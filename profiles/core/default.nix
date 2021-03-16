@@ -2,13 +2,14 @@
 let inherit (lib) fileContents;
 in
 {
-  nix.package = pkgs.nixFlakes;
+  nix.package = pkgs.nixStable;
 
   nix.systemFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 
   environment = {
 
     systemPackages = with pkgs; [
+      nixFlakes
       binutils
       coreutils
       curl

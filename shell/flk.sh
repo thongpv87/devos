@@ -17,7 +17,7 @@ usage () {
 
   printf "  %-30s %s\n\n" \
   "up" "Generate $DEVSHELL_ROOT/hosts/up-$HOSTNAME.nix" \
-  "update [INPUT]" "Update and commit the lock file" \
+  "update [INPUT]" "Update and commit the lock file, or specific input" \
   "get (core|community) [DEST]" "Copy the desired template to DEST" \
   "iso HOST" "Generate an ISO image of HOST" \
   "install HOST [ARGS]" "Shortcut for nixos-install" \
@@ -51,11 +51,11 @@ case "$1" in
   "update")
     if [[ -n "$2" ]]; then
       if [[ -n "$3" ]]; then
-        (cd $2; nix flake list-inputs --update-input "$3")
+        (cd $2; nix flake metadata --update-input "$3")
       else
         (cd $2; nix flake update)
       fi
-      nix flake list-inputs --update-input "$2" "$DEVSHELL_ROOT"
+      nix flake metadata --update-input "$2" "$DEVSHELL_ROOT"
     else
       nix flake update "$DEVSHELL_ROOT"
     fi
