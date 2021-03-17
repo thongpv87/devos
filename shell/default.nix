@@ -33,7 +33,7 @@ pkgs.devshell.mkShell
   commands = with pkgs; [{ package = flk; }
     {
       name = "nix";
-      help = pkgs.nixFlakes.meta.description;
+      help = pkgs.nixStable.meta.description;
       command = ''
         ${pkgs.nixFlakes}/bin/nix --experimental-features "nix-command flakes ca-references" "${"\${@}"}"
       '';
