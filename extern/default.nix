@@ -9,12 +9,6 @@ in
   ];
 
   overlays = [
-    nix.overlay
-    (final: prev: {
-      # needed for nix overlay above
-      utillinuxMinimal = prev.utillinux;
-      nixFlakes = prev.nix;
-    })
     nur.overlay
     devshell.overlay
     (final: prev: {
