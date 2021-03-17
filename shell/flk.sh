@@ -93,6 +93,6 @@ case "$1" in
     ;;
 
   *)
-    sudo nixos-rebuild --flake "$DEVSHELL_ROOT#$1" "${@:2}"
+    sudo nix shell "$DEVSHELL_ROOT#nixosConfigurations.$1.config.system.build.toplevel" -c switch-to-configuration "${@:2}"
     ;;
 esac
