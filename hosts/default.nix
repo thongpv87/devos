@@ -28,28 +28,44 @@ let
             modules;
         };
 
-      global = {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
 
-        hardware.enableRedistributableFirmware = lib.mkDefault true;
+      global =
+        let
+          experimentalFeatures = [
+            "flakes"
+            "nix-command"
+            "ca-references"
+            "ca-derivations"
+          ];
+        in
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
 
-        nix.nixPath = [
-          "nixpkgs=${nixos}"
-          "nixos-config=${self}/compat/nixos"
-          "home-manager=${home}"
-        ];
+          hardware.enableRedistributableFirmware = lib.mkDefault true;
 
-        nixpkgs = { inherit pkgs; };
+          nix.nixPath = [
+            "nixpkgs=${nixos}"
+            "nixos-config=${self}/compat/nixos"
+            "home-manager=${home}"
+          ];
 
-        nix.registry = {
-          devos.flake = self;
-          nixos.flake = nixos;
-          override.flake = override;
+          nixpkgs = { inherit pkgs; };
+
+          nix.registry = {
+            devos.flake = self;
+            nixos.flake = nixos;
+            override.flake = override;
+          };
+
+          nix.extraOptions = ''
+            --experimental-features = ${lib.concatStringsSep " "
+              experimentalFeatures
+            }
+          '';
+
+          system.configurationRevision = lib.mkIf (self ? rev) self.rev;
         };
-
-        system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-      };
 
       # Everything in `./modules/list.nix`.
       flakeModules =
