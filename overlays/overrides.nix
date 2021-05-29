@@ -14,6 +14,10 @@ channels: final: prev: {
     signal-desktop
     starship;
 
+  # selected-nerdfonts = prev.nerdfonts.override {
+  #   fonts = [ "FiraCode" "FiraMono" "SourceCodePro" "DejaVuSansMono" "DroidSansMono"
+  #            "Inconsolata" "Iosevka" "RobotoMono" "Terminus" ];
+  # };
 
   haskellPackages = prev.haskellPackages.override {
     overrides = hfinal: hprev:

@@ -75,6 +75,7 @@
             ci-agent.nixosModules.agent-profile
             home.nixosModules.home-manager
             agenix.nixosModules.age
+            #nixos-hardware.nixosModules.lenovo-thinkpad-x1-extreme-gen2
             ./modules/customBuilds.nix
           ];
         };
@@ -82,11 +83,15 @@
         imports = [ (digga.lib.importers.hosts ./hosts) ];
         hosts = {
           /* set host specific properties here */
+          up-thinkpad = {
+            channelName = "latest";
+          };
           NixOS = { };
         };
         profiles = [ ./profiles ./users ];
         suites = { profiles, users, ... }: with profiles; rec {
-          base = [ core users.nixos users.root ];
+          base = [ core users.thongpv87 users.root ];
+          personal = [ cachix network laptop virt packages misc ];
         };
       };
 
@@ -95,7 +100,7 @@
         externalModules = [ ];
         profiles = [ ./users/profiles ];
         suites = { profiles, ... }: with profiles; rec {
-          base = [ direnv git ];
+          base = [ direnv git thongpv87 ];
         };
       };
 

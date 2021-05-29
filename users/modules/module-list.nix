@@ -1,1 +1,13 @@
-[ ]
+[
+  ./mopidy
+  ./ncmpcpp
+  ./xmonad
+  ./shell
+  ./fonts
+  ./emacs
+  ./holmusk
+  #./mime
+  ./gsettings
+  ./others
+  ./develop
+]
