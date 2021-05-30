@@ -5,7 +5,7 @@ let
 in
 {
   options = {
-    module.dev.haskell.enable = mkOption {
+    module.develop.haskell.enable = mkOption {
       default = false;
     };
   };
