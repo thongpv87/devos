@@ -14,7 +14,7 @@ in
       enable = mkOption {
         default = false;
         description = ''
-          Whether to enable tmux bundle
+          Whether to enable tmux module
         '';
       };
 
@@ -36,7 +36,7 @@ in
             sensible
             yank
             prefix-highlight
-            #gruvbox
+            #tilish
             pain-control
             # {
             #   plugin = continuum;
@@ -46,6 +46,16 @@ in
             #    set -g @yank_action 'copy-pipe'
             #  '';
             # }
+
+            #themes
+            #gruvbox
+            {
+              plugin = power-theme;
+              extraConfig = ''
+                set -g @tmux_power_theme 'moon'
+                #set -g @tmux_power_theme 'default'
+              '';
+            }
           ];
           shortcut = "o";
           customPaneNavigationAndResize = true;
@@ -57,9 +67,8 @@ in
           extraConfig = ''
             set-option  -g default-shell ${shellCmd}
 
-            ${readFile ./tmuxline.conf}
-
             ${readFile ./tmux.conf}
+            #$#{readFile ./bindings.conf}
           '';
         };
       }
