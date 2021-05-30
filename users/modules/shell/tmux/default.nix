@@ -66,9 +66,8 @@ in
 
           extraConfig = ''
             set-option  -g default-shell ${shellCmd}
-
-            ${readFile ./tmux.conf}
             ${readFile ./bindings.conf}
+            ${readFile ./tmux.conf}
           '';
         };
       }
