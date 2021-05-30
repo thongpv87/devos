@@ -23,6 +23,8 @@
 
       pkgs.url = "path:./pkgs";
       pkgs.inputs.nixpkgs.follows = "nixos";
+
+      devshell.url = "github:numtide/devshell";
     };
 
   outputs =

@@ -91,6 +91,21 @@
     },
     "devshell": {
       "locked": {
+        "lastModified": 1622280192,
+        "narHash": "sha256-PUKxjvyNkCQ2mJ9KdoEla46lvasBQwxHGtNi2i57tFk=",
+        "owner": "numtide",
+        "repo": "devshell",
+        "rev": "4ad45f317e2b1b84175c96c1f71cf6332545aa7f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "devshell_2": {
+      "locked": {
         "lastModified": 1618523768,
         "narHash": "sha256-Gev9da35pHUey3kGz/zrJFc/9ICs++vPCho7qB1mqd8=",
         "owner": "numtide",
@@ -107,7 +122,7 @@
     "digga": {
       "inputs": {
         "deploy": "deploy",
-        "devshell": "devshell",
+        "devshell": "devshell_2",
         "nixlib": "nixlib",
         "nixpkgs": "nixpkgs_2",
         "utils": "utils_2"
@@ -375,6 +390,7 @@
         "agenix": "agenix",
         "ci-agent": "ci-agent",
         "darwin": "darwin",
+        "devshell": "devshell",
         "digga": "digga",
         "home": "home",
         "latest": "latest",

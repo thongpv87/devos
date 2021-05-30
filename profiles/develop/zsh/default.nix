@@ -52,7 +52,7 @@ in
     systemPackages = with pkgs; [
       bat
       bzip2
-      devshell.cli
+      #devshell.cli
       exa
       gitAndTools.hub
       gzip
@@ -64,6 +64,7 @@ in
       unzip
       xz
       zsh-completions
+      starship
     ];
   };
 
@@ -91,17 +92,10 @@ in
       "promptsubst"
     ];
 
-    promptInit =
-      let
-        p10k = pkgs.writeText "pk10.zsh" (fileContents ./p10k.zsh);
-        p10k-linux = pkgs.writeText "pk10-linux.zsh" (fileContents ./p10k-linux.zsh);
-      in
-      ''
-        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-        [[ -z $DISPLAY && -z $WAYLAND_DISPLAY ]] \
-          && source ${p10k-linux} \
-          || source ${p10k}
-      '';
+    promptInit = ''
+      nix-zsh-completions
+      eval "$(starship init zsh)"
+    '';
 
     interactiveShellInit =
       let

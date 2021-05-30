@@ -68,7 +68,7 @@ in
             set-option  -g default-shell ${shellCmd}
 
             ${readFile ./tmux.conf}
-            #$#{readFile ./bindings.conf}
+            ${readFile ./bindings.conf}
           '';
         };
       }

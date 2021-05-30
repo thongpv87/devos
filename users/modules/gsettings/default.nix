@@ -28,8 +28,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    fonts.fontconfig.enable = true;
-
     home.packages = with pkgs; [ glib gsettings-desktop-schemas gtk3 ];
 
     home.sessionVariables = {

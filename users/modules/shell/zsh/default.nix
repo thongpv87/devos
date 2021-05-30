@@ -26,7 +26,7 @@ in
 
   config = mkIf cfg.enable
     {
-      home.packages = with pkgs; [ any-nix-shell ];
+      home.packages = with pkgs; [ any-nix-shell nix-zsh-completions ];
       programs.zsh = {
         enable = true;
         enableCompletion = true;
@@ -38,7 +38,7 @@ in
         history = {
           extended = true;
           share = true;
-          size = 5000;
+          size = 10000;
         };
 
         localVariables = {
@@ -58,7 +58,15 @@ in
 
         "oh-my-zsh" = {
           enable = true;
-          plugins = [ "git" "sudo" "gitignore" "cp" "docker" "colored-man-pages" "safe-paste" ];
+          plugins = [
+            "git"
+            "sudo"
+            "gitignore"
+            "cp"
+            "docker"
+            "safe-paste"
+            "colored-man-pages"
+          ];
         };
       };
 

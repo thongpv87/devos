@@ -4,6 +4,7 @@
     iftop.enable = true;
     iotop.enable = true;
     nano.syntaxHighlight = true;
+    zsh.enable = true;
   };
 
   environment = {
