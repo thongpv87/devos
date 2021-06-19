@@ -3,7 +3,7 @@
 
   inputs =
     {
-      nixos.url = "nixpkgs/nixos-unstable";
+      nixos.url = "nixpkgs/release-21.05";
       latest.url = "nixpkgs";
       digga.url = "github:divnix/digga/develop";
 
@@ -21,8 +21,8 @@
       agenix.inputs.nixpkgs.follows = "latest";
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
-      nvfetcher-flake.url = "github:berberman/nvfetcher";
-      nvfetcher-flake.inputs.nixpkgs.follows = "latest";
+      nvfetcher.url = "github:berberman/nvfetcher";
+      nvfetcher.inputs.nixpkgs.follows = "latest";
     };
 
   outputs =
@@ -34,7 +34,7 @@
     , nixos-hardware
     , nur
     , agenix
-    , nvfetcher-flake
+    , nvfetcher
     , ...
     } @ inputs:
     digga.lib.mkFlake {
@@ -48,7 +48,7 @@
           overlays = [
             nur.overlay
             agenix.overlay
-            nvfetcher-flake.overlay
+            (final: prev: { nvfetcher-bin = nvfetcher.defaultPackage.${final.system}; })
             ./pkgs/default.nix
           ];
         };
@@ -69,7 +69,7 @@
         hostDefaults = {
           system = "x86_64-linux";
           channelName = "nixos";
-          modules = ./modules/module-list.nix;
+          imports = [ (digga.lib.importers.modules ./modules) ];
           externalModules = [
             { _module.args.ourLib = self.lib; }
             ci-agent.nixosModules.agent-profile
@@ -95,7 +95,7 @@
       };
 
       home = {
-        modules = ./users/modules/module-list.nix;
+        imports = [ (digga.lib.importers.modules ./users/modules) ];
         externalModules = [ ];
         importables = rec {
           profiles = digga.lib.importers.rakeLeaves ./users/profiles;
@@ -111,7 +111,8 @@
           {
             name = pkgs.nvfetcher-bin.pname;
             help = pkgs.nvfetcher-bin.meta.description;
-            command = "cd $DEVSHELL_ROOT/pkgs; ${pkgs.nvfetcher-bin}/bin/nvfetcher -c ./sources.toml $@"; }
+            command = "cd $DEVSHELL_ROOT/pkgs; ${pkgs.nvfetcher-bin}/bin/nvfetcher -c ./sources.toml --no-output $@; nixpkgs-fmt _sources/";
+          }
         ];
       };
 

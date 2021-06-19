@@ -298,16 +298,16 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1615797423,
-        "narHash": "sha256-5NGDZXPQzuoxf/42NiyC9YwwhwzfMfIRrz3aT0XHzSc=",
+        "lastModified": 1624125633,
+        "narHash": "sha256-AAJPHLnK3Y/R8F7cL1cgTmC5GcfjqjhaV7D0PdyQk8A=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "266dc8c3d052f549826ba246d06787a219533b8f",
+        "rev": "59979f87460379fb2156e462a941b97ddf62ee3a",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-unstable",
+        "ref": "release-21.05",
         "type": "indirect"
       }
     },
@@ -405,7 +405,7 @@
         "type": "indirect"
       }
     },
-    "nvfetcher-flake": {
+    "nvfetcher": {
       "inputs": {
         "flake-compat": "flake-compat_3",
         "flake-utils": "flake-utils_2",
@@ -455,7 +455,7 @@
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
         "nur": "nur",
-        "nvfetcher-flake": "nvfetcher-flake"
+        "nvfetcher": "nvfetcher"
       }
     },
     "utils": {
