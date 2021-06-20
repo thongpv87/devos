@@ -47,6 +47,7 @@ in
         yq
         gnused
         nix-prefetch-git
+        git-crypt
       ];
 
       programs.git.enable = true;
