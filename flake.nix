@@ -3,9 +3,9 @@
 
   inputs =
     {
-      nixos.url = "nixpkgs/nixos-unstable";
+      nixos.url = "nixpkgs/release-21.05";
       latest.url = "nixpkgs";
-      digga.url = "github:divnix/digga";
+      digga.url = "github:divnix/digga/develop";
 
       ci-agent = {
         url = "github:hercules-ci/hercules-ci-agent";
@@ -21,15 +21,12 @@
       agenix.inputs.nixpkgs.follows = "latest";
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
-      pkgs.url = "path:./pkgs";
-      pkgs.inputs.nixpkgs.follows = "nixos";
-
-      devshell.url = "github:numtide/devshell";
+      nvfetcher.url = "github:berberman/nvfetcher";
+      nvfetcher.inputs.nixpkgs.follows = "latest";
     };
 
   outputs =
     { self
-    , pkgs
     , digga
     , nixos
     , ci-agent
@@ -37,6 +34,7 @@
     , nixos-hardware
     , nur
     , agenix
+    , nvfetcher
     , ...
     } @ inputs:
     digga.lib.mkFlake {
@@ -48,10 +46,10 @@
         nixos = {
           imports = [ (digga.lib.importers.overlays ./overlays) ];
           overlays = [
-            ./pkgs/default.nix
-            pkgs.overlay # for `srcs`
             nur.overlay
             agenix.overlay
+            (final: prev: { nvfetcher-bin = nvfetcher.defaultPackage.${final.system}; })
+            ./pkgs/default.nix
           ];
         };
         latest = { };
@@ -71,9 +69,9 @@
         hostDefaults = {
           system = "x86_64-linux";
           channelName = "nixos";
-          modules = ./modules/module-list.nix;
+          imports = [ (digga.lib.importers.modules ./modules) ];
           externalModules = [
-            { _module.args.ourLib = self.lib; }
+            { lib.our = self.lib; }
             ci-agent.nixosModules.agent-profile
             home.nixosModules.home-manager
             agenix.nixosModules.age
@@ -90,20 +88,37 @@
           };
           NixOS = { };
         };
-        profiles = [ ./profiles ./users ];
-        suites = { profiles, users, ... }: with profiles; rec {
-          base = [ core users.thongpv87 users.root ];
-          personal = [ cachix network laptop virt packages misc ];
+        importables = rec {
+          profiles = digga.lib.importers.rakeLeaves ./profiles // {
+            users = digga.lib.importers.rakeLeaves ./users;
+          };
+          suites = with profiles; rec {
+            base = [ core users.thongpv87 users.root ];
+            personal = [ cachix network laptop virt packages misc ];
+          };
         };
       };
 
       home = {
-        modules = ./users/modules/module-list.nix;
+        imports = [ (digga.lib.importers.modules ./users/modules) ];
         externalModules = [ ];
-        profiles = [ ./users/profiles ];
-        suites = { profiles, ... }: with profiles; rec {
-          base = [ direnv git thongpv87 ];
+        importables = rec {
+          profiles = digga.lib.importers.rakeLeaves ./users/profiles;
+          suites = with profiles; rec {
+            base = [ direnv git thongpv87 ];
+          };
         };
+      };
+
+      devshell.externalModules = { pkgs, ... }: {
+        commands = [
+          { package = pkgs.agenix; category = "secrets"; }
+          {
+            name = pkgs.nvfetcher-bin.pname;
+            help = pkgs.nvfetcher-bin.meta.description;
+            command = "cd $DEVSHELL_ROOT/pkgs; ${pkgs.nvfetcher-bin}/bin/nvfetcher -c ./sources.toml --no-output $@; nixpkgs-fmt _sources/";
+          }
+        ];
       };
 
       homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
