@@ -44,6 +44,7 @@ in
         gnome3.gnome-tweaks
         gnome3.nautilus
         gnome3.evince
+        pavucontrol
       ];
 
       gtk = {
