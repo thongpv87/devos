@@ -13,11 +13,18 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ sqlite ispell multimarkdown ];
+    home.packages = with pkgs; [ sqlite ispell multimarkdown libgccjit ];
 
     programs.emacs = {
       enable = true;
-      package = with pkgs; emacsGit;
+      package = pkgs.emacsGcc;
+      extraPackages = (epkgs: with epkgs; [ vterm ]);
+      # package = with pkgs; emacsGit.overrideAttrs (
+      #   old: {
+      #     configureFlags = old.configureFlags ++ lib.singleton "--with-native-compilation";
+      #     buildInputs = with pkgs; old.buildInputs ++ [ libgccjit gcc ];
+      #   }
+      # );
     };
 
     # home.file.".emacs.d/private/themes" = {
