@@ -21,6 +21,8 @@
       agenix.inputs.nixpkgs.follows = "latest";
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
+      emacsCommunity.url = "github:nix-community/emacs-overlay";
+
       nvfetcher.url = "github:berberman/nvfetcher";
       nvfetcher.inputs.nixpkgs.follows = "latest";
     };
@@ -34,6 +36,7 @@
     , nixos-hardware
     , nur
     , agenix
+    , emacsCommunity
     , nvfetcher
     , ...
     } @ inputs:
@@ -63,6 +66,8 @@
             our = self.lib;
           });
         })
+
+        emacsCommunity.outputs.overlay
       ];
 
       nixos = {

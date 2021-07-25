@@ -15,7 +15,10 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ sqlite ispell multimarkdown ];
 
-    programs.emacs.enable = true;
+    programs.emacs = {
+      enable = true;
+      package = with pkgs; emacsGit;
+    };
 
     # home.file.".emacs.d/private/themes" = {
     #   source = ./themes;
