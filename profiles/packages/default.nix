@@ -7,6 +7,10 @@
     zsh.enable = true;
   };
 
+  services = {
+    teamviewer.enable = true;
+  };
+
   environment = {
     systemPackages = with pkgs; [
       #utilities packages
@@ -56,7 +60,6 @@
       nix-index
       nix-zsh-completions
     ];
-
     pathsToLink = [ "/share/zsh" ];
   };
 }

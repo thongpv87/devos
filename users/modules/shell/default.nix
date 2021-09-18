@@ -48,6 +48,7 @@ in
         gnused
         nix-prefetch-git
         git-crypt
+        gnumake
       ];
 
       programs.git.enable = true;

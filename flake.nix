@@ -91,7 +91,6 @@
           up-thinkpad = {
             channelName = "latest";
           };
-          NixOS = { };
         };
         importables = rec {
           profiles = digga.lib.importers.rakeLeaves ./profiles // {
@@ -110,7 +109,7 @@
         importables = rec {
           profiles = digga.lib.importers.rakeLeaves ./users/profiles;
           suites = with profiles; rec {
-            base = [ direnv git thongpv87 ];
+            base = [ git thongpv87 ];
           };
         };
       };

@@ -25,12 +25,14 @@ in
       enableZshIntegration = true;
       enableFishIntegration = true;
       fileWidgetOptions = [ "--preview 'head {}'" ];
-      #historyWidgetCommand = "fc -l 1 | sort -r --key 2.1 -k1,1nr | uniq -f 1 | sort -rn";
     };
 
     direnv = {
       enable = true;
-      nix-direnv.enable = true;
+      nix-direnv = {
+        enable = true;
+        enableFlakes = true;
+      };
       enableZshIntegration = true;
     };
   };

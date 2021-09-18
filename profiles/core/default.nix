@@ -11,6 +11,7 @@ in
     systemPackages = with pkgs; [
       binutils
       coreutils
+      gnumake
       curl
       direnv
       dnsutils

@@ -12,6 +12,7 @@
       enable = true;
       package = pkgs.pulseaudioFull;
       extraModules = [ pkgs.pulseaudio-modules-bt ];
+      extraConfig = "load-module module-switch-on-connect";
     };
 
     bluetooth = {
