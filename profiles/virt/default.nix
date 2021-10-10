@@ -8,6 +8,7 @@
         "virbr1"
       ];
     };
+    docker.enable = true;
 
     containers.enable = true;
 
