@@ -31,7 +31,7 @@ in
   '');
 
   packages = with pkgs; [
-    git-crypt
+    git git-crypt
   ];
 
   commands = with pkgs; [

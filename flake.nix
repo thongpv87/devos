@@ -120,9 +120,7 @@
           imports = [ (digga.lib.importHosts ./hosts) ];
           hosts = {
             /* set host specific properties here */
-            up-thinkpad = {
-              channelName = "latest";
-            };
+            thinkpad = { };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {

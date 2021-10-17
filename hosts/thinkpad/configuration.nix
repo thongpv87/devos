@@ -5,11 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  # imports =
+  #   [ # Include the results of the hardware scan.
+  #     ./hardware-configuration.nix
+  #   ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -25,6 +24,8 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
+  networking.interfaces.docker0.useDHCP = true;
+  networking.interfaces.virbr0.useDHCP = true;
   networking.interfaces.wlp82s0.useDHCP = true;
 
   # Configure network proxy if necessary
@@ -100,4 +101,3 @@
   system.stateVersion = "21.11"; # Did you read the comment?
 
 }
-

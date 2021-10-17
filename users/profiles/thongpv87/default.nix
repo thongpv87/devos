@@ -16,12 +16,12 @@
     };
 
     develop.haskell.enable = true;
+    develop.holmusk.enable = true;
     fonts.enable = true;
     shell.enable = true;
     others.enable = true;
     emacs.enable = true;
     gsettings.enable = true;
-    holmusk.enable = true;
   };
 
   home = {
