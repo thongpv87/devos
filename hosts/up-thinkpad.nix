@@ -1,4 +1,4 @@
-{ suites, pkgs, lib, ... }:
+{ suites, pkgs, lib, config, ... }:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -66,9 +66,12 @@ in
     };
 
     nvidia = {
-      powerManagement.enable = true;
+      powerManagement = {
+        enable = true;
+        finegrained = true;
+      };
       modesetting.enable = true;
-
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
       prime = {
         #sync.enable = true;
         offload.enable = true;
@@ -85,11 +88,6 @@ in
     udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
     xserver = {
       videoDrivers = [ "nvidia" ];
-      #videoDrivers = [ "modesettings" ];
-      # useGlamor = true;
-      # monitorSection = ''
-      #   DisplaySize 508 285
-      # '';
 
       enable = true;
       displayManager.gdm.enable = true;
@@ -181,24 +179,4 @@ in
   systemd.services.thinkfan.preStart = "
     /run/current-system/sw/bin/modprobe  -r thinkpad_acpi && /run/current-system/sw/bin/modprobe thinkpad_acpi
   ";
-
-  ## Enable PCI-Express Runtime D3 (RTD3) Power Management (chapter 22)
-  services.udev.extraRules = ''
-    # Remove NVIDIA USB xHCI Host Controller devices, if present
-    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{remove}="1"
-
-    # Remove NVIDIA USB Type-C UCSI devices, if present
-    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{remove}="1"
-
-    # Remove NVIDIA Audio devices, if present
-    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{remove}="1"
-
-    # Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
-    ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-    ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
-
-    # Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
-    ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
-    ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
-  '';
 }
