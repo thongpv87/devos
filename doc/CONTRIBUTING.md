@@ -1,31 +1,18 @@
 # Pull Requests
-All development is done in the `develop` branch. Only minor bug-fixes and release
-PRs should target `master`.
 
-If making a change to the template, or adding a feature, please be sure to update the
-relevant docs. Each directory contains its own README.md, which will
-automatically be pulled into the [mdbook](https://devos.divnix.com). The book is
-rendered on every change, so the docs should always be up to date.
+## TL;DR;
+- **Target Branch**: `main`
+- **Merge Policy**: [`bors`][bors] is always right (&rarr; `bors try`)
+- **Docs**: every changeset is expected to contain doc updates
+- **Commit Msg**: be a poet! Comprehensive and explanatory commit messages 
+  should cover the motivation and use case in an easily understandable manner
+  even when read after a few months.
+- **Test Driven Development**: please default to test driven development where possible.
 
-We also use [BORS](https://bors.tech) to ensure that all pull requests pass the
-test suite once at least one review is completed.
+### Within the Devshell (`nix develop`)
+- **Hooks**: please `git commit` within the devshell
+- **Fail Early**: please run from within the devshell on your local machine:
+  - `nix flake check`
 
-## Community PRs
-While much of your work in this template may be idiosyncratic in nature. Anything
-that might be generally useful to the broader NixOS community can be synced to
-the `community` branch to provide a host of useful NixOS configurations available
-"out of the box".
+[bors]: https://bors.tech
 
-# Style
-If you wish to contribute please follow these guidelines:
-
-* format your code with [`nixpkgs-fmt`][nixpkgs-fmt]. The default devshell
-  includes a pre-commit hook that does this for you.
-
-* The commit message follows the same semantics as [nixpkgs][nixpkgs].
-  * You can use a `#` symbol to specify ambiguities. For example,
-  `develop#zsh: <rest of commit message>` would tell me that you're updating the
-  `zsh` subprofile living under the `develop` profile.
-
-[nixpkgs-fmt]: https://github.com/nix-community/nixpkgs-fmt
-[nixpkgs]: https://github.com/NixOS/nixpkgs
