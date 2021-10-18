@@ -53,7 +53,6 @@ in
           xlibs.setxkbmap
         ];
 
-
       services = {
         picom = {
           enable = false;
@@ -96,17 +95,17 @@ in
             source = ./dunst;
             recursive = true;
           };
-          "rofi" = {
-            source = ./rofi;
-            recursive = true;
-          };
+          # "rofi" = {
+          #   source = ./rofi;
+          #   recursive = true;
+          # };
 
           "alacritty/alacritty.yml.in".source = ./alacritty/alacritty.yml;
         };
 
-        dataFile = {
-          "fonts/Museo Sans 300.otf".source = ./fonts/Museo-Sans-300.otf;
-        };
+        # dataFile = {
+        #   "fonts/Museo Sans 300.otf".source = ./fonts/Museo-Sans-300.otf;
+        # };
       };
 
       home.file = {

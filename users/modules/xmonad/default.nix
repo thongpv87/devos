@@ -8,6 +8,7 @@ in
   imports = [
     ./simple
     #./axarva
+    ./rofi
   ];
 
   options = {
@@ -81,6 +82,11 @@ in
           Install.WantedBy = [ "graphical-session.target" ];
         };
       };
+
+      module.xmonad.rofi = {
+        enable = true;
+        profile = "simple";
+      };
     }
     # (mkIf (cfg.theme == "axarva") {
     #   module.xmonad.axarva.enable = true;
@@ -89,5 +95,6 @@ in
     (mkIf (cfg.theme == "simple") {
       module.xmonad.simple.enable = true;
     })
+
   ]);
 }

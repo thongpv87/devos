@@ -13,6 +13,11 @@
       enable = true;
       theme = "simple";
       #theme = "axarva";
+
+      rofi = {
+        enable = true;
+        profile = "simple";
+      };
     };
 
     develop.haskell.enable = true;
