@@ -3,20 +3,6 @@
 with lib;
 let
   cfg = config.module.xmonad.simple;
-  selected-nerdfonts = pkgs.nerdfonts.override {
-    fonts = [
-      "FiraCode"
-      "FiraMono"
-      "SourceCodePro"
-      "DejaVuSansMono"
-      "DroidSansMono"
-      "Inconsolata"
-      "Iosevka"
-      "RobotoMono"
-      "Terminus"
-    ];
-    enableWindowsFonts = false;
-  };
 in
 {
   options = {

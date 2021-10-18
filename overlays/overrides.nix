@@ -15,10 +15,20 @@ channels: final: prev: {
     deploy-rs
     ;
 
-  # selected-nerdfonts = prev.nerdfonts.override {
-  #   fonts = [ "FiraCode" "FiraMono" "SourceCodePro" "DejaVuSansMono" "DroidSansMono"
-  #            "Inconsolata" "Iosevka" "RobotoMono" "Terminus" ];
-  # };
+  selected-nerdfonts = prev.nerdfonts.override {
+    fonts = [
+      "FiraCode"
+      "FiraMono"
+      "SourceCodePro"
+      "DejaVuSansMono"
+      "DroidSansMono"
+      "Inconsolata"
+      "Iosevka"
+      "RobotoMono"
+      "Terminus"
+    ];
+    enableWindowsFonts = false;
+  };
 
   haskellPackages = prev.haskellPackages.override
     (old: {
