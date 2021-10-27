@@ -41,7 +41,7 @@ shutdown="襤"
 reboot="ﰇ"
 lock=""
 suspend=""
-logout=""
+logout="﫼"
 
 # Confirmation
 confirm_exit() {
