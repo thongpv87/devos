@@ -28,12 +28,19 @@ in
       efi.canTouchEfiVariables = true;
     };
 
+    kernel.sysctl = {
+      "vm.swappiness" = 1;
+    };
+
+
     kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "battery" "thinkpad_acpi" ];
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" "acpi_call" "coretemp" ];
     blacklistedKernelModules = [ ];
     kernelParams = [ "quiet" "intel_pstate=disable" "nvidia.NVreg_DynamicPowerManagement=0x02" ];
+
+    extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
     extraModprobeConfig = lib.mkMerge [
       # enable wifi power saving (keep uapsd off to maintain low latencies)
@@ -87,6 +94,8 @@ in
 
     upower.enable = true;
     udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+    fstrim.enable = true;
+
     xserver = {
       videoDrivers = [ "nvidia" ];
 
