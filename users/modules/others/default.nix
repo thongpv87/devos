@@ -35,7 +35,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ alacritty irssi alacritty-switch-theme nv-alacritty ];
+    home.packages = with pkgs; [ alacritty irssi alacritty-switch-theme nv-alacritty steam ];
 
     home.file.".irssi" = {
       source = ./irssi;

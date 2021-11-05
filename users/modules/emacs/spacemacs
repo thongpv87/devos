@@ -109,7 +109,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(theme-magic
                                       cmake-mode
-                                      beacon
+                                      hl-line
                                       smartscan
                                       dockerfile-mode
                                       nix-mode
@@ -582,8 +582,16 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (use-package projectile
     :init (spacemacs/set-leader-keys "pC" 'projectile-configure-project))
-  (use-package beacon
-    :init (beacon-mode 1))
+  (require 'hl-line)
+  (add-hook 'prog-mode-hook #'hl-line-mode)
+  (add-hook 'text-mode-hook #'hl-line-mode)
+  (set-face-attribute 'hl-line nil :background "#EFEAE9")
+
+  (setq
+   make-backup-files nil
+   auto-save-default nil
+   create-lockfiles nil)
+
   (use-package clang-format
     :init
     (fset 'c-indent-line-or-region 'spacemacs/clang-format-region-or-buffer))

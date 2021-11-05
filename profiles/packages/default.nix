@@ -42,6 +42,7 @@
       shared_mime_info
       firefox
       google-chrome
+      libreoffice-fresh
       evince
       notify-osd
       libnotify
