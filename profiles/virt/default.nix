@@ -14,14 +14,23 @@
 
     podman.enable = true;
     oci-containers.backend = "podman";
+
+    virtualbox = {
+      host.enable = true;
+    };
   };
 
-  # you'll need to add your user to 'libvirtd' group to use virt-manager
-  environment.systemPackages = with pkgs; [ virt-manager vagrant ];
+  users.extraGroups.vboxusers.members = [ "thongpv87" ];
 
-  environment.shellAliases.docker = "podman";
 
-  environment.sessionVariables = {
-    VAGRANT_DEFAULT_PROVIDER = "libvirt";
+  environment = {
+    # you'll need to add your user to 'libvirtd' group to use virt-manager
+    systemPackages = with pkgs; [ virt-manager vagrant ];
+
+    shellAliases.docker = "podman";
+
+    sessionVariables = {
+      VAGRANT_DEFAULT_PROVIDER = "libvirt";
+    };
   };
 }
