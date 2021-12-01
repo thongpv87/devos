@@ -24,7 +24,7 @@ in
       nodejs
       elmPackages.create-elm-app
       teams
-      terraform_0_14
+      terraform_1_0
       ngrok
       packer
       cargo
