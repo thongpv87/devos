@@ -1,13 +1,13 @@
 {
   description = "A highly structured configuration database.";
 
-  nixConfig.extra-experimental-features = "nix-command flakes ca-references";
+  #nixConfig.extra-experimental-features = "nix-command flakes ca-references";
   nixConfig.extra-substituters = "https://nrdxp.cachix.org https://nix-community.cachix.org";
   nixConfig.extra-trusted-public-keys = "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
 
   inputs =
     {
-      nixos.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+      nixos.url = "github:nixos/nixpkgs/release-21.11";
       latest.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
       digga.url = "github:divnix/digga";
@@ -75,7 +75,7 @@
           nixos = {
             imports = [ (digga.lib.importOverlays ./overlays) ];
             overlays = [
-              digga.overlays.patchedNix
+              #digga.overlays.patchedNix
               nur.overlay
               agenix.overlay
               nvfetcher.overlay

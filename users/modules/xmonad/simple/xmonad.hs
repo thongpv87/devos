@@ -501,7 +501,7 @@ myClockPP h = xmobarPP {
 -- By default, do nothing.
 myStartupHook :: X()
 myStartupHook = do
-  spawnOnce "xrandr --setprovideroutputsource NVIDIA-G0 modesetting; autorandr --change --force || (xrandr --output eDP-1-1 --auto || xrandr --output eDP-1 --auto)"
+  --spawnOnce "xrandr --setprovideroutputsource NVIDIA-G0 modesetting; autorandr --change --force || (xrandr --output eDP-1-1 --auto || xrandr --output eDP-1 --auto)"
   spawnOnce "systemctl --user start emacs"
   spawnOnce "zsh -c 'tmux new-session -d -s default'"
   spawn "xsetroot -cursor_name left_ptr"
