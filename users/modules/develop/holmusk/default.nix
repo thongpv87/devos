@@ -17,6 +17,7 @@ in
       tdesktop
       _1password
       _1password-gui
+      slack
       awscli2
       ssm-session-manager-plugin
       postman
