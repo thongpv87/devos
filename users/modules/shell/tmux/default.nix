@@ -62,7 +62,7 @@ in
           keyMode = "emacs";
           newSession = true;
           secureSocket = false;
-          terminal = "xterm-direct";
+          terminal = "xterm-256color";
 
           extraConfig = ''
             set-option  -g default-shell ${shellCmd}

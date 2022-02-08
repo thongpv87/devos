@@ -39,6 +39,9 @@
       nano
       vim
       wget
+      ascii
+      file
+      
       shared_mime_info
       firefox
       google-chrome

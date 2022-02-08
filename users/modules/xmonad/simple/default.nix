@@ -49,7 +49,7 @@ in
       xsession = {
         enable = true;
 
-        profileExtra = ''# wal -R& '';
+        profileExtra = ''wal -R& '';
 
         windowManager = {
           xmonad = {
