@@ -13,7 +13,6 @@ let
       fetchSubmodules = true;
     };
   });
-
 in
 {
   options = {
@@ -27,91 +26,95 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      home-manager = {
-        home.packages = with pkgs;
-          [
-            wmctrl
-            acpi
-            playerctl
-            jq
-            xclip
-            maim
-            xautolock
-            betterlockscreen
-            feh
-            xdotool
-            scrot
-            font-awesome
-            selected-nerdfonts
-            rofi
-            xmobar
-            jonaburg-picom
-            libqalculate
-            brightnessctl
-            xorg.xbacklight
-            xlibs.setxkbmap
-          ];
+      home.packages = with pkgs;
+        [
+          wmctrl
+          acpi
+          playerctl
+          jq
+          xclip
+          maim
+          xautolock
+          betterlockscreen
+          feh
+          xdotool
+          scrot
+          font-awesome
+          dunst
+          selected-nerdfonts
+          rofi
+          xmobar
+          jonaburg-picom
+          libqalculate
+          brightnessctl
+          xorg.xbacklight
+          xlibs.setxkbmap
+        ];
 
-        xsession = {
-          enable = true;
+      xsession = {
+        enable = true;
 
-          profileExtra = ''# wal -R& '';
+        profileExtra = ''# wal -R& '';
 
-          windowManager = {
-            xmonad = {
-              enable = true;
-              enableContribAndExtras = true;
-              extraPackages = haskellPackages: with haskellPackages; [ xmonad-wallpaper xmobar ];
-              config = ./xmonad.hs;
-            };
+        windowManager = {
+          xmonad = {
+            enable = true;
+            enableContribAndExtras = true;
+            extraPackages = haskellPackages: with haskellPackages; [ xmonad-wallpaper xmobar ];
+            config = ./xmonad.hs;
           };
         };
+      };
 
-        systemd.user.services.dunst = {
-          Unit = {
-            Description = "Dunst notification daemon";
-            After = [ "graphical-session-pre.target" ];
-            PartOf = [ "graphical-session.target" ];
-          };
-
-          Service = {
-            Type = "dbus";
-            BusName = "org.freedesktop.Notifications";
-            ExecStart = "${pkgs.dunst}/bin/dunst";
-          };
+      systemd.user.services.dunst = {
+        Unit = {
+          Description = "Dunst notification daemon";
+          After = [ "graphical-session-pre.target" ];
+          PartOf = [ "graphical-session.target" ];
         };
 
-        xdg = {
-          enable = true;
-          configFile = {
-            "picom/picom.conf".source = ./config/picom.conf;
-            "dunst" = {
-              source = ./dunst;
-              recursive = true;
-            };
-            "rofi" = {
-              source = ./rofi;
-              recursive = true;
-            };
-
-            "alacritty/alacritty.yml.in".source = ./alacritty/alacritty.yml;
-          };
-
-          dataFile = {
-            "fonts/Museo Sans 300.otf".source = ./fonts/Museo-Sans-300.otf;
-          };
+        Service = {
+          Type = "dbus";
+          BusName = "org.freedesktop.Notifications";
+          ExecStart = "${pkgs.dunst}/bin/dunst";
         };
+      };
 
-        home.file = {
-          ".xmonad/xmobar" = {
-            source = ./xmobar;
+      module.xmonad.rofi = {
+        enable = true;
+        profile = "simple";
+      };
+
+      xdg = {
+        enable = true;
+        configFile = {
+          "picom/picom.conf".source = ./config/picom.conf;
+          "dunst" = {
+            source = ./dunst;
             recursive = true;
           };
+          # "rofi" = {
+          #   source = ./rofi;
+          #   recursive = true;
+          # };
 
-          ".xmonad/bin" = {
-            source = ./bin;
-            recursive = true;
-          };
+          "alacritty/alacritty.yml.in".source = ./alacritty/alacritty.yml;
+        };
+
+        dataFile = {
+          "fonts/Museo Sans 300.otf".source = ./fonts/Museo-Sans-300.otf;
+        };
+      };
+
+      home.file = {
+        ".xmonad/xmobar" = {
+          source = ./xmobar;
+          recursive = true;
+        };
+
+        ".xmonad/bin" = {
+          source = ./bin;
+          recursive = true;
         };
       };
     }

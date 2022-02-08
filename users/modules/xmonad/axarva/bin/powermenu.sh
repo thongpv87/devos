@@ -14,52 +14,47 @@
 # drop_circle     drop_square     drop_rounded     drop_alt
 # full_circle     full_square     full_rounded     full_alt
 # row_circle      row_square      row_rounded      row_alt
-res_width=$1
 
-theme="card_circle"
+theme="full_circle"
 dir="$HOME/.config/rofi/powermenu"
 
 # random colors
-#styles=($(ls -p --hide="colors.rasi" $dir/styles))
-#color="${styles[$(( $RANDOM % 8 ))]}"
+styles=($(ls -p --hide="colors.rasi" $dir/styles))
+color="${styles[$(( $RANDOM % 8 ))]}"
 
-# comment this line to disable random colors
-#sed -i -e "s/@import .*/@import \"$color\"/g" $dir/styles/colors.rasi
+# # comment this line to disable random colors
+color="berry.rasi"
+sed -i -e "s/@import .*/@import \"$color\"/g" $dir/styles/colors.rasi
 
+theme="card_square.rasi"
 # comment these lines to disable random style
-#themes=($(ls -p --hide="powermenu.sh" --hide="styles" --hide="confirm.rasi" --hide="message.rasi" $dir))
+themes=($(ls -p --hide="powermenu.sh" --hide="styles" --hide="confirm.rasi" --hide="message.rasi" $dir))
 #theme="${themes[$(( $RANDOM % 24 ))]}"
+theme="card_square.rasi"
+uptime=$(uptime | sed -e 's/up //g')
 
-uptime=$(uptime -p | sed -e 's/up //g')
-rofi_command="rofi -theme $dir/${theme}_${res_width}"
+
+rofi_command="rofi -theme $dir/$theme"
 
 # Options
 shutdown="襤"
 reboot="ﰇ"
-lock=""
+lock=""
 suspend=""
 logout="﫼"
 
 # Confirmation
 confirm_exit() {
-  action=$1
   rofi -dmenu\
     -i\
     -no-fixed-num-lines\
-    -p "Do you want to ${action}? : "\
+    -p "Are You Sure? : "\
     -theme $dir/confirm.rasi
 }
 
-perform_action() {
-    ans=$1
-    action=$2
-    if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
-        eval $action
-    elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
-        exit 0
-    else
-        rofi -theme "$dir/message.rasi" -e "Available Options  -  yes / y / no / n"
-    fi
+# Message
+msg() {
+  rofi -theme "$dir/message.rasi" -e "Available Options  -  yes / y / no / n"
 }
 
 # Variable passed to rofi
@@ -68,22 +63,61 @@ options="$shutdown\n$reboot\n$lock\n$suspend\n$logout"
 chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 2)"
 case $chosen in
     $shutdown)
-    ans=$(confirm_exit "shutdown" &)
-    perform_action "$ans" "shutdown -h now"
-    ;;
+    ans=$(confirm_exit &)
+    if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+      systemctl poweroff
+    elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+      exit 0
+        else
+      msg
+        fi
+        ;;
     $reboot)
-        ans=$(confirm_exit "reboot" &)
-        perform_action "$ans" "shutdown -h now"
-    ;;
+    ans=$(confirm_exit &)
+    if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+      systemctl reboot
+    elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+      exit 0
+        else
+      msg
+        fi
+        ;;
     $lock)
-        betterlockscreen -l
-    ;;
+    # if [[ -f /usr/bin/i3lock ]]; then
+    #   i3lock
+    # elif [[ -f /usr/bin/betterlockscreen ]]; then
+    #   betterlockscreen -l
+    # fi
+    betterlockscreen -l
+        ;;
     $suspend)
-        ans=$(confirm_exit "suspend" &)
-        perform_action "$ans" "playerctl pause & amixer set Master mute & systemctl suspend"
-    ;;
+    ans=$(confirm_exit &)
+    if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+      mpc -q pause
+      amixer set Master mute
+      systemctl suspend
+    elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+      exit 0
+        else
+      msg
+        fi
+        ;;
     $logout)
-        ans=$(confirm_exit "logout"&)
-        perform_action "$ans" "killall xmonad-x86_64-linux"
-    ;;
+    ans=$(confirm_exit &)
+    if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+      if [[ "$DESKTOP_SESSION" == "Openbox" ]]; then
+        openbox --exit
+      elif [[ "$DESKTOP_SESSION" == "bspwm" ]]; then
+        bspc quit
+      elif [[ "$DESKTOP_SESSION" == "i3" ]]; then
+        i3-msg exit
+      elif [[ "$DESKTOP_SESSION" == *"$xmonad"* ]]; then
+          killall xmonad-x86_64-linux
+      fi
+    elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+      exit 0
+        else
+      msg
+        fi
+        ;;
 esac

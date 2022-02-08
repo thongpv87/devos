@@ -7,7 +7,7 @@ in
 {
   imports = [
     ./simple
-    #./axarva
+    ./axarva
     ./rofi
   ];
 
@@ -88,9 +88,9 @@ in
         profile = "simple";
       };
     }
-    # (mkIf (cfg.theme == "axarva") {
-    #   module.xmonad.axarva.enable = true;
-    # })
+    (mkIf (cfg.theme == "axarva") {
+      module.xmonad.axarva.enable = true;
+    })
 
     (mkIf (cfg.theme == "simple") {
       module.xmonad.simple.enable = true;

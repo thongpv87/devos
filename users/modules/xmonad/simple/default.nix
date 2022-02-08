@@ -37,6 +37,7 @@ in
           brightnessctl
           xorg.xbacklight
           xlibs.setxkbmap
+          dunst
         ];
 
       services = {
@@ -49,7 +50,7 @@ in
       xsession = {
         enable = true;
 
-        profileExtra = ''wal -R& '';
+        profileExtra = ''#wal -R& '';
 
         windowManager = {
           xmonad = {
@@ -81,17 +82,9 @@ in
             source = ./dunst;
             recursive = true;
           };
-          # "rofi" = {
-          #   source = ./rofi;
-          #   recursive = true;
-          # };
 
           "alacritty/alacritty.yml.in".source = ./alacritty/alacritty.yml;
         };
-
-        # dataFile = {
-        #   "fonts/Museo Sans 300.otf".source = ./fonts/Museo-Sans-300.otf;
-        # };
       };
 
       home.file = {
