@@ -3,7 +3,7 @@ Config { font = "xft:Iosevka Nerd Font:style=Regular"
        , bgColor = "#121212"
        , fgColor = "#A27592"
        , alpha = 255
-       , position = Static { xpos = 3450,  ypos = 2, width = 260, height=35 }
+       , position = Static { xpos = 3430,  ypos = 2, width = 280, height=35 }
        , textOffset = -1
        , iconOffset = 60
        , lowerOnStart = True

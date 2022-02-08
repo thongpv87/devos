@@ -4,7 +4,7 @@ Config { font = "xft:Source Code Pro Medium:style=Medium, Font Awesome 5 Free So
        , bgColor = "#121212"
        , fgColor = "#A27592"
        , alpha = 255
-       , position = Static { xpos = 20,  ypos = 2, width = 470, height=35 }
+       , position = Static { xpos = 20,  ypos = 2, width = 408, height=35 }
        , textOffset = -1
        , iconOffset = -1
        , lowerOnStart = True

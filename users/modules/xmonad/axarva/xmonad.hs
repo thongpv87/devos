@@ -463,8 +463,8 @@ clickableWs ws = "<action=xdotool key super+" ++ show index ++ ">" ++ xmobarEsca
 myWorkspacePP :: Handle -> PP
 myWorkspacePP h= xmobarPP {
   ppOutput = hPutStrLn h
-  , ppCurrent = xmobarColor "#E5C453" "" . wrap "[" "]"
-  , ppVisible = xmobarColor "#E5C453" "" . wrap "(" ")"
+  , ppCurrent = xmobarColor "#E5C453" "" -- . wrap "[" "]"
+  , ppVisible = xmobarColor "#AB9DF2" "" -- . wrap "(" ")"
   , ppHidden = xmobarColor "#E57254" ""
   , ppHiddenNoWindows = xmobarColor "#E57254" ""
   , ppOrder = \(ws:_) -> [ws]
