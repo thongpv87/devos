@@ -304,7 +304,8 @@ It should only modify the values of Spacemacs settings."
                                ;; "FiraCode Nerd Font Mono"
                                :size 11.0
                                :weight normal
-                               :width normal)
+                               :width normal
+                               :powerline-scale 1.1)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -460,7 +461,21 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   ;; dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers '(t
+                               :relative nil
+                               :disabled-for-modes dired-mode
+                               docview-mode
+                               markdown-mode
+                               org-mode
+                               pdf-view-mode
+                               text-mode
+                               :enabled-for-modes
+                               haskell-mode
+                               c++-mode
+                               html-mode
+                               elm-mode
+                               )
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -590,21 +605,7 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   dotspacemacs-editing-style 'emacs
-  dotspacemacs-default-font '("Source Code Pro"
-                              :size 13
-                              :weight normal
-                              :width normal
-                              :powerline-scale 1.1)
-  dotspacemacs-line-numbers '(t
-                              :relative nil
-                              :disabled-for-modes dired-mode
-                              docview-mode
-                              markdown-mode
-                              org-mode
-                              pdf-view-mode
-                              text-mode)
   dotspacemacs-loading-progress-bar nil
-  ;;dotspacemacs-themes '(monokai-pro)
   dotspacemacs-whitespace-cleanup t
 
   native-comp-deferred-compilation nil
@@ -633,13 +634,11 @@ before packages are loaded."
     :init
     (add-hook 'haskell-mode-hook (defun my-haskell-setup ()
                                    (subword-mode +1)
-                                   (linum-mode)
                                    )))
   (setq
    make-backup-files nil
    auto-save-default nil
    create-lockfiles nil)
-
   (use-package clang-format
     :init
     (fset 'c-indent-line-or-region 'spacemacs/clang-format-region-or-buffer))
@@ -670,10 +669,6 @@ before packages are loaded."
   (add-to-list 'term-file-aliases '("alacritty" . "xterm"))
 
   (toggle-scroll-bar -1)
-
-  ;; highlight line with the cursor, preserving the colours.
-  ;; (set-face-attribute 'hl-line nil :inherit nil :background "#56959F")
-  ;; (global-hl-line-mode 1)
 
   (use-package direnv :ensure t :config (direnv-mode))
   (use-package lsp-mode
