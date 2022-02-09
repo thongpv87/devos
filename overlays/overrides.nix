@@ -13,6 +13,7 @@ channels: final: prev: {
     signal-desktop
     starship
     deploy-rs
+    nix-direnv
     ;
 
   selected-nerdfonts = prev.nerdfonts.override {

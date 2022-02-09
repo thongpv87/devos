@@ -50,10 +50,10 @@ in
         initExtra = ''
           any-nix-shell zsh --info-right | source /dev/stdin
           export DIRENV_LOG_FORMAT=
-          #eval "$(direnv hook zsh)"
+          eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
           source ~/.config/zsh/zshrc_extra
           #(cat ~/.cache/wal/sequences &)
-          eval "$(starship init zsh)"
+          eval "$(${pkgs.starship}/bin/starship init zsh)"
         '';
 
         "oh-my-zsh" = {
