@@ -40,6 +40,13 @@ in
           };
         };
       };
+
+      home.activation = {
+        myActivationAction = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        $DRY_RUN_CMD cp $HOME/.config/rofi/powermenu/styles/colors.rasi.in $HOME/.config/rofi/powermenu/styles/colors.rasi
+        chmod 600 $HOME/.config/rofi/powermenu/styles/colors.rasi
+        '';
+      };
     }
 
     (mkIf (cfg.profile == "simple") { })

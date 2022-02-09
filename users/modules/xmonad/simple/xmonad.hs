@@ -383,16 +383,18 @@ toggleFullScreenLayout = mkToggle (NBFULL ?? EOT)
   . avoidStruts
   . mkToggle (single FULL)
 
-addGaps layout = gaps [(L,20), (R,20), (U,40), (D,20)]
+addGaps layout = gaps [(L,25), (R,25), (U,40), (D,25)]
           $ spacingRaw True (Border 0 0 0 0) True (Border 5 5 5 5) True
           $ layout
 
 myLayout =
-  smartBorders
-  $ toggleFullScreenLayout
-  $ float $ normal where
-    float  = onWorkspace wsFloat simplestFloat
-    normal = tallLayout ||| fullscreenLayout
+    addGaps
+    $ smartBorders
+    $ toggleFullScreenLayout
+    $ float $ normal
+    where
+        float  = onWorkspace wsFloat simplestFloat
+        normal = tallLayout ||| fullscreenLayout
 
 ------------------------------------------------------------------------
 -- Window rules:

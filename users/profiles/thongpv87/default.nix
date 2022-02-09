@@ -11,8 +11,8 @@
   module = {
     xmonad = {
       enable = true;
-      #theme = "simple";
-      theme = "axarva";
+      theme = "simple";
+      #theme = "axarva";
 
       rofi = {
         enable = true;

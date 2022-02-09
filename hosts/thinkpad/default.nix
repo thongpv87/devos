@@ -93,6 +93,7 @@ in
     logind.extraConfig = "RuntimeDirectorySize=30%";
 
     upower.enable = true;
+    fwupd.enable  = true;
     udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
     fstrim.enable = true;
 
