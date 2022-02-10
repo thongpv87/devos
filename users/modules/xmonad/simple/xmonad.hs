@@ -396,7 +396,7 @@ masterAndTabs = Master.mastered (1/100) (1/2) $ Tabbed.tabbed Tabbed.shrinkText 
  where
      originalTheme = theme adwaitaDarkTheme
      cfg = originalTheme
-         { Tabbed.fontName   = "xft:Roboto Slab:size=12"
+         { Tabbed.fontName   = "xft:Roboto Slab:size=10"
          , Tabbed.decoHeight = 25
          }
 
@@ -523,7 +523,7 @@ myStartupHook = do
   spawn "exec ~/.xmonad/bin/lock.sh"
   spawn "ibus-daemon"
   spawn "setxkbmap -model thinkpad -layout us -option ctrl:nocaps -option altwin:prtsc_rwin"
-  -- spawn "picom"
+  spawn "picom"
   -- spawnOnce "emacs --daemon"
   -- sendMessage LM.ToggleOff
 

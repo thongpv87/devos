@@ -38,22 +38,23 @@ in
           xorg.xbacklight
           xlibs.setxkbmap
           dunst
+          jonaburg-picom
         ];
 
       services = {
         picom = {
-          enable = true;
+          enable = false;
 
           vSync = true;
-          activeOpacity = "0.90";
+          activeOpacity = "0.20";
           blur = true;
           blurExclude = [
             "class_g = 'slop'"
           ];
           extraOptions = ''
-          corner-radius = 10;
-          blur-method = "dual_kawase";
-          blur-strength = "10";
+          corner-radius = 30;
+          #blur-method = "dual_kawase";
+          #blur-strength = "10";
           xinerama-shadow-crop = true;
         '';
           experimentalBackends = true;
@@ -107,6 +108,7 @@ in
 
       xdg = {
         configFile = {
+          "picom/picom.conf".source = ./config/picom.conf;
           "dunst" = {
             source = ./dunst;
             recursive = true;
