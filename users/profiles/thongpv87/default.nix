@@ -41,7 +41,7 @@
       base = "en_US.UTF8";
     };
 
-    enableNixpkgsReleaseCheck = true;
+    #enableNixpkgsReleaseCheck = true;
     # Note, these variables may be set in any order
     # so no session variable may have a runtime dependency
     # on another session variable

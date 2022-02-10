@@ -41,6 +41,7 @@ import XMonad.Prompt.Input
 import XMonad.Prompt.FuzzyMatch
 import Control.Arrow (first)
 import XMonad.Prompt.Man
+import XMonad.Prompt.Theme
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Util.Run ( spawnPipe
@@ -60,6 +61,11 @@ import System.Directory(getHomeDirectory)
 
 import XMonad.Wallpaper(setRandomWallpaper)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Layout.ToggleLayouts as LTL
+import XMonad.Layout.Tabbed as Tabbed
+import XMonad.Layout.Master as Master
+import XMonad.Util.Themes
+
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
@@ -238,9 +244,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_c     ), kill)
 
     -- GAPS!!!
-    , ((modm .|. controlMask, xK_g), sendMessage ToggleGaps)               -- toggle all gaps
-    , ((modm .|. shiftMask  , xK_g), toggleWindowSpacingEnabled)               -- toggle window spacing
-    , ((modm                , xK_g), sendMessage ToggleGaps >> toggleWindowSpacingEnabled) -- toggle all spacing
+    , ((modm .|. shiftMask   , xK_g), sendMessage ToggleGaps >> toggleWindowSpacingEnabled) -- toggle all spacing
+    , ((modm                 , xK_g), sendMessage ToggleLayout) -- toggle all spacing
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
@@ -304,8 +309,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 
     , ((modm,               xK_v), sendMessage LM.Toggle)
-    -- , ((modm, xK_f)                      , sendMessage $ LMT.Toggle FULL)
-    -- , ((modm .|. shiftMask, xK_f)        , sendMessage $ LMT.Toggle NBFULL)
+    , ((modm, xK_f)                      , sendMessage $ LMT.Toggle FULL)
+    , ((modm .|. shiftMask, xK_f)        , sendMessage $ LMT.Toggle NBFULL)
     , ((modm, xK_z)                      , sendMessage $ LMT.Toggle MIRROR)
     , ((modm, xK_y)                      , sendMessage $ LMT.Toggle REFLECTX)
     , ((modm, xK_x)                      , sendMessage $ LMT.Toggle REFLECTY)
@@ -377,24 +382,32 @@ tallLayout = named "tall"
   $ mkToggle (single REFLECTY)
   $ basicTallLayout
 
-fullscreenLayout = named "full" $ noBorders Full
+gapsLayout = named "gaps" $ addGaps tallLayout
 
 toggleFullScreenLayout = mkToggle (NBFULL ?? EOT)
   . avoidStruts
   . mkToggle (single FULL)
 
-addGaps layout = gaps [(L,25), (R,25), (U,40), (D,25)]
+addGaps layout = gaps [(L,20), (R,20), (U,20), (D,20)]
           $ spacingRaw True (Border 0 0 0 0) True (Border 5 5 5 5) True
           $ layout
 
+masterAndTabs = Master.mastered (1/100) (1/2) $ Tabbed.tabbed Tabbed.shrinkText cfg
+ where
+     originalTheme = theme adwaitaDarkTheme
+     cfg = originalTheme
+         { Tabbed.fontName   = "xft:Roboto Slab:size=12"
+         , Tabbed.decoHeight = 25
+         }
+
 myLayout =
-    addGaps
-    $ smartBorders
+    smartBorders
     $ toggleFullScreenLayout
-    $ float $ normal
+    $ float $ toggleLayout
     where
         float  = onWorkspace wsFloat simplestFloat
-        normal = tallLayout ||| fullscreenLayout
+        toggleLayout = toggleLayouts tallLayout gapsLayout
+                       ||| masterAndTabs
 
 ------------------------------------------------------------------------
 -- Window rules:
