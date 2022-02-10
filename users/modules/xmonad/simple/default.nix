@@ -42,8 +42,37 @@ in
 
       services = {
         picom = {
-          enable = false;
+          enable = true;
+
           vSync = true;
+          activeOpacity = "0.90";
+          blur = true;
+          blurExclude = [
+            "class_g = 'slop'"
+          ];
+          extraOptions = ''
+          corner-radius = 10;
+          blur-method = "dual_kawase";
+          blur-strength = "10";
+          xinerama-shadow-crop = true;
+        '';
+          experimentalBackends = true;
+
+          shadowExclude = [
+            "bounding_shaped && !rounded_corners"
+          ];
+
+          fade = true;
+          fadeDelta = 5;
+
+          opacityRule = [
+            "100:class_g   *?= 'Chromium-browser'"
+            "100:class_g   *?= 'Firefox'"
+            "100:class_g   *?= 'gitkraken'"
+            "100:class_g   *?= 'emacs'"
+            "100:class_g   ~=  'jetbrains'"
+            "100:class_g   *?= 'slack'"
+          ];
         };
       };
 

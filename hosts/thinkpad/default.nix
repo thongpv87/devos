@@ -191,6 +191,15 @@ in
     /run/current-system/sw/bin/modprobe  -r thinkpad_acpi && /run/current-system/sw/bin/modprobe thinkpad_acpi
   ";
 
+  specialisation = {
+    external-display.configuration = {
+      system.nixos.tags = [ "NVIDIA" ];
+      hardware.nvidia.prime.offload.enable = lib.mkForce false;
+      hardware.nvidia.powerManagement.enable = lib.mkForce false;
+      hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
+    };
+  };
+
   bud.enable = true;
   bud.localFlakeClone = "/home/thongpv87/ws/devos";
   system.stateVersion = "21.11";
