@@ -101,7 +101,7 @@ in
       videoDrivers = [ "nvidia" ];
 
       enable = true;
-      displayManager.gdm.enable = true;
+      displayManager.sddm.enable = true;
       windowManager.xmonad.enable = true;
       layout = "us";
       libinput.enable = true;
@@ -192,11 +192,13 @@ in
   ";
 
   specialisation = {
-    external-display.configuration = {
+    NVIDIA.configuration = {
       system.nixos.tags = [ "NVIDIA" ];
       hardware.nvidia.prime.offload.enable = lib.mkForce false;
+      hardware.nvidia.prime.sync.enable = lib.mkForce true;
       hardware.nvidia.powerManagement.enable = lib.mkForce false;
       hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
+      hardware.nvidia.modesetting.enable = lib.mkForce false;
     };
   };
 

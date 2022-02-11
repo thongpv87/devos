@@ -38,25 +38,40 @@ in
           xorg.xbacklight
           xlibs.setxkbmap
           dunst
-          jonaburg-picom
+          #jonaburg-picom
         ];
 
       services = {
         picom = {
-          enable = false;
+          enable = true;
 
           vSync = true;
-          activeOpacity = "0.20";
+
+          activeOpacity = "0.95";
+          inactiveOpacity = "0.9";
+          opacityRule = [
+            "100:class_g   *?= 'Chromium-browser'"
+            "100:class_g   *?= 'Google-Chrome'"
+            "100:class_g   *?= 'zoom'"
+            "100:class_g   *?= 'Firefox'"
+            "100:class_g   *?= 'gitkraken'"
+            "100:name      *?= 'emacs'"
+            "100:class_g   *?= 'emacs'"
+            "100:class_g   ~=  'jetbrains'"
+            #"100:class_g   *?= 'slack'"
+          ];
+
           blur = true;
           blurExclude = [
             "class_g = 'slop'"
           ];
           extraOptions = ''
           corner-radius = 30;
-          #blur-method = "dual_kawase";
-          #blur-strength = "10";
           xinerama-shadow-crop = true;
-        '';
+          #blur-background = true;
+          blur-method = "kernel";
+          blur-strength = 5;
+          '';
           experimentalBackends = true;
 
           shadowExclude = [
@@ -64,16 +79,7 @@ in
           ];
 
           fade = true;
-          fadeDelta = 5;
-
-          opacityRule = [
-            "100:class_g   *?= 'Chromium-browser'"
-            "100:class_g   *?= 'Firefox'"
-            "100:class_g   *?= 'gitkraken'"
-            "100:class_g   *?= 'emacs'"
-            "100:class_g   ~=  'jetbrains'"
-            "100:class_g   *?= 'slack'"
-          ];
+          fadeDelta = 10;
         };
       };
 

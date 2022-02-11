@@ -15,6 +15,7 @@ channels: final: prev: {
     deploy-rs
     nix-direnv
     zoom-us
+    dbeaver
     ;
 
   selected-nerdfonts = prev.nerdfonts.override {

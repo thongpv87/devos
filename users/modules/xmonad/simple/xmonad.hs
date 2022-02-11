@@ -392,13 +392,11 @@ addGaps layout = gaps [(L,20), (R,20), (U,20), (D,20)]
           $ spacingRaw True (Border 0 0 0 0) True (Border 5 5 5 5) True
           $ layout
 
-masterAndTabs = Master.mastered (1/100) (1/2) $ Tabbed.tabbed Tabbed.shrinkText cfg
- where
-     originalTheme = theme adwaitaDarkTheme
-     cfg = originalTheme
+myTheme = originalTheme
          { Tabbed.fontName   = "xft:Roboto Slab:size=10"
          , Tabbed.decoHeight = 25
          }
+    where originalTheme = theme adwaitaDarkTheme
 
 myLayout =
     smartBorders
@@ -407,7 +405,6 @@ myLayout =
     where
         float  = onWorkspace wsFloat simplestFloat
         toggleLayout = toggleLayouts tallLayout gapsLayout
-                       ||| masterAndTabs
 
 ------------------------------------------------------------------------
 -- Window rules:
