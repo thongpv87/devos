@@ -48,4 +48,5 @@ EOF
 themes=($(ls -p --hide="launcher.sh" --hide="colors.rasi" $dir))
 theme="${themes[$(( $RANDOM % 12 ))]}"
 theme="style_7"
-rofi -no-lazy-grab -show drun -modi drun -theme $dir/"$theme"
+#rofi -no-lazy-grab -show drun -modi drun -theme $dir/"$theme"
+rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun -theme $dir/"$theme"

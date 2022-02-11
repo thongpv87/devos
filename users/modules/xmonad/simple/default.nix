@@ -38,6 +38,8 @@ in
           xorg.xbacklight
           xlibs.setxkbmap
           dunst
+          glava
+          cli-visualizer
           #jonaburg-picom
         ];
 
@@ -47,8 +49,8 @@ in
 
           vSync = true;
 
-          activeOpacity = "0.95";
-          inactiveOpacity = "0.9";
+          activeOpacity = "0.9";
+          inactiveOpacity = "0.8";
           opacityRule = [
             "100:class_g   *?= 'Chromium-browser'"
             "100:class_g   *?= 'Google-Chrome'"
@@ -58,10 +60,11 @@ in
             "100:name      *?= 'emacs'"
             "100:class_g   *?= 'emacs'"
             "100:class_g   ~=  'jetbrains'"
-            #"100:class_g   *?= 'slack'"
+            "70:name       *?= 'GLava'"
+            "100:name      *?= 'GLavaRadial'"
           ];
 
-          blur = true;
+          blur = false;
           blurExclude = [
             "class_g = 'slop'"
           ];
@@ -69,8 +72,8 @@ in
           corner-radius = 30;
           xinerama-shadow-crop = true;
           #blur-background = true;
-          blur-method = "kernel";
-          blur-strength = 5;
+          #blur-method = "kernel";
+          #blur-strength = 5;
           '';
           experimentalBackends = true;
 

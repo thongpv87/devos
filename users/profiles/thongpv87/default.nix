@@ -28,6 +28,7 @@
     emacs.enable = true;
     gsettings.enable = true;
     mime.enable = false;
+    media.enable = true;
   };
 
   home = {

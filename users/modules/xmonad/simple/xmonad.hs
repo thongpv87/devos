@@ -13,7 +13,7 @@ import Data.Monoid ()
 import System.Exit ()
 import XMonad.Util.SpawnOnce ( spawnOnce )
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute, xF86XK_MonBrightnessDown, xF86XK_MonBrightnessUp, xF86XK_AudioPlay, xF86XK_AudioPrev, xF86XK_AudioNext, xF86XK_Display)
-import XMonad.Hooks.EwmhDesktops ( ewmh )
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Config.Gnome( gnomeConfig )
 import Control.Monad ( join, when )
 import XMonad.Layout.NoBorders
@@ -35,6 +35,7 @@ import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.Named
 import XMonad.Actions.SpawnOn
 import XMonad.Layout.Magnifier as LM
+import XMonad.Layout.PerScreen
 
 import XMonad.Prompt
 import XMonad.Prompt.Input
@@ -64,7 +65,9 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Layout.ToggleLayouts as LTL
 import XMonad.Layout.Tabbed as Tabbed
 import XMonad.Layout.Master as Master
+import XMonad.Layout.SortedLayout
 import XMonad.Util.Themes
+import XMonad.Util.SessionStart
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -388,8 +391,8 @@ toggleFullScreenLayout = mkToggle (NBFULL ?? EOT)
   . avoidStruts
   . mkToggle (single FULL)
 
-addGaps layout = gaps [(L,20), (R,20), (U,20), (D,20)]
-          $ spacingRaw True (Border 0 0 0 0) True (Border 5 5 5 5) True
+addGaps layout = gaps [(L,30), (R,30), (U,30), (D,100)]
+          $ spacingRaw True (Border 0 0 0 0) False (Border 10 10 10 10) True
           $ layout
 
 myTheme = originalTheme
@@ -401,10 +404,12 @@ myTheme = originalTheme
 myLayout =
     smartBorders
     $ toggleFullScreenLayout
-    $ float $ toggleLayout
+    $ float $ layouts
     where
         float  = onWorkspace wsFloat simplestFloat
         toggleLayout = toggleLayouts tallLayout gapsLayout
+        layouts =
+            ifWider 1920 toggleLayout tallLayout
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -503,6 +508,19 @@ myClockPP h = xmobarPP {
 }
 
 
+
+
+sessionStart :: X() -> X()
+sessionStart _ = do
+    spawn "xrandr --setprovideroutputsource NVIDIA-G0 modesetting"
+    spawn "glava"
+    spawn "systemctl --user start emacs"
+    spawn "zsh -c 'tmux new-session -d -s default'"
+    spawn "xsetroot -cursor_name left_ptr"
+    spawn "exec ~/.xmonad/bin/lock.sh"
+    spawn "ibus-daemon"
+    spawn "setxkbmap -model thinkpad -layout us -option ctrl:nocaps -option altwin:prtsc_rwin"
+
 ------------------------------------------------------------------------
 -- Startup hook
 
@@ -514,6 +532,7 @@ myClockPP h = xmobarPP {
 myStartupHook :: X()
 myStartupHook = do
   --spawnOnce "xrandr --setprovideroutputsource NVIDIA-G0 modesetting; autorandr --change --force || (xrandr --output eDP-1-1 --auto || xrandr --output eDP-1 --auto)"
+  spawnOnce "glava"
   spawnOnce "systemctl --user start emacs"
   spawnOnce "zsh -c 'tmux new-session -d -s default'"
   spawn "xsetroot -cursor_name left_ptr"
