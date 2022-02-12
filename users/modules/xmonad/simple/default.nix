@@ -38,10 +38,10 @@ in
           xorg.xbacklight
           xlibs.setxkbmap
           dunst
-          glava
-          cli-visualizer
           #jonaburg-picom
         ];
+
+      module.media.enable = true;
 
       services = {
         picom = {

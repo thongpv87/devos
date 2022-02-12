@@ -9,6 +9,7 @@ in
     #./cli-visualizer
     ./mopidy
     ./ncmpcpp
+    ./glava
   ];
 
   options = {
@@ -33,6 +34,7 @@ in
 
       module.media.mopidy.enable = true;
       module.media.ncmpcpp.enable = true;
+      module.media.glava.enable = true;
       #module.media.cli-visualizer.enable = true;
     }
   ]);
