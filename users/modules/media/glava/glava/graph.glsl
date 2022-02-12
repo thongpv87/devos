@@ -1,11 +1,10 @@
-
 /* Vertical scale, larger values will amplify output */
 #define VSCALE 300
 /* Rendering direction, either -1 (outwards) or 1 (inwards). */
 #define DIRECTION 1
 
 /* Color gradient scale, (optionally) used in `COLOR` macro */
-#define GRADIENT_SCALE 75
+#define GRADIENT_SCALE 60
 /* Color definition. By default this is a gradient formed by mixing two colors.
    `pos` represents the pixel position relative to the visualizer baseline. */
 #define COLOR mix(#802A2A, #4F4F92, clamp(pos / GRADIENT_SCALE, 0, 1))
@@ -20,7 +19,7 @@
 /* outline color */
 #define OUTLINE #262626
 /* 1 to join the two channels together in the middle, 0 to clamp both down to zero */
-#define JOIN_CHANNELS 0
+#define JOIN_CHANNELS 1
 /* 1 to invert (vertically), 0 otherwise */
 #define INVERT 0
 

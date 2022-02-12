@@ -15,10 +15,10 @@
 #request mod bars
 
 /* Window hints */
-#request setfloating  false
+#request setfloating  true
 #request setdecorated true
 #request setfocused   false
-#request setmaximized false
+#request setmaximized true
 
 /* Set window background opacity mode. Possible values are:
 
@@ -44,10 +44,10 @@
 #request setshaderversion 330
 
 /* Window title */
-#request settitle "GLava"
+#request settitle "GLavaRadial"
 
 /* Window geometry (x, y, width, height) */
-#request setgeometry 0 0 800 600
+//#request setgeometry 0 0 600 600
 
 /* Window background color (RGB format).
    Does not work with `setopacity "xroot"` */
@@ -67,7 +67,7 @@
    will do nothing, but you can use "!+" and "!-" to stack on top
    or below other windows.
 */
-#request setxwintype "normal"
+#request setxwintype "!-"
 
 /* (X11 only) EWMH Window state atoms (multiple can be specified).
    Possible values are:

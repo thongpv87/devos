@@ -3,6 +3,12 @@
 with lib;
 let
   cfg = config.module.media.glava;
+  glava-graph-3840 =  pkgs.writeShellScriptBin "glava-graph-3840" ''
+     exec ${pkgs.glava}/bin/glava $@ -m graph -r 'setgeometry 0 1855 3840 300' -r 'setxwintype "desktop"'
+  '';
+  glava-radial-3840 =  pkgs.writeShellScriptBin "glava-radial-3840" ''
+     exec ${pkgs.glava}/bin/glava $@ -m radial -r 'setgeometry 1560 600 600 600' -r 'setxwintype "!-"'
+  '';
 in
 {
   options = {
@@ -17,19 +23,14 @@ in
     {
       home.packages = with pkgs; [
         glava
+        glava-graph-3840
+        glava-radial-3840
       ];
 
-      xdg.configFile."glava.in" = {
-        source = ./glava;
-        recursive = true;
-      };
-
-      home.activation = {
-        glavaActivation = lib.hm.dag.entryAfter ["writeBoundary"] ''
-          $DRY_RUN_CMD cp -R $HOME/.config/glava.in $HOME/.config/glava
-          chmod -R 660 $HOME/.config/glava
-        '';
-    };
+      # xdg.configFile."glava" = {
+      #   source = ./glava;
+      #   recursive = true;
+      # };
     }
   ]);
 }

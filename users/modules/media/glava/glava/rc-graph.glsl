@@ -47,7 +47,7 @@
 #request settitle "GLava"
 
 /* Window geometry (x, y, width, height) */
-#request setgeometry 0 0 800 600
+#request setgeometry 0 1855 3840 300
 
 /* Window background color (RGB format).
    Does not work with `setopacity "xroot"` */
@@ -67,7 +67,7 @@
    will do nothing, but you can use "!+" and "!-" to stack on top
    or below other windows.
 */
-#request setxwintype "normal"
+#request setxwintype "desktop"
 
 /* (X11 only) EWMH Window state atoms (multiple can be specified).
    Possible values are:
