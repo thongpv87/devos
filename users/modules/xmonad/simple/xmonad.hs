@@ -68,6 +68,8 @@ import XMonad.Layout.Master as Master
 import XMonad.Layout.SortedLayout
 import XMonad.Util.Themes
 import XMonad.Util.SessionStart
+import XMonad.Layout.Monitor
+import XMonad.Layout.LayoutModifier
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -212,6 +214,17 @@ calcPrompt c ans =
         trim  = f . f
             where f = reverse . dropWhile isSpace
 
+-- Shell commands
+killTask task = spawn $ "kill $(ps -ax | grep" ++ task ++ "| grep -v grep | awk '{print $1}')"
+
+spawnGlava resolution = do
+    killTask "glava-unwrapped"
+    case resolution of
+        1920 -> spawn "glava -e rc-graph.glsl -m graph -r 'setgeometry 0 780 1920 300'"
+        3840 -> do
+            spawn "glava -e rc-graph.glsl -m graph -r 'setgeometry 0 1860 3840 300'"
+            spawn "glava -e rc-radial.glsl -m radial -r 'setgeometry 1670 480 500 520'"
+        otherwise -> pure ()
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -307,9 +320,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Restart xmonad
     , ((modm              , xK_q     ), restart "xmonad" True)
 
+
+
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
+    , ((modm .|. shiftMask, xK_u ), spawn "~/.xmonad/bin/toggle-glava.sh toggle")
+    , ((modm, xK_u ), spawn "~/.xmonad/bin/toggle-glava.sh restart")
 
     , ((modm,               xK_v), sendMessage LM.Toggle)
     , ((modm, xK_f)                      , sendMessage $ LMT.Toggle FULL)
@@ -391,7 +408,7 @@ toggleFullScreenLayout = mkToggle (NBFULL ?? EOT)
   . avoidStruts
   . mkToggle (single FULL)
 
-addGaps layout = gaps [(L,30), (R,30), (U,30), (D,100)]
+addGaps layout = gaps [(L,20), (R,20), (U,20), (D,20)]
           $ spacingRaw True (Border 0 0 0 0) False (Border 10 10 10 10) True
           $ layout
 
@@ -400,6 +417,11 @@ myTheme = originalTheme
          , Tabbed.decoHeight = 25
          }
     where originalTheme = theme adwaitaDarkTheme
+
+visualizer3840 = monitor
+    { prop = ClassName "GLava "
+    , rect = Rectangle 0 1855 3840 300
+    }
 
 myLayout =
     smartBorders
@@ -513,7 +535,6 @@ myClockPP h = xmobarPP {
 sessionStart :: X() -> X()
 sessionStart _ = do
     spawn "xrandr --setprovideroutputsource NVIDIA-G0 modesetting"
-    spawn "glava"
     spawn "systemctl --user start emacs"
     spawn "zsh -c 'tmux new-session -d -s default'"
     spawn "xsetroot -cursor_name left_ptr"
@@ -532,7 +553,8 @@ sessionStart _ = do
 myStartupHook :: X()
 myStartupHook = do
   --spawnOnce "xrandr --setprovideroutputsource NVIDIA-G0 modesetting; autorandr --change --force || (xrandr --output eDP-1-1 --auto || xrandr --output eDP-1 --auto)"
-  spawnOnce "glava"
+  spawn "xrandr --setprovideroutputsource NVIDIA-G0 modesetting"
+  spawnOnce "~/.xmonad/bin/toggle-glava.sh"
   spawnOnce "systemctl --user start emacs"
   spawnOnce "zsh -c 'tmux new-session -d -s default'"
   spawn "xsetroot -cursor_name left_ptr"

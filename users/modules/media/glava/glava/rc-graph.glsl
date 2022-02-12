@@ -15,8 +15,8 @@
 #request mod bars
 
 /* Window hints */
-#request setfloating  false
-#request setdecorated true
+#request setfloating  true
+#request setdecorated false
 #request setfocused   false
 #request setmaximized false
 
@@ -67,7 +67,7 @@
    will do nothing, but you can use "!+" and "!-" to stack on top
    or below other windows.
 */
-#request setxwintype "desktop"
+#request setxwintype "dock"
 
 /* (X11 only) EWMH Window state atoms (multiple can be specified).
    Possible values are:
@@ -85,11 +85,11 @@
    and your WM is not correctly responding to the "desktop" value
    for `setxwintype`.
 */
-// #request addxwinstate "sticky"
+#request addxwinstate "sticky"
 // #request addxwinstate "skip_taskbar"
 // #request addxwinstate "skip_pager"
-// #request addxwinstate "above"
-// #request addxwinstate "pinned"
+#request addxwinstate "above"
+#request addxwinstate "pinned"
 
 /* (X11 only) Use the XShape extension to support clicking through
    the GLava window. Useful when you want to interact with other

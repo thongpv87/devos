@@ -60,6 +60,7 @@ in
             "100:name      *?= 'emacs'"
             "100:class_g   *?= 'emacs'"
             "100:class_g   ~=  'jetbrains'"
+            "100:class_g   *?= 'rofi'"
             "70:name       *?= 'GLava'"
             "100:name      *?= 'GLavaRadial'"
           ];
