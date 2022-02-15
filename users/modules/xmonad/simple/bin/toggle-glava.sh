@@ -10,7 +10,7 @@ spawn_glava() {
         glava -e rc-graph.glsl -m graph -r 'setgeometry 0 780 1920 300' & disown
     else
         glava -e rc-graph.glsl -m graph -r 'setgeometry 0 1860 3840 300' & disown
-        glava -e rc-radial.glsl -m radial -r 'setgeometry 2600 420 500 500' & disown
+        glava -e rc-radial.glsl -m radial -r 'setgeometry 2600 420 800 800' & disown
     fi
 }
 
@@ -20,6 +20,7 @@ toggle_glava () {
 }
 
 restart_glava () {
+    pids=$(get_pid "glava-unwrapped")
     kill $pids || true
     spawn_glava
 }
