@@ -7,6 +7,7 @@ get_pid() {
 spawn_glava() {
     res=$(xrandr | grep "*+|**" | awk '{print $1}')
     if [[ $res == "1920x1080" ]]; then
+        glava -e rc-radial.glsl -m radial -r 'setgeometry 1040 0 800 800' & disown
         glava -e rc-graph.glsl -m graph -r 'setgeometry 0 780 1920 300' & disown
     else
         glava -e rc-graph.glsl -m graph -r 'setgeometry 0 1860 3840 300' & disown
