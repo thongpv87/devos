@@ -8,7 +8,7 @@
   inputs =
     {
       nixos.url = "github:nixos/nixpkgs/release-21.11";
-      latest.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+      latest.url = "github:nixos/nixpkgs/nixos-unstable";
 
       digga.url = "github:divnix/digga";
       digga.inputs.nixpkgs.follows = "nixos";
@@ -26,7 +26,7 @@
       darwin.url = "github:LnL7/nix-darwin";
       darwin.inputs.nixpkgs.follows = "nixos";
 
-      deploy.url = "github:input-output-hk/deploy-rs";
+      deploy.url = "github:serokell/deploy-rs";
       deploy.inputs.nixpkgs.follows = "nixos";
 
       agenix.url = "github:ryantm/agenix";

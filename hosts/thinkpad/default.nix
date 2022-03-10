@@ -116,7 +116,7 @@ in
     };
 
     thinkfan = {
-      enable = true;
+      enable = false;
       fans = [
         {
           type = "tpacpi";
