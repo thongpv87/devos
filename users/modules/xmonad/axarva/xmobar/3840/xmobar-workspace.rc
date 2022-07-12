@@ -1,0 +1,21 @@
+Config { font = "xft:Source Code Pro Medium:style=Medium, Font Awesome 5 Free Solid:style=solid"
+       , additionalFonts = []
+       , border = NoBorder
+       , bgColor = "#121212"
+       , fgColor = "#A27592"
+       , alpha = 255
+       , position = Static { xpos = 20,  ypos = 2, width = 408, height=35 }
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       -- , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run UnsafeStdinReader ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "}%UnsafeStdinReader%{"
+       }

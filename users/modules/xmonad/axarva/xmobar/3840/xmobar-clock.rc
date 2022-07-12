@@ -1,0 +1,22 @@
+Config { font = "xft:Museo Sans 300:style=300,Regular, FiraCode Nerd Font:style=Regular"
+       -- , additionalFonts = []
+       , bgColor = "#121212"
+       , fgColor = "#88C0D0"
+       , alpha = 255
+       , position = Static { xpos = 3730,  ypos = 2, width = 90, height=35 }
+       , textOffset = -1
+       , iconOffset = 60
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Date "%H:%M" "date" 600
+                    , Run StdinReader
+                     ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "}  %date% %StdinReader%{"
+       }

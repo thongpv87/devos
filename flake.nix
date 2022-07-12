@@ -160,6 +160,7 @@
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
               base = [ direnv git ];
+	      hmConfig = [ thongpv87 ];
             };
           };
           users = {
@@ -180,7 +181,7 @@
             # first steps in customizing the template.
             #nixos = { suites, ... }: { imports = suites.base; };
             darwin = { suites, ... }: { imports = suites.base; };
-	    thongpv87 = { suites, ... }: { imports = suites.base; };
+	    thongpv87 = { suites, ... }: { imports = suites.hmConfig; };
           }; # digga.lib.importers.rakeLeaves ./users/hm;
         };
 
