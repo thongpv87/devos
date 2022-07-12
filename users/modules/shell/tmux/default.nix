@@ -32,7 +32,7 @@ in
         programs.tmux = {
           enable = true;
           plugins = with pkgs.tmuxPlugins; [
-            resurrect
+            #resurrect
             sensible
             yank
             prefix-highlight
@@ -44,6 +44,7 @@ in
               '';
             }
           ];
+          baseIndex = 1;
           shortcut = "o";
           customPaneNavigationAndResize = true;
           keyMode = "emacs";
