@@ -80,10 +80,16 @@ in
   };
 
   services = {
-    logind.extraConfig = "RuntimeDirectorySize=30%";
+    logind = {
+      extraConfig = ''
+        RuntimeDirectorySize=30%
+        HandlePowerKey=suspend
+      '';
+      lidSwitch = "suspend";
+    };
 
     upower.enable = true;
-    fwupd.enable  = true;
+    fwupd.enable = true;
     udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
     fstrim.enable = true;
 
@@ -96,6 +102,8 @@ in
       layout = "us";
       libinput.enable = true;
     };
+
+
 
     #thermald.enable = false;
     undervolt = {
@@ -196,18 +204,19 @@ in
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-    fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/97C5-700D";
+  fileSystems."/boot" =
+    {
+      device = "/dev/disk/by-uuid/97C5-700D";
       fsType = "vfat";
     };
-    
-    fileSystems."/" =
+
+  fileSystems."/" =
     {
       device = "/dev/disk/by-uuid/e50d10de-636c-4f47-bf0e-66d8a240efe3";
       fsType = "ext4";
     };
 
-    fileSystems."/home" =
+  fileSystems."/home" =
     {
       device = "/dev/disk/by-uuid/5d53d8b7-a579-474b-bba8-56bce1b599c2";
       fsType = "ext4";

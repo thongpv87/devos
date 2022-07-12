@@ -113,14 +113,14 @@
           hosts = {
             /* set host-specific properties here */
             #NixOS = { };
-	    thinkpad = { };
+            thinkpad = { };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core.nixos users.thongpv87 users.root laptop virt misc packages ];
+              base = [ core.nixos users.thongpv87 users.root laptop packages ];
             };
           };
         };
@@ -160,7 +160,7 @@
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
               base = [ direnv git ];
-	      hmConfig = [ thongpv87 ];
+              hmConfig = [ thongpv87 ];
             };
           };
           users = {
@@ -181,7 +181,7 @@
             # first steps in customizing the template.
             #nixos = { suites, ... }: { imports = suites.base; };
             darwin = { suites, ... }: { imports = suites.base; };
-	    thongpv87 = { suites, ... }: { imports = suites.hmConfig; };
+            thongpv87 = { suites, ... }: { imports = suites.hmConfig; };
           }; # digga.lib.importers.rakeLeaves ./users/hm;
         };
 
