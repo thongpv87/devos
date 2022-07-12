@@ -18,13 +18,6 @@ in
     programs.emacs = {
       enable = true;
       #package = pkgs.emacsGcc;
-      extraPackages = (epkgs: with epkgs; [ vterm ]);
-      # package = with pkgs; emacsGit.overrideAttrs (
-      #   old: {
-      #     configureFlags = old.configureFlags ++ lib.singleton "--with-native-compilation";
-      #     buildInputs = with pkgs; old.buildInputs ++ [ libgccjit gcc ];
-      #   }
-      # );
     };
 
     # home.file.".emacs.d/private/themes" = {
