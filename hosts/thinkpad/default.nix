@@ -1,5 +1,6 @@
 { suites, lib, config, ... }:
 {
+  system.stateVersion = "22.05";
   ### root password is empty by default ###
   imports = suites.base;
 

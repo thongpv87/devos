@@ -12,6 +12,4 @@
     extraGroups = [ "audio" "wheel" "networkmanager" "docker" ];
   };
 
-  nix.trustedUsers = [ "root" "thongpv87" ];
-
 }
