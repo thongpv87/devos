@@ -14,7 +14,7 @@ Config { font = "xft:FiraCode Nerd Font Mono:style=Medium"
        -- , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run UnsafeStdinReader
+       , commands = [ Run XMonadLog
          , Run Network "wlp82s0" ["-t", "<fn=1></fn> <rx>", "-S", "True", "-L","102400","-H","2048000",
                                           "--normal","green","--high","red", "-m", "6" ] 100
          ,Run BatteryP ["BAT0"]
@@ -29,5 +29,5 @@ Config { font = "xft:FiraCode Nerd Font Mono:style=Medium"
          ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<fn=1>%UnsafeStdinReader%</fn> } { <fc=#ab9df2>%alsa:default:Master%</fc> | <fc=#ff6188>%wlp82s0%</fc> | <fc=#78dce8>%battery%</fc> | <fc=#ee9a00>%date%</fc>"
+       , template = "<fn=1>%XMonadLog%</fn> } { <fc=#ab9df2>%alsa:default:Master%</fc> | <fc=#ff6188>%wlp82s0%</fc> | <fc=#78dce8>%battery%</fc> | <fc=#ee9a00>%date%</fc>"
        }
