@@ -91,7 +91,7 @@ in
       videoDrivers = [ "nvidia" ];
 
       enable = true;
-      displayManager.sddm.enable = true;
+      displayManager.gdm.enable = true;
       windowManager.xmonad.enable = true;
       layout = "us";
       libinput.enable = true;

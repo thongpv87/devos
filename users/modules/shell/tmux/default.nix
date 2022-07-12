@@ -36,24 +36,11 @@ in
             sensible
             yank
             prefix-highlight
-            #tilish
             pain-control
-            # {
-            #   plugin = continuum;
-            #   extraConfig = ''
-            #    # set -g @continuum-restore 'on'
-            #    set -g @continuum-save-interval '30' # minutes
-            #    set -g @yank_action 'copy-pipe'
-            #  '';
-            # }
-
-            #themes
-            #gruvbox
             {
-              plugin = power-theme;
+              plugin = gruvbox;
               extraConfig = ''
-                set -g @tmux_power_theme 'moon'
-                #set -g @tmux_power_theme 'default'
+                set -g @tmux_gruvbox 'light'
               '';
             }
           ];

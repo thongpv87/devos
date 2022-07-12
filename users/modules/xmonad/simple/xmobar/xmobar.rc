@@ -1,5 +1,5 @@
 Config { font = "xft:FiraCode Nerd Font Mono:style=Medium"
-       , additionalFonts = ["xft:Font Awesome 5 Free Solid:style=solid"]
+       , additionalFonts = ["xft:Font Awesome 6 Free Solid:style=solid"]
        , border = NoBorder
        , bgColor = "#121212"
        , fgColor = "#555555"

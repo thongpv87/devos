@@ -53,6 +53,8 @@ in
           xorg.xbacklight
           xorg.setxkbmap
           dunst
+          font-awesome
+          selected-nerdfonts
           #jonaburg-picom
         ];
 
@@ -60,7 +62,7 @@ in
 
       services = {
         picom = {
-          enable = true;
+          enable = false;
 
           vSync = true;
 
