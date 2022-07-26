@@ -62,24 +62,26 @@ in
 
       services = {
         picom = {
-          enable = false;
+          enable = true;
 
           vSync = true;
 
           activeOpacity = "0.9";
-          inactiveOpacity = "0.8";
+          inactiveOpacity = "0.6";
           opacityRule = [
             "100:class_g   *?= 'Chromium-browser'"
             "100:class_g   *?= 'Google-Chrome'"
             "100:class_g   *?= 'zoom'"
             "100:class_g   *?= 'Firefox'"
+            "100:class_g   *?= 'Alacritty'"
+            "100:name      *?= 'Dunst'"
             "100:class_g   *?= 'gitkraken'"
             "100:name      *?= 'emacs'"
             "100:class_g   *?= 'emacs'"
             "100:class_g   ~=  'jetbrains'"
             "100:class_g   *?= 'rofi'"
             "70:name       *?= 'GLava'"
-            "100:name      *?= 'GLavaRadial'"
+            "70:name       *?= 'GLavaRadial'"
           ];
 
           blur = false;
@@ -87,11 +89,25 @@ in
             "class_g = 'slop'"
           ];
           extraOptions = ''
-          corner-radius = 30;
-          xinerama-shadow-crop = true;
-          #blur-background = true;
-          #blur-method = "kernel";
-          #blur-strength = 5;
+            corner-radius = 12;
+            xinerama-shadow-crop = true;
+            #blur-background = true;
+            #blur-method = "kernel";
+            #blur-strength = 5;
+            rounded-corners-exclude = [
+              #"window_type = 'normal'",
+              "class_g = 'Rofi'",
+              #"class_g = 'Tint2'",
+              "name = 'Notification area'",
+              "name = 'xmobar'",
+              "class_g = 'xmobar'",
+              #"class_g = 'kitty'",
+              #"class_g = 'Alacritty'",
+              "class_g = 'Polybar'",
+              "class_g = 'code-oss'",
+              "class_g = 'firefox'",
+              "class_g = 'Thunderbird'"
+            ];
           '';
           experimentalBackends = true;
 
@@ -135,7 +151,7 @@ in
 
       xdg = {
         configFile = {
-          "picom/picom.conf".source = ./config/picom.conf;
+          #"picom/picom.conf".source = ./config/picom.conf;
           "dunst" = {
             source = ./dunst;
             recursive = true;

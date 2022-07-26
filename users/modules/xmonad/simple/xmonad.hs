@@ -388,6 +388,9 @@ myPP = -- clickablePP $
   }
 
 mySB = statusBarProp "xmobar ~/.xmonad/xmobar/xmobar.rc" myPP
+
+setWallpaper = spawn "feh --bg-fill ~/.wallpapers/default"
+
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
@@ -395,7 +398,7 @@ mySB = statusBarProp "xmobar ~/.xmonad/xmobar/xmobar.rc" myPP
 --
 main = do
   -- setRandomWallpaper ["$HOME/Pictures/wallpapers"]
-
+  setWallpaper
   homeDir <- getHomeDirectory
   xmonad $
     withEasySB mySB defToggleStrutsKey
@@ -429,8 +432,8 @@ defaults = def
   , layoutHook =  myLayout
   , handleEventHook    = myEventHook
   , logHook            = wallpaperSetter defWallpaperConf
-                         { wallpapers = defWPNames myWorkspaces
-                                        <> WallpaperList ((\ws->(ws,WallpaperDir "default")) <$> myWorkspaces)
+                         { wallpapers = WallpaperList ((\ws->(ws,WallpaperDir "default")) <$> myWorkspaces)
+                         , wallpaperBaseDir = "~/.wallpapers/"
                          }
   , startupHook        = myStartupHook >> addEWMHFullscreen
   }

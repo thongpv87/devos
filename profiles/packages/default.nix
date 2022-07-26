@@ -41,7 +41,7 @@
       wget
       ascii
       file
-      
+      okular
       shared-mime-info
       firefox
       google-chrome

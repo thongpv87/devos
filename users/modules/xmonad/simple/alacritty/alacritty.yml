@@ -24,7 +24,7 @@ font:
     family: FiraCode Nerd Font Mono
     style: Retina
 
-background_opacity: 1
+window.opacity: 1
 live_config_reload: true
 
 schemes:
