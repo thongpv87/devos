@@ -66,8 +66,8 @@ in
 
           vSync = true;
 
-          activeOpacity = "0.9";
-          inactiveOpacity = "0.6";
+          #activeOpacity = "1";
+          #inactiveOpacity = "0.9";
           opacityRule = [
             "100:class_g   *?= 'Chromium-browser'"
             "100:class_g   *?= 'Google-Chrome'"

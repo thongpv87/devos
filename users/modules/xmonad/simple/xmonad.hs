@@ -29,6 +29,7 @@ import XMonad.Layout.Gaps
       GapMessage(DecGap, ToggleGaps, IncGap) )
 
 import XMonad.Layout.SimplestFloat
+import XMonad.Layout.LimitWindows
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle as LMT
@@ -69,6 +70,7 @@ import XMonad.Layout.ToggleLayouts as LTL
 import XMonad.Layout.Tabbed as Tabbed
 import XMonad.Layout.Master as Master
 import XMonad.Layout.SortedLayout
+import XMonad.Layout.ThreeColumns
 import XMonad.Util.Themes
 import XMonad.Util.SessionStart
 import XMonad.Layout.Monitor
@@ -251,7 +253,13 @@ tallLayout = named "tall"
   $ mkToggle (single MIRROR)
   $ mkToggle (single REFLECTX)
   $ mkToggle (single REFLECTY)
+  $ limitWindows 4
   $ basicTallLayout
+
+verticalLayout = LM.magnifiercz' 1.5
+    $ reflectVert
+    $ limitWindows 5
+    $ Mirror $ ThreeCol 1 (3/100) (0.4)
 
 gapsLayout = named "gaps" $ addGaps tallLayout
 
@@ -281,8 +289,10 @@ myLayout =
     where
         float  = onWorkspace wsFloat simplestFloat
         toggleLayout = toggleLayouts tallLayout gapsLayout
-        layouts =
-            ifWider 1920 toggleLayout tallLayout
+        layouts = --ifWider 3840 toggleLayout
+            (ifWider 1920 verticalLayout tallLayout)
+
+
 
 ------------------------------------------------------------------------
 -- Window rules:
