@@ -64,15 +64,15 @@ in
     };
 
     nvidia = {
-      powerManagement = {
-        enable = true;
-        finegrained = true;
-      };
-      modesetting.enable = true;
+      # powerManagement = {
+      #   enable = true;
+      #   finegrained = true;
+      # };
+      # modesetting.enable = true;
       #package = config.boot.kernelPackages.nvidiaPackages.beta;
       prime = {
         #sync.enable = true;
-        offload.enable = true;
+        offload.enable = false;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
       };

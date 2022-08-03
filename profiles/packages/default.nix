@@ -42,6 +42,7 @@
       ascii
       file
       okular
+      goldendict
       shared-mime-info
       firefox
       google-chrome

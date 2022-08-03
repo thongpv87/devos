@@ -290,7 +290,8 @@ myLayout =
         float  = onWorkspace wsFloat simplestFloat
         toggleLayout = toggleLayouts tallLayout gapsLayout
         layouts = --ifWider 3840 toggleLayout
-            (ifWider 1920 verticalLayout tallLayout)
+            -- (ifWider 1920 toggleLayout tallLayout)
+            (ifWider 1920 (ifWider 3800 toggleLayout verticalLayout) tallLayout)
 
 
 
