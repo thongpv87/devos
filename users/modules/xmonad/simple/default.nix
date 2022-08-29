@@ -55,6 +55,7 @@ in
           dunst
           font-awesome
           selected-nerdfonts
+          gnome3.gnome-terminal
           #jonaburg-picom
         ];
 

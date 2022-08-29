@@ -32,7 +32,7 @@ in
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" "acpi_call" "coretemp" ];
     blacklistedKernelModules = [ ];
-    kernelParams = [ "quiet" "intel_pstate=disable" "nvidia.NVreg_DynamicPowerManagement=0x02" ];
+    kernelParams = [ "quiet" "intel_pstate=disable" ];
 
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
@@ -64,15 +64,15 @@ in
     };
 
     nvidia = {
-      # powerManagement = {
-      #   enable = true;
-      #   finegrained = true;
-      # };
-      # modesetting.enable = true;
+      powerManagement = {
+        enable = true;
+        finegrained = true;
+      };
+      modesetting.enable = false;
       #package = config.boot.kernelPackages.nvidiaPackages.beta;
       prime = {
         #sync.enable = true;
-        offload.enable = false;
+        offload.enable = true;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
       };
@@ -80,6 +80,10 @@ in
   };
 
   services = {
+    printing = {
+      enable = true;
+      drivers = [ pkgs.hplip ];
+    };
     logind = {
       extraConfig = ''
         RuntimeDirectorySize=30%

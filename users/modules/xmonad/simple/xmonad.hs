@@ -79,7 +79,8 @@ import XMonad.Layout.LayoutModifier
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "alacritty"
+-- myTerminal      = "alacritty"
+myTerminal      = "gnome-terminal"
 
 -- Width of the window border in pixels.
 --
@@ -355,11 +356,11 @@ layoutSymbol layout
 
 sessionStart :: X() -> X()
 sessionStart _ = do
-    spawn "xrandr --setprovideroutputsource NVIDIA-G0 modesetting"
+    -- spawn "xrandr --setprovideroutputsource NVIDIA-G0 modesetting"
     spawn "systemctl --user start emacs"
     spawn "zsh -c 'tmux new-session -d -s default'"
     spawn "xsetroot -cursor_name left_ptr"
-    spawn "exec ~/.xmonad/bin/lock.sh"
+    -- spawn "exec ~/.xmonad/bin/lock.sh"
     spawn "ibus-daemon"
     spawn "setxkbmap -model thinkpad -layout us -option ctrl:nocaps -option altwin:prtsc_rwin"
 
@@ -373,8 +374,8 @@ sessionStart _ = do
 -- By default, do nothing.
 myStartupHook :: X()
 myStartupHook = do
-  --spawnOnce "xrandr --setprovideroutputsource NVIDIA-G0 modesetting; autorandr --change --force || (xrandr --output eDP-1-1 --auto || xrandr --output eDP-1 --auto)"
-  spawn "xrandr --setprovideroutputsource NVIDIA-G0 modesetting"
+  -- spawnOnce "xrandr --setprovideroutputsource NVIDIA-G0 modesetting; autorandr --change --force || (xrandr --output eDP-1-1 --auto || xrandr --output eDP-1 --auto)"
+  -- spawn "xrandr --setprovideroutputsource NVIDIA-G0 modesetting"
   spawnOnce "~/.xmonad/bin/toggle-glava.sh"
   spawnOnce "systemctl --user start emacs"
   spawnOnce "zsh -c 'tmux new-session -d -s default'"
