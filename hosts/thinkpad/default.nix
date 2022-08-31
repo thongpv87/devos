@@ -101,6 +101,7 @@ in
 
     xserver = {
       videoDrivers = [ "nvidia" ];
+      #videoDrivers = [ "intel" ];
 
       enable = true;
       displayManager.gdm.enable = true;
@@ -114,9 +115,9 @@ in
     #thermald.enable = false;
     undervolt = {
       enable = true;
-      coreOffset = -120;
-      gpuOffset = -50;
-      uncoreOffset = -50;
+      coreOffset = -130;
+      gpuOffset = -70;
+      uncoreOffset = -70;
     };
 
     thinkfan = {
@@ -136,14 +137,14 @@ in
       ];
 
       levels = [
-        [ 0 0 45 ]
-        [ 1 40 47 ]
-        [ 2 42 50 ]
-        [ 3 44 53 ]
-        [ 4 48 58 ]
-        [ 5 50 62 ]
-        [ 6 52 65 ]
-        [ 7 54 80 ]
+        [ 0 0 50 ]
+        [ 1 49 52 ]
+        [ 2 52 55 ]
+        [ 3 53 58 ]
+        [ 4 53 63 ]
+        [ 5 56 67 ]
+        [ 6 57 70 ]
+        [ 7 59 85 ]
         [ "level auto" 80 32767 ]
       ];
     };

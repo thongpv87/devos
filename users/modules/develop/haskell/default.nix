@@ -15,5 +15,7 @@ in
       ".cabal/config".source = ./toolchain/cabal.config;
       ".stack/config.yaml".source = ./toolchain/stack.config.yaml;
     };
+
+    home.packages = with pkgs; [ stack ghc ];
   };
 }

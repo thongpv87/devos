@@ -2,6 +2,5 @@
 {
   imports = [
     ./haskell
-    ./holmusk
   ];
 }
