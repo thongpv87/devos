@@ -1,153 +1,202 @@
-// =============================================================================
-//
-// Waybar configuration
-//
-// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
-//
-// =============================================================================
-
 {
-		// -------------------------------------------------------------------------
-		// Global configuration
-		// -------------------------------------------------------------------------
-
-		"layer": "top",
-
-		"position": "top",
-
-		// If height property would be not present, it'd be calculated dynamically
-		"height": 30,
-
-		"modules-left": [
-				"hyprland/window"
-		],
+		// "layer": "top", // Waybar at top layer
+		// "position": "left", // Waybar position (top|bottom|left|right)
+		"height": 35, // Waybar height (to be removed for auto height)
+		"gtk-layer-shell": false,
+		// "width": 1280, // Waybar width
+		// Choose the order of the modules
+		"modules-left": ["custom/wmname", "wlr/workspaces"],
+		 //, "sway/mode", "custom/media", "custom/spotify"],
+		"modules-center": [ "clock" ],
 
 		"modules-right": [
-				"pulseaudio",
-				"network",
 				"cpu",
+				"custom/separator",
 				"temperature",
+				"custom/separator",
+				"backlight",
+				"custom/separator",
+				"pulseaudio",
+				"custom/separator",
 				"battery",
-				"tray",
-				"clock#datetime",
-		],
-
-
-		// -------------------------------------------------------------------------
-		// Modules
-		// -------------------------------------------------------------------------
-
+				"custom/separator",
+				"network",
+				"custom/separator",
+				"tray"],
+				// "custom/language",
+				// "custom/separator",
+		// Modules configuration
+		"sway/workspaces": {
+				"disable-scroll": true,
+				"all-outputs": true,
+				"format": "{icon}",
+				"format-icons": {
+						"1": "",
+						"2": "",
+						"3": "",
+						"4": "",
+						"5": "",
+						"6": "",
+						"7": "",
+						"8": "ﴝ",
+						"9": "",
+						"special": "ﰕ",
+						"urgent": "",
+						"focused": "",
+						"default": ""
+				}
+		},
+		"custom/wmname": {
+				"format": "",
+				"tooltip": false,
+				"on-scroll-down": "hyprctl dispatch workspace m+1",
+				"on-scroll-up": "hyprctl dispatch workspace m-1"
+		},
+		"wlr/workspaces": {
+				"sort-by-name": true,
+				// "on-click": "/usr/local/bin/hyprctl dispatch workspace 3"
+				// "sort-by-coordinates": true
+				"format": "{icon}",
+				"format-icons": {
+						"1": "",
+						"2": "",
+						"3": "",
+						"4": "",
+						"5": "",
+						"6": "",
+						"7": "",
+						"8": "ﴝ",
+						"9": "",
+						"special": "ﰕ",
+						"urgent": "",
+						"focused": "",
+						"default": ""
+				}
+		},
+		"custom/language": {
+				"exec": "swaymsg --type get_inputs | grep \"xkb_active_layout_name\" | sed -u '1!d; s/^.*xkb_active_layout_name\": \"//; s/ (US)//; s/\",//' && swaymsg --type subscribe --monitor '[\"input\"]' | sed -u 's/^.*xkb_active_layout_name\": \"//; s/\",.*$//; s/ (US)//'"
+		},
+		"custom/separator": {
+				"format": "|",
+				"interval": "once",
+				"tooltip": false
+		},
+		"sway/mode": {
+				"format": "<span style=\"italic\">{}</span>"
+		},
+		"idle_inhibitor": {
+				"format": "{icon}",
+				"format-icons": {
+						"activated": "",
+						"deactivated": ""
+				}
+		},
+		"tray": {
+				"icon-size": 30,
+				"spacing": 6
+		},
+		"clock": {
+				// "timezone": "America/New_York",
+				// "format": " {time}",
+				"format": "{:%Y-%m-%d %a %H:%M}",
+				"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+				"format-alt": "{:%H:%M:%S}",
+				"interval": 1
+		},
+		"cpu": {
+				"format": "&#8239;{usage}%",
+				"tooltip": false,
+				// "on-click": "kitty procs --sortd cpu --watch-interval 2"
+		},
+		"memory": {
+				"format": " {}%"
+		},
+		"temperature": {
+				// "thermal-zone": 2,
+				"hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input",
+				"critical-threshold": 85,
+				// "format-critical": "{temperatureC}°C {icon}",
+				"format": "{icon}&#8239;{temperatureC}°C",
+				"format-icons": ["", "", ""]
+		},
+		"backlight": {
+				// "device": "acpi_video1",
+				"format": "{icon}&#8239;{percent}%",
+				"format-icons": ["", ""]
+		},
 		"battery": {
-				"interval": 10,
 				"states": {
+						// "good": 95,
 						"warning": 30,
 						"critical": 15
 				},
-				// Connected to AC
-				"format": "  {icon}  {capacity}%", // Icon: bolt
-				// Not connected to AC
-				"format-discharging": "{icon}  {capacity}%",
-				"format-icons": [
-						"", // Icon: battery-full
-						"", // Icon: battery-three-quarters
-						"", // Icon: battery-half
-						"", // Icon: battery-quarter
-						""  // Icon: battery-empty
-				],
-				"tooltip": true
+				"format": "{icon}&#8239;{capacity}%",
+				"format-charging": "&#8239;{capacity}%",
+				"format-plugged": "&#8239;{capacity}%",
+				"format-alt": "{icon} {time}",
+				// "format-good": "", // An empty format will hide the module
+				// "format-full": "",
+				"format-icons": ["", "", "", "", ""]
+				// "format-icons": ["", "", "", "", ""]
 		},
-
-		"clock#time": {
-				"interval": 1,
-				"format": "{:%H:%M:%S}",
-				"tooltip": false
+		"battery#bat2": {
+				"bat": "BAT2"
 		},
-
-		"clock#datetime": {
-			"interval": 10,
-			"format": "  {:%e %b %Y - %H:%M}", // Icon: calendar-alt
-			"tooltip-format": "{:%e %B %Y}"
-		},
-
-		"cpu": {
-				"interval": 5,
-				"format": "  {usage}% ({load})", // Icon: microchip
-				"states": {
-					"warning": 70,
-					"critical": 90
-				}
-		},
-
-		"custom/keyboard-layout": {
-			"exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
-			// Interval set only as a fallback, as the value is updated by signal
-			"interval": 30,
-			"format": "  {}", // Icon: keyboard
-			// Signal sent by Sway key binding (~/.config/sway/key-bindings)
-			"signal": 1, // SIGHUP
-			"tooltip": false
-		},
-
-		"memory": {
-				"interval": 5,
-				"format": "  {}%", // Icon: memory
-				"states": {
-						"warning": 70,
-						"critical": 90
-				}
-		},
-
 		"network": {
-				"interval": 5,
-				"format-wifi": "  {essid} ({signalStrength}%)", // Icon: wifi
-				"format-ethernet": "  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
-				"format-disconnected": "⚠  Disconnected",
-				"tooltip-format": "{ifname}: {ipaddr}"
+				// "interface": "wlp2*", // (Optional) To force the use of this interface
+				"format-wifi": "&#8239;{essid} ({signalStrength}%)",
+				"format-ethernet": "&#8239;{ifname}: {ipaddr}/{cidr}",
+				"format-linked": "&#8239;{ifname} (No IP)",
+				"format-disconnected": "&#8239;Disconnected",
+				"format-alt": "{ifname}: {ipaddr}/{cidr}"
 		},
-
-		"sway/mode": {
-				"format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
-				"tooltip": false
-		},
-
-		"hyprland/window": {
-				"format": "{}"
-		},
-
 		"pulseaudio": {
-				//"scroll-step": 1,
-				"format": "{icon}  {volume}%",
-				"format-bluetooth": "{icon}  {volume}%",
-				"format-muted": "",
+				// "scroll-step": 1, // %, can be a float
+				"format": "{icon}&#8239;{volume}% {format_source}",
+				"format-bluetooth": "{volume}% {icon} {format_source}",
+				"format-bluetooth-muted": " {icon} {format_source}",
+				"format-muted": "&#8239;0% {format_source}",
+				"format-source": "&#8239;{volume}%",
+				"format-source-muted": "",
 				"format-icons": {
-						"headphones": "",
-						"handsfree": "",
+						"headphone": "",
+						"hands-free": "",
 						"headset": "",
 						"phone": "",
 						"portable": "",
 						"car": "",
-						"default": ["", ""]
+						"default": ["", "", ""]
 				},
 				"on-click": "pavucontrol"
 		},
-
-		"temperature": {
-			"critical-threshold": 80,
-			"interval": 5,
-			"format": "{icon}  {temperatureC}°C",
-			"format-icons": [
-					"", // Icon: temperature-empty
-					"", // Icon: temperature-quarter
-					"", // Icon: temperature-half
-					"", // Icon: temperature-three-quarters
-					""  // Icon: temperature-full
-			],
-			"tooltip": true
+		"custom/power": {
+				"format": "&#8239;{}W",
+				"exec": "$HOME/bin/power.sh",
+				"interval": 2
+		},
+		"custom/waylandvsxorg": {
+				"exec": "$HOME/bin/window_wayland_xorg.sh",
+				"interval": 2
 		},
 
-		"tray": {
-				"icon-size": 21,
-				"spacing": 10
+		"custom/spotify": {
+				"exec": "/usr/bin/python3 /home/frigaut/bin/mediaplayer.py --player spotify",
+				"format": "{}  ",
+				"return-type": "json",
+				"on-click": "playerctl play-pause",
+				"on-scroll-up": "playerctl next",
+				"on-scroll-down": "playerctl previous"
+		},
+		"custom/media": {
+				"format": "{icon} {}",
+				"return-type": "json",
+				"max-length": 40,
+				"format-icons": {
+						"spotify": "",
+						"default": "🎜"
+				},
+				"escape": true,
+				"exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+				// "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
 		}
-
 }
