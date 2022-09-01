@@ -770,7 +770,7 @@ before packages are loaded."
   (require 'simpleclip)
   (simpleclip-mode 1)
   (setq simpleclip-unmark-on-copy t)
-  (global-set-key (kbd "M-w") 'simpleclip-cut)
+  (global-set-key (kbd "C-w") 'simpleclip-cut)
   (global-set-key (kbd "C-y") 'simpleclip-paste)
   (global-set-key (kbd "M-w") 'simpleclip-copy)
 

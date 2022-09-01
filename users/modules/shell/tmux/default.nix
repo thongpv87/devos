@@ -29,6 +29,7 @@ in
   config = mkIf cfg.enable (
     mkMerge [
       {
+        home.packages = [ pkgs.wl-clipboard ];
         programs.tmux = {
           enable = true;
           plugins = with pkgs.tmuxPlugins; [
