@@ -37,6 +37,11 @@ in
         pavucontrol
         wofi
         seatd
+        hyprpaper
+        pipewire
+        wireplumber
+        slurp
+        wl-clipboard
       ];
 
       programs = {
@@ -87,6 +92,10 @@ in
           recursive = true;
         };
         "wofi/style.css".source = ./wofi.css;
+        "hypr/hyprpaper.conf".text = ''
+          preload=~/.wallpapers/wallpaper.jpg
+          wallpaper=eDP-1,~/.wallpapers/wallpaper.jpg
+        '';
       };
     }
   ]);
