@@ -3,6 +3,9 @@
 with lib;
 let
   cfg = config.module.hyprland;
+  switch-input-method = pkgs.writeShellScriptBin "switch-input-method" ''
+    if [ $(ibus engine) == xkb:us::eng ]; then ibus engine Bamboo; else ibus engine xkb:us::eng ; fi
+  '';
 in
 {
   imports = [ inputs.hyprland.homeManagerModules.default ];
@@ -42,6 +45,7 @@ in
         wireplumber
         slurp
         wl-clipboard
+        switch-input-method
       ];
 
       programs = {
