@@ -3,9 +3,15 @@
 with lib;
 let
   cfg = config.module.hyprland;
+
   switch-input-method = pkgs.writeShellScriptBin "switch-input-method" ''
     if [ $(ibus engine) == xkb:us::eng ]; then ibus engine Bamboo; else ibus engine xkb:us::eng ; fi
   '';
+
+  raise-volume = pkgs.writeShellScriptBin "raise-volume" ''
+    [ $(amixer get Master | grep 'Front Left: Playback' | awk -F '\\[|%' '{print $2}') -lt 100 ] && pactl set-sink-volume @DEFAULT_SINK@ +5%
+  '';
+  launch-rofi = pkgs.writeScriptBin "launch-rofi" (builtins.readFile ./launcher.sh);
 in
 {
   imports = [ inputs.hyprland.homeManagerModules.default ];
@@ -46,6 +52,9 @@ in
         slurp
         wl-clipboard
         switch-input-method
+        raise-volume
+        rofi-wayland
+        launch-rofi
       ];
 
       programs = {
@@ -79,26 +88,39 @@ in
         };
       };
 
-      module.xmonad.rofi = {
-        enable = true;
-        profile = "simple";
-      };
-
       wayland.windowManager.hyprland = {
         enable = true;
         systemdIntegration = true;
       };
 
-      xdg.configFile = {
-        "hypr/hyprland.conf".source = ./hyprland.conf;
-        "waybar" = {
-          source = ./waybar;
+      xdg = {
+        configFile = {
+          "hypr/hyprland.conf".source = ./hyprland.conf;
+          "waybar" = {
+            source = ./waybar;
+            recursive = true;
+          };
+          "wofi/style.css".source = ./wofi.css;
+          "hypr/hyprpaper.conf".text = ''
+            preload=~/.wallpapers/wallpaper.jpg
+            wallpaper=eDP-1,~/.wallpapers/wallpaper.jpg
+          '';
+          "rofi" = {
+            source = ./rofi/1080p;
+            recursive = true;
+          };
+        };
+
+        dataFile."fonts" = {
+          source = ./rofi/fonts;
           recursive = true;
         };
-        "wofi/style.css".source = ./wofi.css;
-        "hypr/hyprpaper.conf".text = ''
-          preload=~/.wallpapers/wallpaper.jpg
-          wallpaper=eDP-1,~/.wallpapers/wallpaper.jpg
+      };
+
+      home.activation = {
+        makeRofiConfigWriteable = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          $DRY_RUN_CMD cp $HOME/.config/rofi/powermenu/styles/colors.rasi.in $HOME/.config/rofi/powermenu/styles/colors.rasi
+          chmod 600 $HOME/.config/rofi/powermenu/styles/colors.rasi
         '';
       };
     }

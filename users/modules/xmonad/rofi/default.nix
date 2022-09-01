@@ -23,7 +23,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      home.packages = with pkgs; [ rofi noto-fonts-extra ];
+      home.packages = [ pkgs.rofi pkgs.noto-fonts-extra ];
 
       xdg = {
         configFile = {
@@ -42,9 +42,9 @@ in
       };
 
       home.activation = {
-        myActivationAction = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        $DRY_RUN_CMD cp $HOME/.config/rofi/powermenu/styles/colors.rasi.in $HOME/.config/rofi/powermenu/styles/colors.rasi
-        chmod 600 $HOME/.config/rofi/powermenu/styles/colors.rasi
+        myActivationAction = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          $DRY_RUN_CMD cp $HOME/.config/rofi/powermenu/styles/colors.rasi.in $HOME/.config/rofi/powermenu/styles/colors.rasi
+          chmod 600 $HOME/.config/rofi/powermenu/styles/colors.rasi
         '';
       };
     }
