@@ -63,20 +63,20 @@ in
       ];
     };
 
-    nvidia = {
-      powerManagement = {
-        enable = true;
-        finegrained = true;
-      };
-      modesetting.enable = false;
-      #package = config.boot.kernelPackages.nvidiaPackages.beta;
-      prime = {
-        #sync.enable = true;
-        offload.enable = true;
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
-    };
+    # nvidia = {
+    #   powerManagement = {
+    #     enable = true;
+    #     finegrained = true;
+    #   };
+    #   modesetting.enable = false;
+    #   #package = config.boot.kernelPackages.nvidiaPackages.beta;
+    #   prime = {
+    #     #sync.enable = true;
+    #     offload.enable = true;
+    #     intelBusId = "PCI:0:2:0";
+    #     nvidiaBusId = "PCI:1:0:0";
+    #   };
+    # };
   };
 
   services = {
@@ -100,14 +100,14 @@ in
     fstrim.enable = true;
 
     xserver = {
-      videoDrivers = [ "nvidia" ];
-      #videoDrivers = [ "intel" ];
-
-      enable = true;
-      displayManager.gdm.enable = true;
-      windowManager.xmonad.enable = true;
+      #videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "intel" ];
+      enable = false;
+      displayManager.gdm.enable = false;
+      #displayManager.sddm.enable = true;
+      #windowManager.xmonad.enable = true;
       layout = "us";
-      libinput.enable = true;
+      #libinput.enable = true;
     };
 
 

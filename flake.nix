@@ -19,32 +19,38 @@
       nixpkgs-darwin-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.05-darwin";
 
       digga.url = "github:divnix/digga";
-      digga.inputs.nixpkgs.follows = "nixos";
-      digga.inputs.nixlib.follows = "nixos";
+      digga.inputs.nixpkgs.follows = "latest";
+      digga.inputs.nixlib.follows = "latest";
       digga.inputs.home-manager.follows = "home";
       digga.inputs.deploy.follows = "deploy";
 
       home.url = "github:nix-community/home-manager/release-22.05";
-      home.inputs.nixpkgs.follows = "nixos";
+      home.inputs.nixpkgs.follows = "latest";
 
       darwin.url = "github:LnL7/nix-darwin";
       darwin.inputs.nixpkgs.follows = "nixpkgs-darwin-stable";
 
       deploy.url = "github:serokell/deploy-rs";
-      deploy.inputs.nixpkgs.follows = "nixos";
+      deploy.inputs.nixpkgs.follows = "latest";
 
       agenix.url = "github:ryantm/agenix";
-      agenix.inputs.nixpkgs.follows = "nixos";
+      agenix.inputs.nixpkgs.follows = "latest";
 
       nvfetcher.url = "github:berberman/nvfetcher";
-      nvfetcher.inputs.nixpkgs.follows = "nixos";
+      nvfetcher.inputs.nixpkgs.follows = "latest";
 
       naersk.url = "github:nmattia/naersk";
-      naersk.inputs.nixpkgs.follows = "nixos";
+      naersk.inputs.nixpkgs.follows = "latest";
 
       nixos-hardware.url = "github:nixos/nixos-hardware";
 
       nixos-generators.url = "github:nix-community/nixos-generators";
+
+      hyprland = {
+        url = "github:thongpv87/Hyprland";
+        # build with your own instance of nixpkgs
+        inputs.nixpkgs.follows = "latest";
+      };
     };
 
   outputs =
@@ -58,6 +64,7 @@
     , nvfetcher
     , deploy
     , nixpkgs
+    , hyprland
     , ...
     } @ inputs:
     digga.lib.mkFlake

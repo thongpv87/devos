@@ -9,8 +9,9 @@
   };
 
   module = {
+    hyprland.enable = true;
     xmonad = {
-      enable = true;
+      enable = false;
       theme = "simple";
       #theme = "axarva";
 
