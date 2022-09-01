@@ -120,7 +120,7 @@
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core.nixos users.thongpv87 users.root laptop packages ];
+              base = [ core.nixos users.thongpv87 users.root laptop packages virt ];
             };
           };
         };

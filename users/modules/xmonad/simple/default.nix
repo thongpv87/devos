@@ -59,7 +59,7 @@ in
           #jonaburg-picom
         ];
 
-      module.media.enable = true;
+      module.media.enable = false;
 
       services = {
         picom = {
