@@ -55,6 +55,7 @@ in
         raise-volume
         rofi-wayland
         launch-rofi
+        ranger
       ];
 
       programs = {
