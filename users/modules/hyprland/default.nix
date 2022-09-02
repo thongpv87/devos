@@ -90,23 +90,10 @@ in
         };
       };
 
+
       wayland.windowManager.hyprland = {
         enable = true;
         systemdIntegration = true;
-      };
-
-      systemd.user.services.dunst = {
-        Unit = {
-          Description = "Dunst notification daemon";
-          After = [ "graphical-session-pre.target" ];
-          PartOf = [ "graphical-session.target" ];
-        };
-
-        Service = {
-          Type = "dbus";
-          BusName = "org.freedesktop.Notifications";
-          ExecStart = "${pkgs.dunst}/bin/dunst";
-        };
       };
 
       xdg = {
