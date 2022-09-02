@@ -37,7 +37,7 @@
 						"4": "",
 						"5": "",
 						"6": "",
-						"7": "",
+						"7": "ﯧ",
 						"8": "ﴝ",
 						"9": "",
 						"special": "ﰕ",
@@ -47,7 +47,7 @@
 				}
 		},
 		"custom/wmname": {
-				"format": "",
+				"format": "",
 				"tooltip": false,
 				"on-scroll-down": "hyprctl dispatch workspace m+1",
 				"on-scroll-up": "hyprctl dispatch workspace m-1"
