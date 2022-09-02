@@ -1,17 +1,9 @@
 { suites, lib, config, pkgs, ... }:
-let
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec -a "$0" "$@"
-  '';
-in
 {
+
   system.stateVersion = "22.05";
   ### root password is empty by default ###
-  imports = suites.base;
+  imports = suites.base ++ suites.wayland;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -42,7 +34,7 @@ in
     ];
   };
 
-  environment.systemPackages = with pkgs; [ vulkan-tools nvidia-offload ];
+  environment.systemPackages = with pkgs; [ vulkan-tools ];
   time.timeZone = "Asia/Ho_Chi_Minh";
   i18n.inputMethod = {
     enabled = "ibus";
@@ -62,21 +54,6 @@ in
         intel-media-driver
       ];
     };
-
-    # nvidia = {
-    #   powerManagement = {
-    #     enable = true;
-    #     finegrained = true;
-    #   };
-    #   modesetting.enable = false;
-    #   #package = config.boot.kernelPackages.nvidiaPackages.beta;
-    #   prime = {
-    #     #sync.enable = true;
-    #     offload.enable = true;
-    #     intelBusId = "PCI:0:2:0";
-    #     nvidiaBusId = "PCI:1:0:0";
-    #   };
-    # };
   };
 
   services = {
@@ -99,20 +76,6 @@ in
     udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
     fstrim.enable = true;
 
-    xserver = {
-      #videoDrivers = [ "nvidia" ];
-      videoDrivers = [ "intel" ];
-      enable = false;
-      displayManager.gdm.enable = false;
-      #displayManager.sddm.enable = true;
-      #windowManager.xmonad.enable = true;
-      layout = "us";
-      #libinput.enable = true;
-    };
-
-
-
-    #thermald.enable = false;
     undervolt = {
       enable = true;
       coreOffset = -130;
