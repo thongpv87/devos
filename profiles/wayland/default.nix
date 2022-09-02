@@ -8,29 +8,38 @@ let
   '';
 in
 {
-  environment.systemPackages = with pkgs; [ vulkan-tools nvidia-offload ];
+  environment.systemPackages = with pkgs; [
+    vulkan-tools
+    nvidia-offload
+    wlr-randr
+    wl-clipboard
+    pipewire
+    wireplumber
+    slurp
+  ];
 
+  programs.xwayland.enable = true;
 
+  hardware = {
+    #Completely disable the NVIDIA graphics card and use the integrated graphics processor instead.
+    nvidiaOptimus.disable = true;
 
-  services.udev.extraRules =
-    lib.optionalString (lib.versionOlder config.boot.kernelPackages.kernel.version "5.5") ''
-      # Remove NVIDIA USB xHCI Host Controller devices, if present
-      ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{remove}="1"
-      # Remove NVIDIA USB Type-C UCSI devices, if present
-      ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{remove}="1"
-      # Remove NVIDIA Audio devices, if present
-      ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{remove}="1"
-    '' + ''
-      # Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
-      ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-      ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+    # nvidia = {
+    #   open = true;
+    #   powerManagement = {
+    #     enable = true;
+    #     finegrained = true;
+    #   };
+    #   nvidiaPersistenced = true;
 
-      # Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
-      ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
-      ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
-      '';
-
-  boot.extraModprobeConfig = ''
-    options nvidia "NVreg_DynamicPowerManagement=0x02"
-  '';
+    #   modesetting.enable = true;
+    #   #package = config.boot.kernelPackages.nvidiaPackages.beta;
+    #   prime = {
+    #     #sync.enable = true;
+    #     offload.enable = true;
+    #     intelBusId = "PCI:0:2:0";
+    #     nvidiaBusId = "PCI:1:0:0";
+    #   };
+    # };
+  };
 }

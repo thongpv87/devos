@@ -18,6 +18,7 @@ in
         finegrained = true;
       };
       #modesetting.enable = false;
+      nvidiaPersistenced = true;
       #package = config.boot.kernelPackages.nvidiaPackages.beta;
       prime = {
         #sync.enable = true;
