@@ -56,6 +56,7 @@ in
         rofi-wayland
         launch-rofi
         ranger
+        dunst
       ];
 
       programs = {
@@ -94,18 +95,41 @@ in
         systemdIntegration = true;
       };
 
+      systemd.user.services.dunst = {
+        Unit = {
+          Description = "Dunst notification daemon";
+          After = [ "graphical-session-pre.target" ];
+          PartOf = [ "graphical-session.target" ];
+        };
+
+        Service = {
+          Type = "dbus";
+          BusName = "org.freedesktop.Notifications";
+          ExecStart = "${pkgs.dunst}/bin/dunst";
+        };
+      };
+
       xdg = {
         configFile = {
           "hypr/hyprland.conf".source = ./hyprland.conf;
+
           "waybar" = {
             source = ./waybar;
             recursive = true;
           };
+
+          "dunst" = {
+            source = ./dunst;
+            recursive = true;
+          };
+
           "wofi/style.css".source = ./wofi.css;
+
           "hypr/hyprpaper.conf".text = ''
             preload=~/.wallpapers/wallpaper.jpg
             wallpaper=eDP-1,~/.wallpapers/wallpaper.jpg
           '';
+
           "rofi" = {
             source = ./rofi/1080p;
             recursive = true;
