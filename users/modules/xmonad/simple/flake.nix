@@ -19,8 +19,21 @@
                 name = "xmonad-simple";
                 src = ./.;
                 evalSystem = "x86_64-linux";
-                shell.nativeBuildInputs = with final;  [ xorg.libX11 ];
-                #++ [ xlibsWrapper xorg.libXext xorg.libXinerama xorg.libXrandr xorg.libXrender ];
+                shell = {
+                  buildInputs = with final.xorg;
+                    [ libX11 libX11.dev xlibsWrapper libXext
+                      libXinerama libXrandr libXrender
+                      final.pkgconfig libXft libXrandr
+                      libXScrnSaver final.alsa-lib.dev
+                    ];
+                    exactDeps = true;
+                    withHoogle = true;
+                    tools = {
+                      cabal = "3.2.0.0";
+                      hlint = "latest";
+                      haskell-language-server = "latest";
+                    };
+                  };
               };
           })
         ];

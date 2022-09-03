@@ -10,7 +10,9 @@ executable xmonad-simple
                               , xmonad >= 0.17
                               , xmonad-contrib
                               , xmonad-extras
-                              , QuickCheck
+                              , containers
+                              , directory
+                              , X11
            default-language:    Haskell2010
            ghc-options:        -Wall
                                -Wincomplete-uni-patterns

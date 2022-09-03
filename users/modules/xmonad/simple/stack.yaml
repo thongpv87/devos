@@ -1,4 +1,7 @@
 resolver: lts-19.21
 packages:
   - .
-allow-newer: true
+
+nix:
+  enable: true
+  packages: [ xorg.libX11, xlibsWrapper, xorg.libXext, xorg.libXinerama, xorg.libXrandr, xorg.libXrender, xorg.libXft, xorg.libXrandr, xorg.libXScrnSaver, alsa-lib.dev ]
