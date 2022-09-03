@@ -33,6 +33,5 @@ in
     home.sessionVariables = {
       NIX_GSETTINGS_OVERRIDES_DIR = "${my-gsettings-desktop-schemas}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
     };
-
   };
 }

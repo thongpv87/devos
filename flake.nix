@@ -120,16 +120,19 @@
           hosts = {
             /* set host-specific properties here */
             #NixOS = { };
+
             thinkpad = { };
           };
+
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
+
             suites = with profiles; rec {
               base = [ core.nixos users.thongpv87 users.root laptop packages virt ];
-              wayland = [ profiles.wayland ];
-              xorg = [ profiles.xorg ];
+              wayland = base ++ [ profiles.wayland ];
+              xorg = base ++ [ profiles.xorg ];
             };
           };
         };

@@ -1,9 +1,25 @@
 { suites, lib, config, pkgs, ... }:
 {
-
   system.stateVersion = "22.05";
   ### root password is empty by default ###
-  imports = suites.base ++ suites.wayland;
+  imports = suites.base;
+  personalize = {
+    performanceTweaks = {
+      cpuScaling = "pstate";
+      undervolt = true;
+      fancontrol = "manual";
+    };
+
+    displayServer = {
+      xorg = {
+        enable = true;
+        gpuMode = "hybrid";
+      };
+      wayland = {
+        enable = false;
+      };
+    };
+  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -24,17 +40,12 @@
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" "acpi_call" "coretemp" ];
     blacklistedKernelModules = [ ];
-    kernelParams = [ "quiet" "intel_pstate=disable" ];
+    kernelParams = [ "quiet" ];
 
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
-
-    extraModprobeConfig = lib.mkMerge [
-      # enable wifi power saving (keep uapsd off to maintain low latencies)
-      "options iwlwifi power_save=1 uapsd_disable=1"
-    ];
   };
 
-  environment.systemPackages = with pkgs; [ vulkan-tools ];
+
   time.timeZone = "Asia/Ho_Chi_Minh";
   i18n.inputMethod = {
     enabled = "ibus";
@@ -57,10 +68,7 @@
   };
 
   services = {
-    printing = {
-      enable = true;
-      drivers = [ pkgs.hplip ];
-    };
+    fstrim.enable = true;
     logind = {
       extraConfig = ''
         RuntimeDirectorySize=30%
@@ -71,106 +79,14 @@
       lidSwitch = "suspend";
     };
 
-    upower.enable = true;
     fwupd.enable = true;
     udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
-    fstrim.enable = true;
-
-    undervolt = {
-      enable = true;
-      coreOffset = -130;
-      gpuOffset = -70;
-      uncoreOffset = -70;
-    };
-
-    thinkfan = {
-      enable = true;
-      fans = [
-        {
-          type = "tpacpi";
-          query = "/proc/acpi/ibm/fan";
-        }
-      ];
-
-      sensors = [
-        {
-          query = "/proc/acpi/ibm/thermal";
-          type = "tpacpi";
-        }
-      ];
-
-      levels = [
-        [ 0 0 50 ]
-        [ 1 49 52 ]
-        [ 2 52 55 ]
-        [ 3 53 58 ]
-        [ 4 53 63 ]
-        [ 5 56 67 ]
-        [ 6 57 70 ]
-        [ 7 59 85 ]
-        [ "level auto" 80 32767 ]
-      ];
-    };
-
-    tlp = {
-      enable = true;
-      settings = {
-        # START_CHARGE_THRESH_BAT0 = 75;
-        # STOP_CHARGE_THRESH_BAT0 = 80;
-
-        CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
-        CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-        #CPU_SCALING_GOVERNOR_ON_AC="powersave";
-        #CPU_SCALING_GOVERNOR_ON_BAT="powersave";
-
-        CPU_SCALING_MIN_FREQ_ON_AC = 800000;
-        CPU_SCALING_MAX_FREQ_ON_AC = 3500000;
-        CPU_SCALING_MIN_FREQ_ON_BAT = 800000;
-        CPU_SCALING_MAX_FREQ_ON_BAT = 2300000;
-
-        #CPU_BOOST_ON_AC=1;
-        #CPU_BOOST_ON_BAT=0;
-
-        # Enable audio power saving for Intel HDA, AC97 devices (timeout in secs).
-        # A value of 0 disables, >=1 enables power saving (recommended: 1).
-        # Default: 0 (AC), 1 (BAT)
-        SOUND_POWER_SAVE_ON_AC = 0;
-        SOUND_POWER_SAVE_ON_BAT = 1;
-
-        # Runtime Power Management for PCI(e) bus devices: on=disable, auto=enable.
-        # Default: on (AC), auto (BAT)
-        RUNTIME_PM_ON_AC = "on";
-        RUNTIME_PM_ON_BAT = "auto";
-
-        # Battery feature drivers: 0=disable, 1=enable
-        # Default: 1 (all)
-        NATACPI_ENABLE = 1;
-        TPACPI_ENABLE = 1;
-        TPSMAPI_ENABLE = 1;
-
-        # Bluetooth devices are excluded from USB autosuspend:
-        #   0=do not exclude, 1=exclude
-        USB_BLACKLIST_BTUSB = 1;
-      };
-    };
   };
 
   # systemd.services.thinkfan.preStart = "
   #   /run/current-system/sw/bin/modprobe  -r thinkpad_acpi && /run/current-system/sw/bin/modprobe thinkpad_acpi
   # ";
 
-  #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-
-  # specialisation = {
-  #   NVIDIA.configuration = {
-  #     system.nixos.tags = [ "NVIDIA" ];
-  #     hardware.nvidia.prime.offload.enable = lib.mkForce false;
-  #     hardware.nvidia.prime.sync.enable = lib.mkForce true;
-  #     hardware.nvidia.powerManagement.enable = lib.mkForce false;
-  #     hardware.nvidia.powerManagement.finegrained = lib.mkForce false;
-  #     hardware.nvidia.modesetting.enable = lib.mkForce false;
-  #   };
-  # };
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 

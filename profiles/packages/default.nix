@@ -8,7 +8,7 @@
   };
 
   services = {
-    teamviewer.enable = true;
+    teamviewer.enable = false;
   };
 
   environment = {
