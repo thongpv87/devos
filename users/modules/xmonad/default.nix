@@ -7,7 +7,6 @@ in
 {
   imports = [
     ./simple
-    ./axarva
     ./rofi
   ];
 
@@ -21,8 +20,8 @@ in
       };
 
       theme = mkOption {
-        type = with types; enum [ "axarva" "simple" ];
-        default = "axarva";
+        type = with types; enum [ "simple" ];
+        default = "simple";
         description = ''
           xmonad theme"
         '';
@@ -90,9 +89,6 @@ in
         profile = "simple";
       };
     }
-    (mkIf (cfg.theme == "axarva") {
-      module.xmonad.axarva.enable = true;
-    })
 
     (mkIf (cfg.theme == "simple") {
       module.xmonad.simple.enable = true;

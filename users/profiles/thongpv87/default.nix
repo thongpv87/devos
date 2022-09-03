@@ -13,7 +13,6 @@
     xmonad = {
       enable = true;
       theme = "simple";
-      #theme = "axarva";
     };
 
     develop.haskell.enable = true;
