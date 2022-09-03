@@ -6,6 +6,9 @@
 --
 -- Normally, you'd only override those defaults you care about.
 --
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Used otherwise as a pattern" #-}
+{-# HLINT ignore "Use tuple-section" #-}
 import XMonad
 import XMonad.Layout.Fullscreen
     ( fullscreenEventHook, fullscreenManageHook, fullscreenSupport, fullscreenFull )
@@ -123,7 +126,7 @@ addNETSupported x   = withDisplay $ \dpy -> do
     a_NET_SUPPORTED <- getAtom "_NET_SUPPORTED"
     a               <- getAtom "ATOM"
     liftIO $ do
-       sup <- (join . maybeToList) <$> getWindowProperty32 dpy a_NET_SUPPORTED r
+       sup <- join . maybeToList <$> getWindowProperty32 dpy a_NET_SUPPORTED r
        when (fromIntegral x `notElem` sup) $
          changeProperty32 dpy r a_NET_SUPPORTED a propModeAppend [fromIntegral x]
 
@@ -196,7 +199,7 @@ dtXPConfig = def
       , showCompletionOnTab = False
       -- , searchPredicate     = isPrefixOf
       , searchPredicate     = fuzzyMatch
-      , defaultPrompter     = id $ map toUpper  -- change prompt to UPPER
+      , defaultPrompter     = map toUpper  -- change prompt to UPPER
       -- , defaultPrompter     = unwords . map reverse . words  -- reverse the prompt
       -- , defaultPrompter     = drop 5 .id (++ "XXXX: ")  -- drop first 5 chars of prompt and add XXXX:
       , alwaysHighlight     = True
@@ -254,13 +257,12 @@ tallLayout = named "tall"
   $ mkToggle (single MIRROR)
   $ mkToggle (single REFLECTX)
   $ mkToggle (single REFLECTY)
-  $ limitWindows 4
-  $ basicTallLayout
+  $ limitWindows 4 basicTallLayout
 
 verticalLayout = LM.magnifiercz' 1.5
     $ reflectVert
     $ limitWindows 5
-    $ Mirror $ ThreeCol 1 (3/100) (0.4)
+    $ Mirror $ ThreeCol 1 (3/100) 0.4
 
 gapsLayout = named "gaps" $ addGaps tallLayout
 
@@ -269,8 +271,7 @@ toggleFullScreenLayout = mkToggle (NBFULL ?? EOT)
   . mkToggle (single FULL)
 
 addGaps layout = gaps [(L,20), (R,20), (U,20), (D,20)]
-          $ spacingRaw True (Border 0 0 0 0) False (Border 10 10 10 10) True
-          $ layout
+          $ spacingRaw True (Border 0 0 0 0) False (Border 10 10 10 10) True layout
 
 myTheme = originalTheme
          { Tabbed.fontName   = "xft:Roboto Slab:size=10"
@@ -286,13 +287,13 @@ visualizer3840 = monitor
 myLayout =
     smartBorders
     $ toggleFullScreenLayout
-    $ float $ layouts
+    $ float layouts
     where
         float  = onWorkspace wsFloat simplestFloat
         toggleLayout = toggleLayouts tallLayout gapsLayout
         layouts = --ifWider 3840 toggleLayout
             -- (ifWider 1920 toggleLayout tallLayout)
-            (ifWider 1920 (ifWider 3800 toggleLayout verticalLayout) tallLayout)
+            ifWider 1920 (ifWider 3800 toggleLayout verticalLayout) tallLayout
 
 
 
@@ -414,7 +415,7 @@ main = do
   homeDir <- getHomeDirectory
   xmonad $
     withEasySB mySB defToggleStrutsKey
-      $ ewmhFullscreen $ docks $ ewmh $ defaults
+      $ ewmhFullscreen $ docks $ ewmh defaults
 
 
 -- A structure containing your configuration settings, overriding
@@ -593,18 +594,16 @@ myAdditionalKeys =
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
+myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 
     -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
-                                       >> windows W.shiftMaster))
+    [ ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)
 
     -- mod-button2, Raise the window to the top of the stack
-    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
+    , ((modm, button2), \w -> focus w >> windows W.shiftMaster)
 
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
-                                       >> windows W.shiftMaster))
+    , ((modm, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
