@@ -37,7 +37,7 @@
 
     kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "battery" "thinkpad_acpi" ];
-    initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+    initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" "acpi_call" "coretemp" ];
     blacklistedKernelModules = [ ];
     kernelParams = [ "quiet" ];

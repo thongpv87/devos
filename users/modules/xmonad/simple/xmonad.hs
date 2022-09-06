@@ -10,13 +10,23 @@ import Graphics.X11.Xrandr
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Hooks.EwmhDesktops (ewmhFullscreen)
 import Graphics.X11.Xinerama (getScreenInfo, compiledWithXinerama, xineramaQueryScreens)
-import XMonad.StackSet (Screen(screenDetail))
+import XMonad.Layout.Gaps(Direction2D(..), gaps, setGaps, GapMessage(..))
+import XMonad.Layout
+import XMonad.StackSet (Screen(..))
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
+import XMonad.Layout.Magnifier as LM
+import XMonad.Layout.PerScreen
+import XMonad.Layout.Tabbed as Tabbed
+import XMonad.Layout.Master as Master
+import XMonad.Layout.SortedLayout
+import XMonad.Layout.ThreeColumns
 import Config
 import KeyBindings
+import Layouts
+import Common
 
 data Terminal
     = Alacritty
@@ -26,17 +36,6 @@ instance Show Terminal where
     show Alacritty = "alacritty"
     show GnomeTerminal = "gnome-terminal"
 
-myWorkspaces =
-    [ ("cmd", "\61728")
-    , ("web", "\62845")
-    , ("code", "\61729")
-    , ("doc", "\62744")
-    , ("note", "\61614")
-    , ("com", "\61664")
-    , ("float", "\62029")
-    , ("media", "\63612")
-    , ("remote", "\61705")
-    ]
 
 -- mkXConfig :: XMonadConfig -> XConfig l
 mkXConfig XMonadConfig{..} = def
@@ -48,7 +47,8 @@ mkXConfig XMonadConfig{..} = def
     , normalBorderColor = "#3b4252"
     , focusedBorderColor = "#E57254" -- "#E95065"
     , keys = myKeyBindings
-    , workspaces = snd <$> myWorkspaces
+    , workspaces = myWorkspaceNames
+    , layoutHook = tallOrFull
     }
 
 getMyConfig = undefined

@@ -43,6 +43,8 @@ library
            hs-source-dirs:      lib
            exposed-modules:     Config
                                 KeyBindings
+                                Layouts
+                                Common
 
            default-language:    Haskell2010
 
