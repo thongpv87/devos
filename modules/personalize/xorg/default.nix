@@ -34,6 +34,7 @@ with lib;
             finegrained = true;
           };
           nvidiaPersistenced = true;
+          modesetting.enable = true;
           prime = {
             offload.enable = true;
             intelBusId = "PCI:0:2:0";
@@ -44,7 +45,7 @@ with lib;
       services.xserver = {
         videoDrivers = [ "nvidia" ];
         enable = true;
-        displayManager.gdm.enable = true;
+        displayManager.gdm.enable = false;
         windowManager.xmonad.enable = true;
         layout = "us";
         libinput.enable = true;

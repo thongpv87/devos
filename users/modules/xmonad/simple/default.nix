@@ -18,6 +18,17 @@ let
     ];
     enableWindowsFonts = false;
   };
+
+  shellScripts = pkgs.stdenv.mkDerivation {
+    name = "myShellScripts";
+    src = ./bin;
+    phases = "installPhase";
+    installPhase = ''
+      mkdir -p $out/bin
+      cp -r ${./bin}/* $out/bin/
+      chmod +x $out/bin/*
+    '';
+  };
 in
 {
   options = {
@@ -56,6 +67,7 @@ in
           font-awesome
           selected-nerdfonts
           gnome3.gnome-terminal
+          shellScripts
           #jonaburg-picom
         ];
 
@@ -131,7 +143,7 @@ in
             enable = true;
             enableContribAndExtras = true;
             extraPackages = haskellPackages: with haskellPackages; [ xmobar ];
-            config = ./xmonad.hs;
+            #config = ./xmonad.hs;
           };
         };
       };
@@ -158,20 +170,25 @@ in
             recursive = true;
           };
 
+          "xmonad" = {
+            source = ./.;
+            recursive = true;
+          };
+
           "alacritty/alacritty.yml.in".source = ./alacritty/alacritty.yml;
         };
       };
 
       home.file = {
-        ".xmonad/xmobar" = {
-          source = ./xmobar;
-          recursive = true;
-        };
+        # ".xmonad/xmobar" = {
+        #   source = ./xmobar;
+        #   recursive = true;
+        # };
 
-        ".xmonad/bin" = {
-          source = ./bin;
-          recursive = true;
-        };
+        # ".xmonad/bin" = {
+        #   source = ./bin;
+        #   recursive = true;
+        # };
       };
     }
   ]);

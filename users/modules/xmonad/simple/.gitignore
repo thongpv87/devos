@@ -1,4 +1,7 @@
-
+./direnv
+./hix-flake
+./stack-work
+./result
 
 ### Created by https://www.gitignore.io
 ### Haskell ###
@@ -25,4 +28,3 @@ cabal.project.local
 cabal.project.local~
 .HTF/
 .ghc.environment.*
-

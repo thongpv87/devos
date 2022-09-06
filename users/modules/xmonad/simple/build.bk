@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+set -e
+stack build :xmonad-simple-exe --verbosity error
+stack install :xmonad-simple-exe --local-bin-path bin/ --verbosity error
+mv bin/xmonad-simple-exe "$1"

@@ -28,26 +28,7 @@ with lib;
     programs.xwayland.enable = true;
 
     hardware = {
-      #Completely disable the NVIDIA graphics card and use the integrated graphics processor instead.
       nvidiaOptimus.disable = true;
-
-      # nvidia = {
-      #   open = true;
-      #   powerManagement = {
-      #     enable = true;
-      #     finegrained = true;
-      #   };
-      #   nvidiaPersistenced = true;
-
-      #   modesetting.enable = true;
-      #   #package = config.boot.kernelPackages.nvidiaPackages.beta;
-      #   prime = {
-      #     #sync.enable = true;
-      #     offload.enable = true;
-      #     intelBusId = "PCI:0:2:0";
-      #     nvidiaBusId = "PCI:1:0:0";
-      #   };
-      # };
     };
   };
 }
