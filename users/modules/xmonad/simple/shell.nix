@@ -1,4 +1,23 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.mkShell {
-  nativeBuildInputs = [ pkgs.haskell-language-server pkgs.hlint pkgs.xorg.libXScrnSaver.all ];
+  buildInputs = with pkgs.xorg;
+    [ libX11 xlibsWrapper libXext libXinerama
+      libXrandr libXrender libXft
+      libXScrnSaver pkgs.alsa-lib
+      pkgs.haskell-language-server pkgs.hlint
+      pkgs.pkgconfig pkgs.xscreensaver
+      pkgs.cabal-install
+      libXdmcp.dev pkgs.expat.dev libXpm pkgs.wirelesstools
+    ];
+  buildInputs = with pkgs.haskellPackages;
+    [ xmonad
+      xmonad-contrib
+      xmonad-extras
+      xmobar
+      containers
+      directory
+      X11
+      async
+      stm
+    ];
 }

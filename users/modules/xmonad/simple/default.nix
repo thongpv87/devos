@@ -142,7 +142,13 @@ in
           xmonad = {
             enable = true;
             enableContribAndExtras = true;
-            extraPackages = haskellPackages: with haskellPackages; [ xmobar ];
+            extraPackages = hsPkgs:
+              let xmobar-config = hsPkgs.callCabal2nix "xmonad-config"
+                (lib.fetchGit {
+                  url = "https://codeberg.org/jao/xmobar-config.git";
+                  rev = "07c093c9b351466e60b93692c7d05b949bd71b0c";
+                });
+              in [ hsPkgs.xmobar xmobar-config ];
             #config = ./xmonad.hs;
           };
         };

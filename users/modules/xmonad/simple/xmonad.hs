@@ -27,6 +27,7 @@ import Config
 import KeyBindings
 import Layouts
 import Common
+import StatusBar
 
 data Terminal
     = Alacritty
@@ -58,5 +59,8 @@ main = do
     -- dp <- openDisplay ""
     -- screens <- getScreenInfo dp
     -- xqs <- xineramaQueryScreens dp
+    -- topBar
     myConfig <- mkDefaultXMonadConfig
+
+
     xmonad . ewmh . xmobarProp $ mkXConfig myConfig

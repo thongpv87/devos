@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+set -e
+cabal build
+cabal v2-install --installdir=bin
+# mv bin/xmonadwm "$1"
+cp bin/run-xmonad "$1"
+mv bin/xmonadwm $(dirname "$1")/xmonadwm

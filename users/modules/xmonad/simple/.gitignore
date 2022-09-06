@@ -2,6 +2,7 @@
 ./hix-flake
 ./stack-work
 ./result
+./dist-newstyle
 
 ### Created by https://www.gitignore.io
 ### Haskell ###

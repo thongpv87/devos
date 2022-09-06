@@ -50,8 +50,8 @@ addGaps layout = gaps [(L,20), (R,20), (U,20), (D,20)]
 
 tallOrFull =
     smartBorders
-    $ toggleFullScreenLayout
-    $ onWorkspace (wsName Float) simplestFloat
+    . toggleFullScreenLayout
+    . onWorkspace (wsName Float) simplestFloat
     $ layouts
     where
         layouts =

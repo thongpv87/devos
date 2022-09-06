@@ -3,3 +3,5 @@ set -e
 stack build :xmonad-simple-exe --verbosity error
 stack install :xmonad-simple-exe --local-bin-path bin/ --verbosity error
 mv bin/xmonad-simple-exe "$1"
+# mv bin/run-xmonad "$1"
+# mv bin/xmonad-simple-exe $(dirname "$1")/xmonad-wm

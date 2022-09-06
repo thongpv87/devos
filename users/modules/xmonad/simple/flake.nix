@@ -13,12 +13,20 @@
       let
         overlays = [ haskellNix.overlay
           (final: prev: {
+            final.haskellPackages.X11 = prev.haskellPackages.X11.overrideAttrs (o: {
+              buildInputs = o.buildInputs ++ [ final.xorg.libX11 final.xlibsWrapper final.xorg.libX11.dev final.xlibsWrapper.dev final.gcc ];
+            });
+
             hixProject =
               final.haskell-nix.hix.project {
                 src = ./.;
                 evalSystem = "x86_64-linux";
                 shell = {
-                  buildInputs = with final.xorg; [libX11 libX11.dev xlibsWrapper ];
+                  buildInputs = with final.xorg;
+                    [ libX11 xlibsWrapper libXScrnSaver libXext libXinerama
+                      libXrender libXft libXrandr final.xscreensaver
+                      final.pkgconfig final.alsa-lib xrandr final.dbus final.gcc
+                    ];
                 };
               };
           })
@@ -37,5 +45,6 @@
     extra-substituters = ["https://cache.iog.io"];
     extra-trusted-public-keys = ["hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="];
     allow-import-from-derivation = "true";
+    useSanbox = false;
   };
 }
