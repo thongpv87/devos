@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
-export XMONAD_GHC='${pkgs.ghc}/bin/ghc'
-export XMONAD_XMESSAGE='${pkgs.xmessage}/bin/xmessage'
+#!/usr/bin/env bash
+export XMONAD_GHC=ghc
+export XMONAD_XMESSAGE=xmessage
 exec "./xmonadwm"  "$@"

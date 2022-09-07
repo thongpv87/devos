@@ -40,7 +40,7 @@ instance Show Terminal where
 
 -- mkXConfig :: XMonadConfig -> XConfig l
 mkXConfig XMonadConfig{..} = def
-    { terminal = show Alacritty
+    { terminal = show GnomeTerminal
     , modMask = mod4Mask
     , clickJustFocuses = True
     , focusFollowsMouse = False
@@ -61,6 +61,4 @@ main = do
     -- xqs <- xineramaQueryScreens dp
     -- topBar
     myConfig <- mkDefaultXMonadConfig
-
-
     xmonad . ewmh . xmobarProp $ mkXConfig myConfig

@@ -24,10 +24,6 @@ extra-deps:
     # with_alsa: true
     # #with_xpm: true
     # with_weather: true
-flags:
-  xmobar:
-    all_extensions: true
-
 
 nix:
   enable: true

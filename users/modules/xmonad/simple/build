@@ -1,7 +1,6 @@
-#!/usr/bin/env sh
-set -e
-cabal build
-cabal v2-install --installdir=bin
-# mv bin/xmonadwm "$1"
-cp bin/run-xmonad "$1"
-mv bin/xmonadwm $(dirname "$1")/xmonadwm
+#!/usr/bin/env bash
+output=$1
+dir="$(dirname "$output")"
+fn="$(basename "$output")"
+nix-shell ./shell.nix --command 'cabal install exe:xmonadwm --enable-executable-stripping --enable-optimization=2 --installdir=$dir --overwrite-policy=always'
+ln -sf $dir/xmonadwm  "$output"

@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.mkShell {
-  buildInputs = with pkgs.xorg;
+  buildInputs = with pkgs.xorg; with pkgs.haskellPackages;
     [ libX11 xlibsWrapper libXext libXinerama
       libXrandr libXrender libXft
       libXScrnSaver pkgs.alsa-lib
@@ -8,8 +8,8 @@ pkgs.mkShell {
       pkgs.pkgconfig pkgs.xscreensaver
       pkgs.cabal-install
       libXdmcp.dev pkgs.expat.dev libXpm pkgs.wirelesstools
-    ];
-  buildInputs = with pkgs.haskellPackages;
+    ] ++
+
     [ xmonad
       xmonad-contrib
       xmonad-extras
