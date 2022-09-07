@@ -30,13 +30,6 @@ let
     '';
   };
 
-  xmonadBin = "${pkgs.runCommandLocal "update-xmonad" {}
-    ''
-      wm="${with pkgs; with haskellPackages; pkgs.haskellPackages.callPackage ./xmonad.nix {}}"
-      mkdir -p $out/bin
-      cp $wm/bin/xmonadwm $out/bin/xmonad-${pkgs.stdenv.hostPlatform.system};
-    ''
-  }/bin/xmonad-${pkgs.stdenv.hostPlatform.system}";
 in
 {
   options = {
@@ -148,18 +141,10 @@ in
         profileExtra = ''#wal -R& '';
 
         windowManager = {
-          command = xmonadBin;
-          # command =
-          #   let xmonad =  with pkgs; with haskellPackages; pkgs.haskellPackages.callPackage ./xmonad.nix{};
-          #   in "${xmonad}/bin/xmonad-x86_64-linux";
-
-          # xmonad = {
-          #   enable = true;
-          #   package = with pkgs; with haskellPackages; pkgs.haskellPackages.callPackage ./xmonad.nix{};
-          #   # enableContribAndExtras = true;
-          #   # extraPackages = hsPkgs: [ hsPkgs.xmobar ];
-          #   #config = ./xmonad.hs.old;
-          # };
+          xmonad = {
+            enable = true;
+            enableContribAndExtras = true;
+          };
         };
       };
 
@@ -186,7 +171,7 @@ in
           };
 
           "xmonad" = {
-            source = ./.;
+            source = lib.cleanSource ./.;
             recursive = true;
           };
 
@@ -195,15 +180,6 @@ in
       };
 
       home.file = {
-        ".xmonad/xmonad-${pkgs.stdenv.hostPlatform.system}" = {
-          source = xmonadBin;
-          onChange = ''
-            # Attempt to restart xmonad if X is running.
-            if [[ -v DISPLAY ]]; then
-              ${config.xsession.windowManager.command} --restart
-              fi
-          '';
-        };
         # ".xmonad/xmobar" = {
         #   source = ./xmobar;
         #   recursive = true;
