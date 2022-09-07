@@ -1,4 +1,4 @@
-module XMobar.Themes (
+module StatusBar.Themes (
   Palette(..), baseConfig, palette, (<~>), (>~<),
   mkArgs, defaultHeight, fc, fn, fni
   ) where

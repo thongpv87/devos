@@ -1,7 +1,7 @@
-module StatusBar where
+module Main where
 import Xmobar
-import XMobar.Themes
-import XMobar.Monitors
+import StatusBar.Themes
+import StatusBar.Monitors
 
 -- <fn=1> 💡 </fn>
 config p = (baseConfig p) {
@@ -27,5 +27,5 @@ config p = (baseConfig p) {
                \  |multicoretemp| |batt0| "
 }
 
-topBar =
+main =
   palette >>= configFromArgs . config >>= xmobar

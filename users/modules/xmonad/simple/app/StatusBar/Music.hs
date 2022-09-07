@@ -1,9 +1,9 @@
-module XMobar.Music where
+module StatusBar.Music where
 
 import Xmobar
-import XMobar.Monitors
-import qualified XMobar.Bottom as Bottom
-import XMobar.Themes (defaultHeight, pIsLight, pHigh, fc, fni)
+import StatusBar.Monitors
+import qualified StatusBar.Bottom as Bottom
+import StatusBar.Themes (defaultHeight, pIsLight, pHigh, fc, fni)
 
 mpris p client width =
   Mpris2 client

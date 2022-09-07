@@ -1,7 +1,7 @@
-module XMobar.Monitors where
+module StatusBar.Monitors where
 
 import Xmobar
-import XMobar.Themes
+import StatusBar.Themes
 import Control.Concurrent
 import Control.Concurrent.Async (async)
 import Control.Concurrent.STM

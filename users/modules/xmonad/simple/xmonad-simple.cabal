@@ -94,11 +94,6 @@ library
                                 KeyBindings
                                 Layouts
                                 Common
-                                XMobar.Monitors
-                                XMobar.Music
-                                XMobar.Themes
-                                XMobar.Bottom
-                                StatusBar
 
            default-language:    Haskell2010
 
@@ -108,3 +103,14 @@ executable xmonadwm
            build-depends:       xmonad-simple
            default-language:    Haskell2010
            main-is:             xmonad.hs
+
+executable xmobar
+           import:              common
+           hs-source-dirs:      app
+           build-depends:       xmonad-simple
+           default-language:    Haskell2010
+           main-is:             StatusBar/StatusBar.hs
+           other-modules:       StatusBar.Monitors
+                                StatusBar.Music
+                                StatusBar.Themes
+                                StatusBar.Bottom

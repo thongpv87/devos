@@ -1,8 +1,8 @@
-module XMobar.Bottom (config) where
+module StatusBar.Bottom (config) where
 
 import Xmobar
-import XMobar.Themes
-import XMobar.Monitors
+import StatusBar.Themes
+import StatusBar.Monitors
 
 -- ⏱
 config cs tpl p = (baseConfig p) {
