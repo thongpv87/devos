@@ -58,7 +58,6 @@ mkXConfig XMonadConfig{..} = def
     , manageHook = myManageHook
     , layoutHook = tallOrFull
     , startupHook = myStartupHook
-    , logHook = setWallpaper
     }
 
 statusbarPP :: PP
@@ -109,10 +108,12 @@ myManageHook = fullscreenManageHook <+> manageDocks <+> composeAll
     ] where shiftToWs = doShift . wsName
 
 myStartupHook = do
+    spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --width 5 --transparent true --alpha 0 --tint 0x22242b --height 24 --padding 5 --iconspacing 3"
     spawnOnce "systemctl --user start emacs"
     spawn "ibus-daemon"
-    spawn "pkill trayer && trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --width 5 --transparent true --alpha 0 --tint 0x22242b --height 23 --padding 5 --iconspacing 3"
+    spawn "xsetroot -cursor_name left_ptr"
     spawn "nm-applet"
+    spawn "feh --bg-fill ~/.wallpapers/default"
 
 setWallpaper = wallpaperSetter defWallpaperConf
                { wallpapers = WallpaperList ((\ws->(ws,WallpaperDir "default")) <$> myWorkspaceNames)

@@ -50,7 +50,7 @@ in
         pipewire
         wireplumber
         slurp
-        wl-clipboard
+        #wl-clipboard
         switch-input-method
         raise-volume
         rofi-wayland

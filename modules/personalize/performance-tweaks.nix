@@ -104,19 +104,28 @@ with lib;
             CPU_SCALING_MIN_FREQ_ON_BAT = 800000;
             CPU_SCALING_MAX_FREQ_ON_BAT = 2300000;
 
-            #CPU_BOOST_ON_AC=1;
-            #CPU_BOOST_ON_BAT=0;
+            CPU_BOOST_ON_AC = 1;
+            CPU_BOOST_ON_BAT = 0;
+            CPU_HWP_DYN_BOOST_ON_AC = 1;
+            CPU_HWP_DYN_BOOST_ON_BAT = 0;
+
+            NMI_WATCHDOG = 0;
 
             # Enable audio power saving for Intel HDA, AC97 devices (timeout in secs).
             # A value of 0 disables, >=1 enables power saving (recommended: 1).
             # Default: 0 (AC), 1 (BAT)
-            SOUND_POWER_SAVE_ON_AC = 0;
+            SOUND_POWER_SAVE_ON_AC = 1;
             SOUND_POWER_SAVE_ON_BAT = 1;
 
+            # Radio device switching
+            DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE = "bluetooth wwan";
+
+            PLATFORM_PROFILE_ON_BAT="low-power";
             # Runtime Power Management for PCI(e) bus devices: on=disable, auto=enable.
             # Default: on (AC), auto (BAT)
-            RUNTIME_PM_ON_AC = "on";
+            RUNTIME_PM_ON_AC = "auto";
             RUNTIME_PM_ON_BAT = "auto";
+            RUNTIME_PM_ENABLE = "01:00.0";
 
             # Battery feature drivers: 0=disable, 1=enable
             # Default: 1 (all)

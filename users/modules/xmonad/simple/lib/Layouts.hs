@@ -45,8 +45,8 @@ toggleFullScreenLayout = mkToggle (NBFULL ?? EOT)
   . avoidStruts
   . mkToggle (single FULL)
 
-addGaps layout = gaps [(L,20), (R,20), (U,20), (D,20)]
-          $ spacingRaw True (Border 0 0 0 0) False (Border 10 10 10 10) True layout
+addGaps layout = gaps [(L,20), (R,20), (U,24), (D,20)]
+          $ spacingRaw True (Border 0 0 0 0) False (Border 5 10 10 10) True layout
 
 tallOrFull =
     smartBorders

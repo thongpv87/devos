@@ -5,7 +5,7 @@
   imports = suites.base;
   personalize = {
     performanceTweaks = {
-      cpuScaling = "pstate";
+      cpuScaling = "schedutil";
       undervolt = true;
       fancontrol = "manual";
     };

@@ -20,7 +20,7 @@ in
 
       shell = mkOption {
         type = with types; enum [ "bash" "zsh" "fish" ];
-        default = "bash";
+        default = "zsh";
       };
     };
   };
@@ -29,7 +29,7 @@ in
   config = mkIf cfg.enable (
     mkMerge [
       {
-        home.packages = [ pkgs.wl-clipboard ];
+        home.packages = [ pkgs.xsel ];
         programs.tmux = {
           enable = true;
           plugins = with pkgs.tmuxPlugins; [
@@ -55,10 +55,7 @@ in
 
           extraConfig = ''
             set-option  -g default-shell ${shellCmd}
-            ${if (config.module.hyprland.enable == false)
-              then "set -s copy-command 'xsel -ib'"
-              else "set -s copy-command 'wl-copy'"
-             }
+            set -s copy-command 'xsel -ib'
             ${readFile ./bindings.conf}
             ${readFile ./tmux.conf}
           '';
