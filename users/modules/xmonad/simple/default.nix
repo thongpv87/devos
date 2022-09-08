@@ -29,7 +29,7 @@ let
       chmod +x $out/bin/*
     '';
   };
-  statusBar = pkgs.haskellPackages.callCabal2nix "xmobar" ./xmobar {};
+  statusbar = pkgs.haskellPackages.callCabal2nix "xmobar" ./xmobar {};
 in
 {
   options = {
@@ -69,7 +69,10 @@ in
           selected-nerdfonts
           gnome3.gnome-terminal
           shellScripts
-          statusBar
+          trayer
+          statusbar
+          networkmanagerapplet
+          imagemagick
           #jonaburg-picom
         ];
 
@@ -184,7 +187,8 @@ in
               #"class_g = 'Alacritty'",
               "class_g = 'Polybar'",
               "class_g = 'code-oss'",
-              "class_g = 'firefox'",
+              "class_g = 'trayer'",
+              #"class_g = 'firefox'",
               "class_g = 'Thunderbird'"
             ];
           '';

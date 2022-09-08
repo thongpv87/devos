@@ -6,19 +6,19 @@ data MyWorkspace
     | Code
     | Doc
     | Tasks
-    | Com
+    | Mail
     | Media
     | Remote
     | Float
     deriving (Show, Eq, Enum, Bounded)
 
 wsName :: MyWorkspace -> String
-wsName Cmd    = "\61728"
+wsName Cmd    = "\62601"
 wsName Web    = "\63288"
 wsName Code   = "\58911"
 wsName Doc    = "\57995"
 wsName Tasks  = "\61953"
-wsName Com    = "\63215"
+wsName Mail   = "\63215"
 wsName Media  = "\61448"
 wsName Remote = "\63074"
 wsName Float  = "\xe764"

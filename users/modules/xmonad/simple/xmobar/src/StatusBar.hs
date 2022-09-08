@@ -36,11 +36,13 @@ battery p rate =
            , "-P"
            , "-a", "notify-send -u critical 'Battery running out!!!!!!'"
            , "-A", "10"
-           , "-i", fni "\xf011"
-           , "-O", fni "<leftbar>\xf0e7" ++ "<left> <timeleft>"
-           , "-o", fni "<leftbar>" ++ "<left> <timeleft>"
+           , "-i", "\xf011"
+           , "-O", "<leftbar> \xfa34" ++ "<left> <timeleft>"
+           , "-o", "<leftbar>" ++ "<left> <timeleft>"
            , "-H", "14", "-L", "10"
-           , "-h", pHigh p, "-l", pLow p] rate "battery"
+           , "-h", pHigh p, "-l", pLow p
+           , "-p", "#2ae300"
+           ] rate "battery"
 
 wireless p n rate = Wireless n (p >~< ["-t", "\xf1eb <ssid>"
                                  , "-W", "5", "-M", "15" , "-m", "3"
@@ -64,30 +66,30 @@ brightness rate = Brightness
     , "--", "-D", "intel_backlight"
     ] rate
 
-config p = (baseConfig p) {
-  position = TopSize C 100 defaultHeight
-  , textOffset = defaultHeight - 8
-  , textOffsets = [defaultHeight - 9]
-  , border = BottomB
-  , commands = [ Run (wireless p "wlp82s0" 600)
-               , Run (brightness 100)
-               , Run (cpuTemp p 50)
-               , Run (volume p)
-               , Run (bluetooth 100)
-               , Run XMonadLog
-               , Run (Date "%a %d %R" "datetime" 30)
-               , Run (battery p 600)
-               ]
-  , template = unwords
-               [ "|XMonadLog|"
-               , "{||}"
-               , runScriptOnClick "wf-onclick" "|wlp82s0wi| "
-               , runScriptOnClick "bt-onclick" "|bluetooth| "
-               , runScriptOnClick "vol-onclick" "|alsa:default:Master| "
-               , "|bright| "
-               , "|multicoretemp| |battery| |datetime|"
-               ]
-}
+config p = (baseConfig p)
+    { position = TopW L 95
+    , textOffset = defaultHeight - 8
+    , textOffsets = [defaultHeight - 9]
+    , border = BottomB
+    , commands = [ Run (wireless p "wlp82s0" 600)
+                 , Run (brightness 100)
+                 , Run (cpuTemp p 50)
+                 , Run (volume p)
+                 , Run (bluetooth 100)
+                 , Run XMonadLog
+                 , Run (Date "%a %d %R" "datetime" 30)
+                 , Run (battery p 600)
+                 ]
+    , template = unwords
+                 [ "|XMonadLog|"
+                 , "{||}"
+                 , runScriptOnClick "wf-onclick" "|wlp82s0wi| "
+                 , runScriptOnClick "bt-onclick" "|bluetooth| "
+                 , runScriptOnClick "vol-onclick" "|alsa:default:Master| "
+                 , "|bright| "
+                 , "|multicoretemp| |battery| |datetime|"
+                 ]
+    }
 
 main =
   pure darkOnOrange >>= configFromArgs . config >>= xmobar

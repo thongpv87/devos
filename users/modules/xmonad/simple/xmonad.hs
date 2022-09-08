@@ -17,13 +17,19 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.WallpaperSetter
 import XMonad.Layout.Magnifier as LM
 import XMonad.Layout.PerScreen
 import XMonad.Layout.Tabbed as Tabbed
 import XMonad.Layout.Master as Master
 import XMonad.Layout.SortedLayout
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Fullscreen
 import XMonad.Util.Loggers
+import XMonad.Util.ClickableWorkspaces
+import XMonad.Util.SpawnOnce
 import Config
 import KeyBindings
 import Layouts
@@ -49,14 +55,18 @@ mkXConfig XMonadConfig{..} = def
     , focusedBorderColor = "#E57254" -- "#E95065"
     , keys = myKeyBindings
     , workspaces = myWorkspaceNames
+    , manageHook = myManageHook
     , layoutHook = tallOrFull
+    , startupHook = myStartupHook
+    , logHook = setWallpaper
     }
 
 statusbarPP :: PP
 statusbarPP = def
     { ppSep             = magenta " | "
     , ppTitleSanitize   = xmobarStrip
-    , ppCurrent         = wrap "" "" . xmobarBorder "Top" "#8be9fd" 2
+    , ppCurrent         = yellow . xmobarBorder "Top" "#8be9fd" 2
+    , ppVisible         = yellow
     , ppHidden          = white . wrap "" ""
     , ppHiddenNoWindows = lowWhite . wrap "" ""
     , ppUrgent          = red . wrap (yellow "!") (yellow "!")
@@ -72,16 +82,42 @@ statusbarPP = def
     ppWindow :: String -> String
     ppWindow = xmobarRaw . (\w -> if null w then "untitled" else w) . shorten 30
 
-    blue, lowWhite, magenta, red, white, yellow :: String -> String
+    blue, lowWhite, magenta, red, white, gray, yellow :: String -> String
     magenta  = xmobarColor "#ff79c6" ""
     blue     = xmobarColor "#bd93f9" ""
-    white    = xmobarColor "#f8f8f2" ""
+    white    = xmobarColor "#fbfbf8" ""
     yellow   = xmobarColor "#f1fa8c" ""
     red      = xmobarColor "#ff5555" ""
+    gray     = xmobarColor "#666666" ""
     lowWhite = xmobarColor "#bbbbbb" ""
 
 
-getMyConfig = undefined
+myManageHook = fullscreenManageHook <+> manageDocks <+> composeAll
+    [ className =? "org.gnome.Nautilus" --> doCenterFloat
+    , className =? "music-hub"        --> doCenterFloat
+    , appName   =? "Music"            --> doCenterFloat
+    , className =? "Thunderbird"      --> shiftToWs Mail
+    , className =? "Gnome-calculator" --> doCenterFloat
+    , className =? "Pavucontrol"      --> doCenterFloat
+    , className =? "Gimp"             --> doFloat
+    , className =? "Xmessage"         --> doCenterFloat
+    , resource  =? "desktop_window"   --> doIgnore
+    , resource  =? "kdesktop"         --> doIgnore
+    , className =? "trayer"           --> doIgnore
+    , isDialog                        --> doCenterFloat
+    , isFullscreen --> doFullFloat
+    ] where shiftToWs = doShift . wsName
+
+myStartupHook = do
+    spawnOnce "systemctl --user start emacs"
+    spawn "ibus-daemon"
+    spawn "pkill trayer && trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --width 5 --transparent true --alpha 0 --tint 0x22242b --height 23 --padding 5 --iconspacing 3"
+    spawn "nm-applet"
+
+setWallpaper = wallpaperSetter defWallpaperConf
+               { wallpapers = WallpaperList ((\ws->(ws,WallpaperDir "default")) <$> myWorkspaceNames)
+               , wallpaperBaseDir = "~/.wallpapers/"
+               }
 
 main :: IO ()
 main = do

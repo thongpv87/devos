@@ -45,10 +45,13 @@ with lib;
       services.xserver = {
         videoDrivers = [ "nvidia" ];
         enable = true;
-        displayManager.gdm.enable = false;
-        displayManager.lightdm.enable = true;
+        #displayManager.gdm.enable = true;
+        #desktopManager.kde.enable = true;
+        #desktopManger.gnome.enable = true;
+        displayManager.lightdm.enable = false;
+        displayManager.sddm.enable = true;
         displayManager.startx.enable = false;
-        windowManager.xmonad.enable = false;
+        windowManager.xmonad.enable = true;
         layout = "us";
         libinput.enable = true;
       };
