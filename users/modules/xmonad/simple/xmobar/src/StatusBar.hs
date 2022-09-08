@@ -79,7 +79,7 @@ config p = (baseConfig p) {
                , Run (battery p 600)
                ]
   , template = unwords
-               [ " |XMonadLog|"
+               [ "|XMonadLog|"
                , "{||}"
                , runScriptOnClick "wf-onclick" "|wlp82s0wi| "
                , runScriptOnClick "bt-onclick" "|bluetooth| "

@@ -55,9 +55,9 @@ in
 
           extraConfig = ''
             set-option  -g default-shell ${shellCmd}
-            ${if (config.module.hyprland.enable == true)
-              then "set -s copy-command 'wl-copy'"
-              else "set -s copy-command 'xsel -ib'"
+            ${if (config.module.hyprland.enable == false)
+              then "set -s copy-command 'xsel -ib'"
+              else "set -s copy-command 'wl-copy'"
              }
             ${readFile ./bindings.conf}
             ${readFile ./tmux.conf}
