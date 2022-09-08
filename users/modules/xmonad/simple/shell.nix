@@ -4,10 +4,9 @@ pkgs.mkShell {
     [ libX11 xlibsWrapper libXext libXinerama
       libXrandr libXrender libXft
       libXScrnSaver pkgs.alsa-lib
-      pkgs.haskell-language-server pkgs.hlint
       pkgs.pkgconfig pkgs.xscreensaver
-      pkgs.cabal-install
       libXdmcp.dev pkgs.expat.dev libXpm pkgs.wirelesstools
+      haskell-language-server hlint cabal-install
     ] ++
 
     [ xmonad

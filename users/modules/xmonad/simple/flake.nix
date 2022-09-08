@@ -13,20 +13,35 @@
       let
         overlays = [ haskellNix.overlay
           (final: prev: {
-            final.haskellPackages.X11 = prev.haskellPackages.X11.overrideAttrs (o: {
-              buildInputs = o.buildInputs ++ [ final.xorg.libX11 final.xlibsWrapper final.xorg.libX11.dev final.xlibsWrapper.dev final.gcc ];
-            });
+            Xpm = final.xorg.libXpm;
+            # haskellPackages = prev.haskellPackages.override {
+            #   overrides = hsPkgsNew: hsPkgsOld: rec {
+            #     X11 = pkgs.haskell.lib.dontHaddock hsPkgsOld.X11;
+            #   };
+            # };
+            haskellPakages.X11 = pkgs.haskell.lib.dontHaddock prev.haskellPackages.X11;
+            #xorg.libX11 = pkgs.haskell.lib.dontHaddock prev.xorg.libX11;
 
             hixProject =
-              final.haskell-nix.hix.project {
+              final.haskell-nix.cabalProject' {
                 src = ./.;
-                evalSystem = "x86_64-linux";
+                compiler-nix-name = "ghc902";
                 shell = {
                   buildInputs = with final.xorg;
-                    [ libX11 xlibsWrapper libXScrnSaver libXext libXinerama
-                      libXrender libXft libXrandr final.xscreensaver
+                    [ #libX11
+                      xlibsWrapper libXScrnSaver libXext libXinerama
+                      libXrender libXft libXrandr libXpm
                       final.pkgconfig final.alsa-lib xrandr final.dbus final.gcc
+                      final.haskellPackages.X11 libXi
+                      libX11.out
+                      libXScrnSaver
+                      libXft.out
                     ];
+                  tools = {
+                    cabal = {};
+                    haskell-language-server = {};
+                    hlint = {};
+                  };
                 };
               };
           })

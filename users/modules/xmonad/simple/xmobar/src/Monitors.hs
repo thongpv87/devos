@@ -1,7 +1,14 @@
-module StatusBar.Monitors where
+module Monitors
+    (CombinedMonitor
+    , guardedMonitor
+    , altMonitor
+    , concatMonitor
+    , toggleMonitor
+    )
+where
 
 import Xmobar
-import StatusBar.Themes
+import Themes
 import Control.Concurrent
 import Control.Concurrent.Async (async)
 import Control.Concurrent.STM

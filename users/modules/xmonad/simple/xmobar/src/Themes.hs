@@ -1,6 +1,6 @@
-module StatusBar.Themes (
+module Themes (
   Palette(..), baseConfig, palette, (<~>), (>~<),
-  mkArgs, defaultHeight, fc, fn, fni
+  mkArgs, defaultHeight, fc, fn, fni, darkOnOrange
   ) where
 
 import System.Environment (lookupEnv)
@@ -28,10 +28,28 @@ fc color thing = "<fc=" ++ color ++ ">" ++ thing ++ "</fc>"
 fn n thing = "<fn=" ++ show n ++ ">" ++ thing ++ "</fn>"
 fni = fn 6
 
+
+darkOnOrange :: Palette
+darkOnOrange = Palette
+    { pNormal = zenburnFg
+    , pLow = "darkseagreen4" -- zenburnGreen
+    , pHigh = zenburnRed
+    , pFont = "xft:RobotoMono Nerd Font Mono:style=Medium,Light"
+    , pDim = "#7f7f7f"
+    , pBorder = "#000000" -- zenburnBackLight
+    , pForeground = zenburnFg
+    , pBackground = doomBack -- zenburnBack
+    , pAlpha = 255
+    , pIconRoot = icons "dark"
+    , pIsLight = False
+    , pWm = Nothing
+    }
+
+
 lightTheme :: IO Bool
 lightTheme = fmap (== Just "light") (lookupEnv "JAO_COLOR_SCHEME")
 
-icons k = "/home/jao/.config/xmobar/icons/" ++ k
+icons k = "/home/thongpv87/.config/xmobar/icons/" ++ k
 
 lightPalette :: Palette
 lightPalette = Palette { pNormal = "#000000"
@@ -85,13 +103,9 @@ baseConfig p = defaultConfig {
   , borderColor = pBorder p
   , fgColor = pForeground p
   , bgColor = pBackground p
-  , additionalFonts = [ "xft:Symbola-9"
-                      , "xft:Symbola-10"
-                      , "xft:Symbola-11"
-                      , "xft:Symbola-11"
-                      , "xft:Symbola-12"
-                      , "xft:FontAwesome-10"
-                      , "xft:FontAwesome-9"]
+  , additionalFonts = [ "xft:RobotoMono Nerd Font Mono:style=Medium,Regular"
+                      , "xft:Font Awesome 6 Free Solid:style=Solid"
+                      ]
 
   , border = NoBorder
   , alpha = pAlpha p

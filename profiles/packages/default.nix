@@ -64,6 +64,8 @@
 
       nix-index
       nix-zsh-completions
+
+      config.boot.kernelPackages.bcc
     ];
     pathsToLink = [ "/share/zsh" ];
   };

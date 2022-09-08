@@ -1,7 +1,22 @@
 cradle:
-  stack:
-    - path: "./src/Main.hs"
-      component: "xmonad-simple:exe:xmonad-simple"
+  cabal:
+    - path: "lib"
+      component: "lib:xmonad-simple"
 
-    - path: "././xmonad.hs"
-      component: "xmonad-simple:exe:xmonad-testing"
+    - path: "./xmonad.hs"
+      component: "xmonad-simple:exe:xmonadwm"
+
+    - path: "app/StatusBar/StatusBar.hs"
+      component: "xmonad-simple:exe:xmobar"
+
+    - path: "app/StatusBar/Monitors.hs"
+      component: "xmonad-simple:exe:xmobar"
+
+    - path: "app/StatusBar/Music.hs"
+      component: "xmonad-simple:exe:xmobar"
+
+    - path: "app/StatusBar/Themes.hs"
+      component: "xmonad-simple:exe:xmobar"
+
+    - path: "app/StatusBar/Bottom.hs"
+      component: "xmonad-simple:exe:xmobar"

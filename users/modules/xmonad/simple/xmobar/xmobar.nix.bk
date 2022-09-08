@@ -15,7 +15,8 @@ mkDerivation {
   ];
 
   buildTools = [haskell-language-server ];
-  executableSystemDepends = with xorg; [ libX11 xlibsWrapper libXext libXinerama
+  executableSystemDepends = with xorg;
+    [ libX11 xlibsWrapper libXext libXinerama
       libXrandr libXrender libXft
       libXScrnSaver alsa-lib
       pkgconfig

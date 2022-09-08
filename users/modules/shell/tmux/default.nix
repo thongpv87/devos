@@ -55,7 +55,7 @@ in
 
           extraConfig = ''
             set-option  -g default-shell ${shellCmd}
-            ${if config.module.hyprland.enable
+            ${if (config.module.hyprland.enable == true)
               then "set -s copy-command 'wl-copy'"
               else "set -s copy-command 'xsel -ib'"
              }

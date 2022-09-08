@@ -1,4 +1,0 @@
-packages: xmonad-simple.cabal
-
-package xmobar
-        flags: +all_extensions

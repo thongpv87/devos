@@ -29,7 +29,7 @@ let
       chmod +x $out/bin/*
     '';
   };
-
+  statusBar = pkgs.haskellPackages.callCabal2nix "xmobar" ./xmobar {};
 in
 {
   options = {
@@ -69,11 +69,75 @@ in
           selected-nerdfonts
           gnome3.gnome-terminal
           shellScripts
-          #xmonadBin
+          statusBar
           #jonaburg-picom
         ];
 
       module.media.enable = false;
+
+
+      xsession = {
+        enable = true;
+
+        profileExtra = ''#wal -R& '';
+
+        windowManager = {
+          xmonad = {
+            enable = true;
+            enableContribAndExtras = true;
+            config = ./xmonad.hs;
+            extraPackages = hsPkgs: [
+              hsPkgs.xmobar
+            ];
+            libFiles = lib.foldr lib.trivial.mergeAttrs {}
+              (lib.lists.forEach (lib.filesystem.listFilesRecursive ./lib)
+                (file : {"${builtins.baseNameOf file}" = file; }));
+          };
+        };
+      };
+
+      systemd.user.services.dunst = {
+        Unit = {
+          Description = "Dunst notification daemon";
+          After = [ "graphical-session-pre.target" ];
+          PartOf = [ "graphical-session.target" ];
+        };
+
+        Service = {
+          Type = "dbus";
+          BusName = "org.freedesktop.Notifications";
+          ExecStart = "${pkgs.dunst}/bin/dunst";
+        };
+      };
+
+      xdg = {
+        configFile = {
+          #"picom/picom.conf".source = ./config/picom.conf;
+          "dunst" = {
+            source = ./dunst;
+            recursive = true;
+          };
+
+          "xmobar/bin" = {
+            source = ./xmobar/bin;
+            recursive = true;
+          };
+
+          "alacritty/alacritty.yml.in".source = ./alacritty/alacritty.yml;
+        };
+      };
+
+      home.file = {
+        # ".xmonad/xmobar" = {
+        #   source = ./xmobar;
+        #   recursive = true;
+        # };
+
+        # ".xmonad/bin" = {
+        #   source = ./bin;
+        #   recursive = true;
+        # };
+      };
 
       services = {
         picom = {
@@ -133,62 +197,6 @@ in
           fade = true;
           fadeDelta = 10;
         };
-      };
-
-      xsession = {
-        enable = true;
-
-        profileExtra = ''#wal -R& '';
-
-        windowManager = {
-          xmonad = {
-            enable = true;
-            enableContribAndExtras = true;
-          };
-        };
-      };
-
-      systemd.user.services.dunst = {
-        Unit = {
-          Description = "Dunst notification daemon";
-          After = [ "graphical-session-pre.target" ];
-          PartOf = [ "graphical-session.target" ];
-        };
-
-        Service = {
-          Type = "dbus";
-          BusName = "org.freedesktop.Notifications";
-          ExecStart = "${pkgs.dunst}/bin/dunst";
-        };
-      };
-
-      xdg = {
-        configFile = {
-          #"picom/picom.conf".source = ./config/picom.conf;
-          "dunst" = {
-            source = ./dunst;
-            recursive = true;
-          };
-
-          "xmonad" = {
-            source = lib.cleanSource ./.;
-            recursive = true;
-          };
-
-          "alacritty/alacritty.yml.in".source = ./alacritty/alacritty.yml;
-        };
-      };
-
-      home.file = {
-        # ".xmonad/xmobar" = {
-        #   source = ./xmobar;
-        #   recursive = true;
-        # };
-
-        # ".xmonad/bin" = {
-        #   source = ./bin;
-        #   recursive = true;
-        # };
       };
     }
   ]);
