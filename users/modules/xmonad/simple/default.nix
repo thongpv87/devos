@@ -144,9 +144,9 @@ in
 
       services = {
         picom = {
-          enable = true;
+          enable = false;
 
-          vSync = true;
+          #vSync = true;
 
           #activeOpacity = "1";
           #inactiveOpacity = "0.9";

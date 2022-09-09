@@ -62,14 +62,14 @@ mkXConfig XMonadConfig{..} = def
 
 statusbarPP :: PP
 statusbarPP = def
-    { ppSep             = magenta " | "
+    { ppSep             = blue " | "
     , ppTitleSanitize   = xmobarStrip
     , ppCurrent         = yellow . xmobarBorder "Top" "#8be9fd" 2
     , ppVisible         = yellow
     , ppHidden          = white . wrap "" ""
     , ppHiddenNoWindows = lowWhite . wrap "" ""
     , ppUrgent          = red . wrap (yellow "!") (yellow "!")
-    , ppOrder           = \[ws, l, _, wins] -> [ws, l]
+    , ppOrder           = \[ws, l, _, wins] -> [ws, l ]
     , ppExtras          = [logTitles formatFocused formatUnfocused]
     }
   where

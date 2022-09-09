@@ -3,11 +3,11 @@ module Music where
 import Xmobar
 import Monitors
 import qualified Bottom as Bottom
-import Themes (defaultHeight, pIsLight, pHigh, fc, fni)
+import Themes (defaultHeight, pIsLight, pHigh, fc)
 
 mpris p client width =
   Mpris2 client
-         ["-t", fni "\xf1bc" ++ " <tracknumber> <title> " ++ fc (pHigh p) "<artist>"
+         ["-t", fn 6 "\xf1bc" ++ " <tracknumber> <title> " ++ fc (pHigh p) "<artist>"
                 ++ " <album> <length> <composer>"
          , "-T", show width, "-E", "…", "-M", "100", "-x", ""] 40
 
@@ -31,7 +31,7 @@ autoMPD l lgt =
 
 mpdx a p i =
   MPDX [ "-W", "12", "-b", "░", "-f", "▒", "-t", "<statei> <remaining>"
-       , "--", "-p", p, "-P", fni "\xf144", "-Z", fni i, "-S", fni i] 20 a
+       , "--", "-p", p, "-P", fn 6 "\xf144", "-Z", fn 6 i, "-S", fn 6 i] 20 a
 
 mpdMon = mpdx "mpd" "6600" "\xf001"
 mopMon = mpdx "mopidy" "6669" "\xf1bc"

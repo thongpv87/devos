@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 if [[ $(systemctl status bluetooth | grep "inactive (dead)" | wc -l) == 1 ]]; then
    notify-send "Bluetooth" "Bluetooth is off";
    exit;

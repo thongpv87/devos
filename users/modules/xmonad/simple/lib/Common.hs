@@ -21,7 +21,7 @@ wsName Tasks  = "\61953"
 wsName Mail   = "\63215"
 wsName Media  = "\61448"
 wsName Remote = "\63074"
-wsName Float  = "\xe764"
+wsName Float  = "\xf313"
 
 myWorkspaces = [minBound::MyWorkspace .. maxBound]
 

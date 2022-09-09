@@ -66,28 +66,34 @@ brightness rate = Brightness
     , "--", "-D", "intel_backlight"
     ] rate
 
+sep = "<fc=#bd93f9>|</fc>"
+
 config p = (baseConfig p)
     { position = TopW L 95
-    , textOffset = defaultHeight - 8
-    , textOffsets = [defaultHeight - 9]
+    , textOffset = defaultHeight - 4
+    , textOffsets = [defaultHeight - 4]
     , border = BottomB
     , commands = [ Run (wireless p "wlp82s0" 600)
-                 , Run (brightness 100)
+                 , Run (brightness 600)
                  , Run (cpuTemp p 50)
                  , Run (volume p)
-                 , Run (bluetooth 100)
+                 , Run (bluetooth 600)
                  , Run XMonadLog
                  , Run (Date "%a %d %R" "datetime" 30)
                  , Run (battery p 600)
                  ]
     , template = unwords
-                 [ "|XMonadLog|"
-                 , "{||}"
-                 , runScriptOnClick "wf-onclick" "|wlp82s0wi| "
-                 , runScriptOnClick "bt-onclick" "|bluetooth| "
-                 , runScriptOnClick "vol-onclick" "|alsa:default:Master| "
-                 , "|bright| "
-                 , "|multicoretemp| |battery| |datetime|"
+                 [ " ^XMonadLog^"
+                 , "{^^}"
+                 , sep
+                 , runScriptOnClick "wf-onclick" "^wlp82s0wi^", sep
+                 , runScriptOnClick "bt-onclick" "^bluetooth^", sep
+                 , runScriptOnClick "vol-onclick" "^alsa:default:Master^", sep
+                 , "^bright^", sep
+                 , "^multicoretemp^", sep
+                 , "^battery^", sep
+                 , "^datetime^"
+                 ," <fc=#bd93f9>|</fc>"
                  ]
     }
 
