@@ -30,7 +30,7 @@
     keyboard = {
       model = "thinkpad";
       layout = "us";
-      options = [ "ctrl:nocaps" "altwin:prtsc_rwin" ];
+      options = [ "caps:escape" "altwin:prtsc_rwin" ];
     };
 
     language = {

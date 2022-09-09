@@ -13,7 +13,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ sqlite ispell multimarkdown libgccjit ];
+    home.packages = with pkgs; [ sqlite ispell multimarkdown libgccjit ripgrep coreutils fd git ];
 
     programs.emacs = {
       enable = true;

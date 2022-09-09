@@ -363,7 +363,7 @@ sessionStart _ = do
     spawn "xsetroot -cursor_name left_ptr"
     -- spawn "exec ~/.xmonad/bin/lock.sh"
     spawn "ibus-daemon"
-    spawn "setxkbmap -model thinkpad -layout us -option ctrl:nocaps -option altwin:prtsc_rwin"
+    spawn "setxkbmap -model thinkpad -layout us -option caps:escape -option altwin:prtsc_rwin"
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -383,7 +383,7 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
   spawn "exec ~/.xmonad/bin/lock.sh"
   spawn "ibus-daemon"
-  spawn "setxkbmap -model thinkpad -layout us -option ctrl:nocaps -option altwin:prtsc_rwin"
+  spawn "setxkbmap -model thinkpad -layout us -option caps:escape -option altwin:prtsc_rwin"
   -- spawn "picom"
   -- spawnOnce "emacs --daemon"
   -- sendMessage LM.ToggleOff

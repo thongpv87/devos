@@ -63,7 +63,7 @@ myStartupHook = do
         spawnOnce "notify-osd"
         spawnOnce "systemctl --user start emacs"
         spawn "ibus-daemon"
-        spawn "setxkbmap -model thinkpad -layout us -option ctrl:nocaps -option altwin:prtsc_rwin"
+        spawn "setxkbmap -model thinkpad -layout us -option caps:escape -option altwin:prtsc_rwin"
         -- spawn "picom"
 
 -- myLogHook = do

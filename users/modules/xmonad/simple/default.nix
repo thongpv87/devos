@@ -29,7 +29,7 @@ let
       chmod +x $out/bin/*
     '';
   };
-  statusbar = pkgs.haskellPackages.callCabal2nix "xmobar" ./xmobar {};
+  statusbar = pkgs.haskellPackages.callCabal2nix "xmobar" ./xmobar { };
 in
 {
   options = {
@@ -88,13 +88,15 @@ in
           xmonad = {
             enable = true;
             enableContribAndExtras = true;
-            config = ./xmonad.hs;
+            config = ./xmonad/xmonad.hs;
             extraPackages = hsPkgs: [
               hsPkgs.xmobar
             ];
-            libFiles = lib.foldr lib.trivial.mergeAttrs {}
-              (lib.lists.forEach (lib.filesystem.listFilesRecursive ./lib)
-                (file : {"${builtins.baseNameOf file}" = file; }));
+            libFiles = lib.foldr lib.trivial.mergeAttrs { }
+              (lib.lists.forEach
+                (lib.lists.filter (x: builtins.baseNameOf x != "xmonad.hs")
+                  (lib.filesystem.listFilesRecursive ./xmonad))
+                (file: { "${builtins.baseNameOf file}" = file; }));
           };
         };
       };
