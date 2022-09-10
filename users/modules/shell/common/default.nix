@@ -16,8 +16,8 @@ let
   };
   mkWriteable = pkgs.writeShellScriptBin "mkWriteable" ''
     fn=$1;
-    mv "$fn" "fn.bk";
-    cp "$fn.bk" "$fn";
+    mv "$fn" "$fn".bk;
+    cp "$fn".bk "$fn";
     chmod +w "$fn"
   '';
   theme-sh = pkgs.writeShellScriptBin "theme.sh" ''${builtins.readFile ./theme.sh}'';

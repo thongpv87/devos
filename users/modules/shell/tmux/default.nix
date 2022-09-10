@@ -35,15 +35,15 @@ in
           plugins = with pkgs.tmuxPlugins; [
             #resurrect
             sensible
-            yank
+            #yank
             prefix-highlight
             pain-control
-            {
-              plugin = gruvbox;
-              extraConfig = ''
-                set -g @tmux_gruvbox 'light'
-              '';
-            }
+            # {
+            #   plugin = tmux-colors-solarized;
+            #   extraConfig = ''
+            #     set -g @colors-solarized 'dark'
+            #   '';
+            # }
           ];
           baseIndex = 1;
           shortcut = "o";
@@ -58,6 +58,7 @@ in
             set -s copy-command 'xsel -ib'
             ${readFile ./bindings.conf}
             ${readFile ./tmux.conf}
+            ${readFile ./gruvbox.conf}
           '';
         };
       }
