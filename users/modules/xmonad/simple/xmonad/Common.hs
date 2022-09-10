@@ -19,7 +19,7 @@ wsName Code = "\58911"
 wsName Doc = "\57995"
 wsName Tasks = "\61953"
 wsName Mail = "\63215"
-wsName Media = "\xf90d"
+wsName Media = "\xf001"
 wsName Remote = "\63074"
 wsName Float = "\xf313"
 
