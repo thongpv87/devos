@@ -5,7 +5,7 @@
   imports = suites.base;
   personalize = {
     performanceTweaks = {
-      cpuScaling = "schedutil";
+      cpuScaling = "acpi_cpufreq";
       undervolt = true;
       fancontrol = "manual";
     };
@@ -40,7 +40,7 @@
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" "acpi_call" "coretemp" ];
     blacklistedKernelModules = [ ];
-    kernelParams = [ "quiet" ];
+    kernelParams = [ "quiet" "msr.allow_writes=on" "cpuidle.governor=teo" ];
 
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
   };

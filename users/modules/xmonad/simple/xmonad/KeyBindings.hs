@@ -1,8 +1,10 @@
 module KeyBindings where
 
 import Control.Monad (void)
+import Data.Foldable (Foldable (toList))
 import qualified Data.Map as M
 import Graphics.X11.ExtraTypes.XF86
+import Layouts
 import XMonad
 import XMonad.Actions.Volume (lowerVolume, raiseVolume, toggleMute)
 import XMonad.Hooks.ManageDocks (ToggleStruts (..))
@@ -124,3 +126,4 @@ myKeyBindings conf@(XConfig {XMonad.modMask = modm}) =
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0 ..],
           (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
       ]
+      ++ M.toList (namedScratchpadKeymaps conf)

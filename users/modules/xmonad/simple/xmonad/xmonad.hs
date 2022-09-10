@@ -11,7 +11,7 @@ import Config
     mkDefaultXMonadConfig,
   )
 import KeyBindings (myKeyBindings)
-import Layouts (tallOrFull)
+import Layouts (namedScratchpads, tallOrFull)
 import XMonad
   ( Default (def),
     ManageHook,
@@ -58,6 +58,7 @@ import XMonad.Hooks.WallpaperSetter
   )
 import XMonad.Layout.Fullscreen (fullscreenManageHook)
 import XMonad.Util.Loggers (logTitles)
+import XMonad.Util.NamedScratchpad (namedScratchpadManageHook)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
 data Terminal
@@ -134,12 +135,13 @@ myManageHook =
         isDialog --> doCenterFloat,
         isFullscreen --> doFullFloat
       ]
+    <+> namedScratchpadManageHook namedScratchpads
   where
     shiftToWs = doShift . wsName
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --width 5 --transparent true --alpha 0 --tint 0x22242b --height 28 --padding 5 --iconspacing 3"
+  spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --width 8 --transparent true --alpha 0 --tint 0x22242b --height 24 --padding 5 --iconspacing 3"
   spawnOnce "systemctl --user start emacs"
   spawn "ibus-daemon"
   spawn "xsetroot -cursor_name left_ptr"
