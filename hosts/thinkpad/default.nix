@@ -5,7 +5,7 @@
   imports = suites.base;
   personalize = {
     performanceTweaks = {
-      cpuScaling = "acpi_cpufreq";
+      cpuScaling = "intel_cpufreq";
       undervolt = true;
       fancontrol = "manual";
     };

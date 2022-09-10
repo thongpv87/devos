@@ -2,6 +2,9 @@
 with lib;
 let
   cfg = config.module.emacs;
+  doom = pkgs.writeShellScriptBin "doom" ''
+    $HOME/.emacs.d/bin/doom $@
+  '';
 in
 {
   options = {
@@ -13,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ sqlite ispell multimarkdown libgccjit ripgrep coreutils fd git ];
+    home.packages = with pkgs; [ sqlite ispell multimarkdown libgccjit ripgrep coreutils fd git doom ];
 
     programs.emacs = {
       enable = true;

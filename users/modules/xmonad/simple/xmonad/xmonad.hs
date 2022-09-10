@@ -72,7 +72,7 @@ instance Show Terminal where
 -- mkXConfig :: XMonadConfig -> XConfig l
 mkXConfig XMonadConfig {..} =
   def
-    { terminal = show GnomeTerminal,
+    { terminal = show Alacritty,
       modMask = mod4Mask,
       clickJustFocuses = True,
       focusFollowsMouse = False,

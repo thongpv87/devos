@@ -112,7 +112,7 @@ with lib;
 
                 # Set Intel CPU HWP.EPP /EPB policy
                 CPU_ENERGY_PERF_POLICY_ON_AC = "default";
-                CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
+                CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
 
                 # Set min/max P-state for intel CPUs, min/max from min_perf_pct
                 CPU_MIN_PERF_ON_AC = 17;

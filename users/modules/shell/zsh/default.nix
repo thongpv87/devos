@@ -48,6 +48,9 @@ in
         shellAliases = aliases;
 
         initExtra = ''
+          if command -v theme.sh > /dev/null; then
+            [ -e ~/.theme_history ] && theme.sh "$(theme.sh -l|tail -n1)"
+          fi
           any-nix-shell zsh --info-right | source /dev/stdin
           export DIRENV_LOG_FORMAT=
           eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
