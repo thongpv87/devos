@@ -195,7 +195,7 @@
             # first steps in customizing the template.
             #nixos = { suites, ... }: { imports = suites.base; };
             darwin = { suites, ... }: { imports = suites.base; };
-            thongpv87 = { suites, ... }: { imports = suites.hmConfig; };
+            thongpv87 = { suites, ... }: { imports = suites.base ++ suites.hmConfig; };
           }; # digga.lib.importers.rakeLeaves ./users/hm;
         };
 

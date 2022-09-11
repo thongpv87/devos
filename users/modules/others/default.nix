@@ -20,10 +20,6 @@ let
         echo "set alacritty theme: $next"
         sed -e "s/colors: \*monokai_pro/colors: *$next/" $config_in > $config
     fi'';
-
-  nv-alacritty = pkgs.writeShellScriptBin "nv-alacritty" ''
-    exec nvidia-offload alacritty $@
-  '';
 in
 {
   options = {
@@ -35,7 +31,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ alacritty irssi alacritty-switch-theme nv-alacritty steam ];
+    home.packages = with pkgs; [ alacritty irssi alacritty-switch-theme colorpicker tree ];
 
     home.file.".irssi" = {
       source = ./irssi;
