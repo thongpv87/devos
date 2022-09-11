@@ -31,7 +31,16 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ alacritty irssi alacritty-switch-theme colorpicker tree ];
+    home.packages = with pkgs;
+      [
+        alacritty
+        irssi
+        alacritty-switch-theme
+        colorpicker
+        tree
+        shotwell
+        ranger
+      ];
 
     home.file.".irssi" = {
       source = ./irssi;

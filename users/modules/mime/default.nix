@@ -16,7 +16,7 @@ in
   options = {
     module.mime = {
       enable = mkOption {
-        default = true;
+        default = false;
       };
     };
   };

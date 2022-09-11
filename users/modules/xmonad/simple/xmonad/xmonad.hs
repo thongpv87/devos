@@ -58,7 +58,7 @@ import XMonad.Hooks.WallpaperSetter
   )
 import XMonad.Layout.Fullscreen (fullscreenManageHook)
 import XMonad.Util.Loggers (logTitles)
-import XMonad.Util.NamedScratchpad (namedScratchpadManageHook)
+import XMonad.Util.NamedScratchpad (namedScratchpadManageHook, nsHideOnFocusLoss)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
 data Terminal
@@ -83,7 +83,8 @@ mkXConfig XMonadConfig {..} =
       workspaces = myWorkspaceNames,
       manageHook = myManageHook,
       layoutHook = tallOrFull,
-      startupHook = myStartupHook
+      startupHook = myStartupHook,
+      logHook = nsHideOnFocusLoss namedScratchpads
     }
 
 statusbarPP :: PP
@@ -121,7 +122,16 @@ myManageHook :: ManageHook
 myManageHook =
   fullscreenManageHook <+> manageDocks
     <+> composeAll
-      [ className =? "org.gnome.Nautilus" --> doCenterFloat,
+      [ className =? "confirm" --> doFloat,
+        className =? "file_progress" --> doFloat,
+        className =? "dialog" --> doFloat,
+        className =? "download" --> doFloat,
+        className =? "error" --> doFloat,
+        className =? "notification" --> doFloat,
+        className =? "pinentry-gtk-2" --> doFloat,
+        className =? "splash" --> doFloat,
+        className =? "toolbar" --> doFloat,
+        className =? "org.gnome.Nautilus" --> doCenterFloat,
         className =? "music-hub" --> doCenterFloat,
         appName =? "Music" --> doCenterFloat,
         className =? "Thunderbird" --> shiftToWs Mail,

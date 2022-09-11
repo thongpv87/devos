@@ -66,16 +66,29 @@ tallOrFull =
     layouts =
       ifWider 1920 (ifWider 3800 (toggleGapsLayout tallLayout) verticalLayout) (toggleGapsLayout tallLayout)
 
+centerFloatMedium = customFloating $ RationalRect (1 / 4) (1 / 4) (2 / 4) (2 / 4)
+
+centerFloatBig = customFloating $ RationalRect (1 / 8) (1 / 8) (6 / 8) (6 / 8)
+
+nsOpenDoc pdf = NS pdf (concat ["evince --class \"", pdf, "\" -f \"", pdf, "\""]) (className =? pdf)
+
+namedScratchpads :: [NamedScratchpad]
 namedScratchpads =
-  [ NS "vim-cheat-sheet" "evince -f ~/Documents/vi-vim-tutorial.pdf" (appName =? "vi-vim-tutorial.pdf") nonFloating,
-    NS "vim-tutorial" "google-chrome-stable --start-fullscreen --app=https://devhints.io/vim" (appName =? "Vim cheatsheet") nonFloating,
-    NS "emacs" "emacs --name emacs-scratchpad" (appName =? "emacs-scratchpad") defaultFloating
+  [ NS "file-manager" "alacritty --class ns-file-manager -e ranger" (className =? "ns-file-manager") centerFloatMedium,
+    NS "terminal" "alacritty --class ns-terminal -e tmux new-session -A -s scratch" (className =? "ns-terminal") centerFloatBig,
+    NS "emacs" spawnEmacs (title =? "emacs") centerFloatBig,
+    nsOpenDoc "~/Documents/vi-vim-tutorial.pdf" centerFloatBig,
+    nsOpenDoc "~/Documents/Vim cheatsheet.pdf" centerFloatBig
   ]
+  where
+    spawnEmacs = "emacsclient -a -n -c --frame-parameters='(quote (name . \"ns-emacs\"))'"
 
 namedScratchpadKeymaps c =
   mkKeymap
     c
-    [ ("M-s v", namedScratchpadAction namedScratchpads "vim-cheat-sheet"),
-      ("M-s t", namedScratchpadAction namedScratchpads "vim-tutorial"),
-      ("M-s e", namedScratchpadAction namedScratchpads "emacs")
+    [ ("M-s f", namedScratchpadAction namedScratchpads "file-manager"),
+      ("M-s t", namedScratchpadAction namedScratchpads "terminal"),
+      ("M-s e", namedScratchpadAction namedScratchpads "emacs"),
+      ("M-s 1", namedScratchpadAction namedScratchpads "~/Documents/Vim cheatsheet.pdf"),
+      ("M-s 2", namedScratchpadAction namedScratchpads "~/Documents/vi-vim-tutorial.pdf")
     ]
