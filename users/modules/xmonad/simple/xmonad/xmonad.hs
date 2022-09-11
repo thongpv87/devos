@@ -33,6 +33,7 @@ import XMonad
   )
 import XMonad.Hooks.DynamicLog
   ( PP (..),
+    filterOutWsPP,
     shorten,
     wrap,
     xmobarBorder,
@@ -58,7 +59,7 @@ import XMonad.Hooks.WallpaperSetter
   )
 import XMonad.Layout.Fullscreen (fullscreenManageHook)
 import XMonad.Util.Loggers (logTitles)
-import XMonad.Util.NamedScratchpad (namedScratchpadManageHook, nsHideOnFocusLoss)
+import XMonad.Util.NamedScratchpad (namedScratchpadManageHook, nsHideOnFocusLoss, scratchpadWorkspaceTag)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
 data Terminal
@@ -89,17 +90,18 @@ mkXConfig XMonadConfig {..} =
 
 statusbarPP :: PP
 statusbarPP =
-  def
-    { ppSep = blue " | ",
-      ppTitleSanitize = xmobarStrip,
-      ppCurrent = yellow . xmobarBorder "Top" "#8be9fd" 2,
-      ppVisible = yellow,
-      ppHidden = white . wrap "" "",
-      ppHiddenNoWindows = gray . wrap "" "",
-      ppUrgent = red . wrap (yellow "!") (yellow "!"),
-      ppOrder = \[ws, l, _, wins] -> [ws, l],
-      ppExtras = [logTitles formatFocused formatUnfocused]
-    }
+  filterOutWsPP [scratchpadWorkspaceTag] $
+    def
+      { ppSep = blue " | ",
+        ppTitleSanitize = xmobarStrip,
+        ppCurrent = yellow . xmobarBorder "Top" "#8be9fd" 2,
+        ppVisible = yellow,
+        ppHidden = white . wrap "" "",
+        ppHiddenNoWindows = gray . wrap "" "",
+        ppUrgent = red . wrap (yellow "!") (yellow "!"),
+        ppOrder = \[ws, l, _, wins] -> [ws, l],
+        ppExtras = [logTitles formatFocused formatUnfocused]
+      }
   where
     formatFocused = wrap (white "[") (white "]") . magenta . ppWindow
     formatUnfocused = wrap (lowWhite "[") (lowWhite "]") . blue . ppWindow

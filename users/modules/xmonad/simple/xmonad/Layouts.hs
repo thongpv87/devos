@@ -22,6 +22,7 @@ import XMonad.Layout.ToggleLayouts (toggleLayouts)
 import XMonad.ManageHook
 import XMonad.StackSet as W
 import XMonad.Util.EZConfig
+import XMonad.Util.ExclusiveScratchpads (ExclusiveScratchpad, hideAll, mkXScratchpads, scratchpadAction)
 import XMonad.Util.NamedScratchpad
 
 basicTallLayout :: Tall a
@@ -70,15 +71,15 @@ centerFloatMedium = customFloating $ RationalRect (1 / 4) (1 / 4) (2 / 4) (2 / 4
 
 centerFloatBig = customFloating $ RationalRect (1 / 8) (1 / 8) (6 / 8) (6 / 8)
 
-nsOpenDoc pdf = NS pdf (concat ["evince --class \"", pdf, "\" -f \"", pdf, "\""]) (className =? pdf)
+nsOpenDoc pdf = NS pdf (concat ["evince --class \"", pdf, "\" -f \"/home/thongpv87/", pdf, "\""]) (className =? pdf)
 
 namedScratchpads :: [NamedScratchpad]
 namedScratchpads =
-  [ NS "file-manager" "alacritty --class ns-file-manager -e ranger" (className =? "ns-file-manager") centerFloatMedium,
-    NS "terminal" "alacritty --class ns-terminal -e tmux new-session -A -s scratch" (className =? "ns-terminal") centerFloatBig,
-    NS "emacs" spawnEmacs (title =? "emacs") centerFloatBig,
-    nsOpenDoc "~/Documents/vi-vim-tutorial.pdf" centerFloatBig,
-    nsOpenDoc "~/Documents/Vim cheatsheet.pdf" centerFloatBig
+  [ NS "file-manager" "alacritty -t ns-file-manager -e ranger" (title =? "ns-file-manager") centerFloatMedium,
+    NS "terminal" "alacritty -t ns-terminal -e tmux new-session -A -s scratch" (title =? "ns-terminal") centerFloatBig,
+    NS "emacs" spawnEmacs (title =? "ns-emacs") centerFloatBig,
+    nsOpenDoc "Documents/vi-vim-tutorial.pdf" centerFloatBig,
+    nsOpenDoc "Documents/Vim cheatsheet.pdf" centerFloatBig
   ]
   where
     spawnEmacs = "emacsclient -a -n -c --frame-parameters='(quote (name . \"ns-emacs\"))'"
@@ -91,4 +92,24 @@ namedScratchpadKeymaps c =
       ("M-s e", namedScratchpadAction namedScratchpads "emacs"),
       ("M-s 1", namedScratchpadAction namedScratchpads "~/Documents/Vim cheatsheet.pdf"),
       ("M-s 2", namedScratchpadAction namedScratchpads "~/Documents/vi-vim-tutorial.pdf")
+    ]
+
+exclusiveScratchPads :: [ExclusiveScratchpad]
+exclusiveScratchPads =
+  mkXScratchpads
+    [ ("file-manager", "alacritty -t ns-file-manager -e ranger", title =? "ns-file-manager"),
+      ("terminal", "alacritty -t ns-terminal -e tmux new-session -A -s scratch", title =? "ns-terminal"),
+      ("emacs", spawnEmacs, title =? "ns-emacs")
+    ]
+    centerFloatBig
+  where
+    spawnEmacs = "emacsclient -a -n -c --frame-parameters='(quote (name . \"ns-emacs\"))'"
+
+exclusiveScratchPadKeymaps c =
+  mkKeymap
+    c
+    [ ("M-s f", scratchpadAction exclusiveScratchPads "file-manager"),
+      ("M-s t", scratchpadAction exclusiveScratchPads "terminal"),
+      ("M-s e", scratchpadAction exclusiveScratchPads "emacs"),
+      ("M-s s", hideAll exclusiveScratchPads)
     ]
