@@ -73,8 +73,8 @@ with lib;
       services.undervolt = {
         enable = true;
         coreOffset = -130;
-        gpuOffset = -70;
-        uncoreOffset = -70;
+        gpuOffset = -120;
+        uncoreOffset = -120;
       };
     })
 

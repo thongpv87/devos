@@ -28,7 +28,7 @@ import Xmobar
     xmobar,
   )
 
-myScriptPath script = "~/.config/xmobar/bin/" <> script
+myScriptPath script = "/home/thongpv87/.config/xmobar/bin/" <> script
 
 bluetooth :: Rate -> Command
 bluetooth = Com (myScriptPath "bt-status") [] "bluetooth"
@@ -183,7 +183,7 @@ config p =
           Run (brightness 600),
           Run (cpuTemp p 50),
           Run (volume p),
-          Run (bluetooth 600),
+          -- Run (bluetooth 600),
           Run XMonadLog,
           Run (Date "%a %d %R" "datetime" 30),
           Run (battery p 600)
@@ -195,8 +195,8 @@ config p =
             sep,
             runScriptOnClick "wf-onclick" "^wlp82s0wi^",
             sep,
-            runScriptOnClick "bt-onclick" "^bluetooth^",
-            sep,
+            -- runScriptOnClick "bt-onclick" "^bluetooth^",
+            -- sep,
             runScriptOnClick "vol-onclick" "^alsa:default:Master^",
             sep,
             "^bright^",

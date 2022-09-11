@@ -10,7 +10,7 @@ import Config
   ( XMonadConfig (..),
     mkDefaultXMonadConfig,
   )
-import KeyBindings (myKeyBindings)
+import KeyBindings (myKeyBindings, myMouseBindings)
 import Layouts (namedScratchpads, tallOrFull)
 import XMonad
   ( Default (def),
@@ -81,6 +81,7 @@ mkXConfig XMonadConfig {..} =
       normalBorderColor = "#3b4252",
       focusedBorderColor = "#E57254", -- "#E95065"
       keys = myKeyBindings,
+      mouseBindings = myMouseBindings,
       workspaces = myWorkspaceNames,
       manageHook = myManageHook,
       layoutHook = tallOrFull,
