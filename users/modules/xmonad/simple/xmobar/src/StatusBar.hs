@@ -20,6 +20,7 @@ import Xmobar
     Config (..),
     Date (..),
     Monitors (..),
+    Rate,
     Runnable (..),
     XMonadLog (..),
     XPosition (..),
@@ -30,26 +31,28 @@ import Xmobar
 -- myScriptPath script = "~/.config/xmobar/bin/" <> script
 myScriptPath script = "/home/thongpv87/ws/devos/users/modules/xmonad/simple/xmobar/bin/" <> script
 
+bluetooth :: Rate -> Command
 bluetooth = Com (myScriptPath "bt-status") [] "bluetooth"
 
+runScriptOnClick :: String -> String -> String
 runScriptOnClick script button = concat ["<action=`", myScriptPath script, "`>", button, "</action>"]
 
+cpuTemp :: Palette -> Rate -> Monitors
 cpuTemp p =
   MultiCoreTemp
-    ( p
-        <~> [ "-t",
-              "<avgbar> <core0>°C",
-              "-W",
-              "0",
-              "-f",
-              "\xf2cb\xf2ca\xf2ca\xf2c9\xf2c9\xf2c8\xf2c8\xf2c7\xf2c7\xf2c7",
-              "-L",
-              "40",
-              "-H",
-              "60"
-            ]
-    )
+    [ "-t",
+      "<avgbar> <core0>°C",
+      "-W",
+      "0",
+      "-f",
+      "\xf2cb\xf2ca\xf2ca\xf2c9\xf2c9\xf2c8\xf2c8\xf2c7\xf2c7\xf2c7",
+      "-L",
+      "40",
+      "-H",
+      "60"
+    ]
 
+battery :: Palette -> Rate -> Monitors
 battery p rate =
   BatteryN
     ["BAT0"]
@@ -98,7 +101,7 @@ battery p rate =
       "-l",
       pLow p,
       "-p",
-      "#2ae300"
+      "green"
     ]
     rate
     "battery"
@@ -127,6 +130,7 @@ wireless p n =
 --          , "-f", "\xfa7e\xfa7f\xfa7f\xfa7f\xfa7f\xfa7d\xfa7d\xfa7d\xfa7d\xfa7d"
 --          ]
 
+volume :: Palette -> Monitors
 volume p =
   Alsa
     "default"
@@ -152,6 +156,7 @@ volume p =
       "\xfa7e"
     ]
 
+brightness :: Rate -> Monitors
 brightness =
   Brightness
     [ "-t",
@@ -165,8 +170,10 @@ brightness =
       "intel_backlight"
     ]
 
+sep :: String
 sep = "<fc=#bd93f9>|</fc>"
 
+config :: Palette -> Config
 config p =
   (baseConfig p)
     { position = TopW L 92,
