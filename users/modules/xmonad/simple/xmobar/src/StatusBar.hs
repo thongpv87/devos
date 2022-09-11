@@ -28,8 +28,7 @@ import Xmobar
     xmobar,
   )
 
--- myScriptPath script = "~/.config/xmobar/bin/" <> script
-myScriptPath script = "/home/thongpv87/ws/devos/users/modules/xmonad/simple/xmobar/bin/" <> script
+myScriptPath script = "~/.config/xmobar/bin/" <> script
 
 bluetooth :: Rate -> Command
 bluetooth = Com (myScriptPath "bt-status") [] "bluetooth"
@@ -88,7 +87,7 @@ battery p rate =
       "-A",
       "10",
       "-i",
-      "\xf011",
+      "\xf0e7",
       "-O",
       "<leftbar> \xfa34" ++ "<left> <timeleft>",
       "-o",
