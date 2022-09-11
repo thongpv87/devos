@@ -39,18 +39,19 @@ runScriptOnClick script button = concat ["<action=`", myScriptPath script, "`>",
 
 cpuTemp :: Palette -> Rate -> Monitors
 cpuTemp p =
-  MultiCoreTemp
-    [ "-t",
-      "<avgbar> <core0>°C",
-      "-W",
-      "0",
-      "-f",
-      "\xf2cb\xf2ca\xf2ca\xf2c9\xf2c9\xf2c8\xf2c8\xf2c7\xf2c7\xf2c7",
-      "-L",
-      "40",
-      "-H",
-      "60"
-    ]
+  MultiCoreTemp $
+    p
+      <~> [ "-t",
+            "<avgbar> <core0>°C",
+            "-W",
+            "0",
+            "-f",
+            "\xf2cb\xf2ca\xf2ca\xf2c9\xf2c9\xf2c8\xf2c8\xf2c7\xf2c7\xf2c7",
+            "-L",
+            "40",
+            "-H",
+            "60"
+          ]
 
 battery :: Palette -> Rate -> Monitors
 battery p rate =
@@ -99,9 +100,7 @@ battery p rate =
       "-h",
       pHigh p,
       "-l",
-      pLow p,
-      "-p",
-      "green"
+      pLow p
     ]
     rate
     "battery"
