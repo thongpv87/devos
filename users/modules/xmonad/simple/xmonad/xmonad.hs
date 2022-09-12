@@ -49,6 +49,7 @@ import XMonad.Hooks.ManageHelpers
     isDialog,
     isFullscreen,
   )
+import XMonad.Hooks.RefocusLast (refocusLastLogHook)
 import XMonad.Hooks.StatusBar (statusBarProp, withSB)
 import XMonad.Hooks.WallpaperSetter
   ( Wallpaper (..),
@@ -86,7 +87,7 @@ mkXConfig XMonadConfig {..} =
       manageHook = myManageHook,
       layoutHook = tallOrFull,
       startupHook = myStartupHook,
-      logHook = nsHideOnFocusLoss namedScratchpads
+      logHook = refocusLastLogHook >> nsHideOnFocusLoss namedScratchpads
     }
 
 statusbarPP :: PP
