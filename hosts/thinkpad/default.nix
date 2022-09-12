@@ -37,7 +37,7 @@
 
     kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "battery" "thinkpad_acpi" ];
-    initrd.kernelModules = [ ];
+    initrd.kernelModules = [ "i915" ];
     kernelModules = [ "kvm-intel" "acpi_call" "coretemp" ];
     blacklistedKernelModules = [ ];
     kernelParams = [ "quiet" "msr.allow_writes=on" "cpuidle.governor=teo" ];
@@ -55,6 +55,7 @@
   networking.networkmanager.enable = true;
 
   hardware = {
+    trackpoint.device = "TPPS/2 Elan TrackPoint";
     opengl = {
       enable = true;
       driSupport32Bit = true;
@@ -69,6 +70,7 @@
   };
 
   services = {
+    thermald.enable = true;
     fstrim.enable = true;
     logind = {
       extraConfig = ''
@@ -82,6 +84,11 @@
 
     fwupd.enable = true;
     udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+  };
+
+
+  environment.variables = {
+    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
   };
 
   # systemd.services.thinkfan.preStart = "
