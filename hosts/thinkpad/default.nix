@@ -70,7 +70,6 @@
   };
 
   services = {
-    thermald.enable = true;
     fstrim.enable = true;
     logind = {
       extraConfig = ''
