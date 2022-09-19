@@ -90,14 +90,31 @@
 ;; lsp key bindings
 (evil-define-key 'normal lsp-mode-map (kbd "`") lsp-command-map)
 (setq!
+ lsp-enable-semantic-highlighting t
+ lsp-enable-completion-at-point t
+ lsp-lens-enable t
+ lsp-enable-imenu t
+ lsp-enable-indentation t
+ lsp-enable-symbol-highlighting t
+ lsp-enable-text-document-color t
+ lsp-headerline-breadcrumb-enable t
+ lsp-signature-auto-activate t
+ lsp-signature-render-documentation t
+ lsp-haskell-plugin-retrie-global-on nil
+ lsp-haskell-plugin-tactics-global-on nil
+
+ lsp-ui-sideline-enable t
  lsp-ui-sideline-show-hover nil
  lsp-ui-sideline-ignore-duplicate t
- lsp-ui-sideline-show-symbol nil
+ lsp-ui-sideline-show-symbol t
  lsp-ui-sideline-show-code-actions t
- lsp-ui-sideline-show-diagnostics nil
+ lsp-ui-sideline-show-diagnostics t
 
- lsp-ui-doc-use-webkit t
+ lsp-ui-doc-enable t
+ lsp-ui-doc-use-webkit nil
  lsp-ui-doc-enhanced-markdown t
+ lsp-ui-doc-use-childframe t
+ lsp-ui-doc-include-signature t
  lsp-ui-doc-show-with-cursor t
  lsp-ui-doc-show-with-mouse t)
 

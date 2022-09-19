@@ -34,6 +34,11 @@ in
         enable = true;
         socketActivation.enable = true;
         client.enable = true;
+        package = pkgs.emacs.overrideAttrs (o: {
+          withXwidgets = true;
+          withGTK3 = true;
+          webkitgtk = true;
+        });
       };
     };
   };
