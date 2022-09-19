@@ -39,6 +39,7 @@
 ;; (setq doom-theme 'doom-ayu-light)
 ;; (setq doom-theme 'doom-tomorow-light)
 (setq doom-theme 'doom-gruvbox-light)
+(setq doom-themes-treemacs-theme "doom-colors")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -81,15 +82,28 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; PACKAGE CONFIG
+;; LSP
 (use-package! lsp-haskell
   :defer
   :config
   (setq lsp-haskell-server-path "haskell-language-server"))
+;; lsp key bindings
+(evil-define-key 'normal lsp-mode-map (kbd "`") lsp-command-map)
+(setq!
+ lsp-ui-sideline-show-hover nil
+ lsp-ui-sideline-ignore-duplicate t
+ lsp-ui-sideline-show-symbol nil
+ lsp-ui-sideline-show-code-actions t
+ lsp-ui-sideline-show-diagnostics nil
 
-; HOOKS
+ lsp-ui-doc-use-webkit t
+ lsp-ui-doc-enhanced-markdown t
+ lsp-ui-doc-show-with-cursor t
+ lsp-ui-doc-show-with-mouse t)
 
-;; KEY MAPPING
+
+;; TREEMACS
+(setq winum-scope 'visible)
 (map!
  "M-0" #'treemacs-select-window
  "M-1" #'winum-select-window-1
@@ -101,3 +115,7 @@
  "M-7" #'winum-select-window-7
  "M-8" #'winum-select-window-8
  "M-9" #'winum-select-window-9)
+
+;; OTHERS
+(add-hook! treemacs-mode
+           (treemacs-load-theme "all-the-icons"))
