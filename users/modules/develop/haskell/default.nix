@@ -16,6 +16,6 @@ in
       ".stack/config.yaml".source = ./toolchain/stack.config.yaml;
     };
 
-    home.packages = with pkgs; [ stack ghc ];
+    home.packages = with pkgs; [ stack ghc haskellPackages.haskell-language-server ];
   };
 }

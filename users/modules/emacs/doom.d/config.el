@@ -23,21 +23,19 @@
 ;;
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
+
+(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 12 :weight 'semi-bold)
+      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+
+
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 12 :weight 'semi-bold)
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
-
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-one)
-;; (setq doom-theme 'doom-ayu-light)
-;; (setq doom-theme 'doom-tomorow-light)
 (setq doom-theme 'doom-gruvbox-light)
 (setq doom-themes-treemacs-theme "doom-colors")
 
@@ -82,56 +80,56 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; LSP
-(use-package! lsp-haskell
-  :defer
-  :config
-  (setq lsp-haskell-server-path "haskell-language-server"))
-;; lsp key bindings
-(evil-define-key 'normal lsp-mode-map (kbd "`") lsp-command-map)
-(setq!
- lsp-enable-semantic-highlighting t
- lsp-enable-completion-at-point t
- lsp-lens-enable t
- lsp-enable-imenu t
- lsp-enable-indentation t
- lsp-enable-symbol-highlighting t
- lsp-enable-text-document-color t
- lsp-headerline-breadcrumb-enable t
- lsp-signature-auto-activate t
- lsp-signature-render-documentation t
- lsp-haskell-plugin-retrie-global-on nil
- lsp-haskell-plugin-tactics-global-on nil
+(after! lsp-haskell
+  (setq lsp-haskell-server-path "haskell-language-server"
+        lsp-haskell-plugin-retire-global-on nil
+        lsp-haskell-plugin-tactics-global-on nil))
 
- lsp-ui-sideline-enable t
- lsp-ui-sideline-show-hover nil
- lsp-ui-sideline-ignore-duplicate t
- lsp-ui-sideline-show-symbol t
- lsp-ui-sideline-show-code-actions t
- lsp-ui-sideline-show-diagnostics t
+(after! lsp-mode
+  (evil-define-key 'normal lsp-mode-map (kbd "`") lsp-command-map)
+  (setq lsp-semantic-highlighting t
+        lsp-completion-at-point t
+        lsp-lens-enable nil
+        lsp-enable-imenu t
+        lsp-enable-indentation t
+        lsp-enable-symbol-highlighting t
+        lsp-enable-text-document-color t
+        lsp-headerline-breadcrumb-enable t
+        lsp-signature-auto-activate t
+        lsp-signature-doc-lines 5
+        lsp-signature-render-documentation t
 
- lsp-ui-doc-enable t
- lsp-ui-doc-use-webkit nil
- lsp-ui-doc-enhanced-markdown t
- lsp-ui-doc-use-childframe t
- lsp-ui-doc-include-signature t
- lsp-ui-doc-show-with-cursor t
- lsp-ui-doc-show-with-mouse t)
+        lsp-ui-sideline-enable t
+        lsp-ui-sideline-show-hover nil
+        lsp-ui-sideline-ignore-duplicate t
+        lsp-ui-sideline-show-symbol t
+        lsp-ui-sideline-show-code-actions t
+        lsp-ui-sideline-show-diagnostics t
+        lsp-ui-sideline-update-mode 'line
 
+        lsp-ui-doc-enable t
+        ;;lsp-ui-doc-use-webkit nil
+        lsp-ui-doc-enhanced-markdown t
+        ;;lsp-ui-doc-use-childframe t
+        lsp-ui-doc-max-width 150
+        lsp-ui-doc-max-height 15
+        lsp-ui-doc-include-signature t
+        lsp-ui-doc-show-with-cursor t
+        lsp-ui-doc-show-with-mouse t
+        lsp-ui-doc-delay 3))
 
 ;; TREEMACS
 (setq winum-scope 'visible)
-(map!
- "M-0" #'treemacs-select-window
- "M-1" #'winum-select-window-1
- "M-2" #'winum-select-window-2
- "M-3" #'winum-select-window-3
- "M-4" #'winum-select-window-4
- "M-5" #'winum-select-window-5
- "M-6" #'winum-select-window-6
- "M-7" #'winum-select-window-7
- "M-8" #'winum-select-window-8
- "M-9" #'winum-select-window-9)
+(map! "M-0" #'treemacs-select-window
+      "M-1" #'winum-select-window-1
+      "M-2" #'winum-select-window-2
+      "M-3" #'winum-select-window-3
+      "M-4" #'winum-select-window-4
+      "M-5" #'winum-select-window-5
+      "M-6" #'winum-select-window-6
+      "M-7" #'winum-select-window-7
+      "M-8" #'winum-select-window-8
+      "M-9" #'winum-select-window-9)
 
 ;; OTHERS
 (add-hook! treemacs-mode
