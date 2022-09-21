@@ -161,7 +161,7 @@ myStartupHook = do
   spawn "xsetroot -cursor_name left_ptr"
   spawn "nm-applet"
   spawn "blueman-applet"
-  spawn "feh --bg-fill ~/.wallpapers/default"
+  -- spawn "feh --bg-fill ~/.wallpapers/default"
 
 setWallpaper :: X ()
 setWallpaper =

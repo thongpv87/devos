@@ -145,6 +145,14 @@ in
       };
 
       services = {
+        random-background = {
+          enable = true;
+          enableXinerama = true;
+          display = "fill";
+          imageDirectory = "%h/.wallpapers";
+          interval = "24h";
+        };
+
         picom = {
           enable = false;
 
