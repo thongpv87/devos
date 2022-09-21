@@ -7,7 +7,7 @@ import XMonad.Hooks.ManageDocks (avoidStruts)
 import XMonad.Layout (Mirror (..), Tall (..))
 import XMonad.Layout.Gaps (Direction2D (..), gaps)
 import XMonad.Layout.LimitWindows (limitWindows)
-import XMonad.Layout.Magnifier as LM (magnifierOff, magnifiercz')
+import XMonad.Layout.Magnifier as LM (magnifierOff, magnifiercz', magnifierczOff', magnify, MagnifyThis(..))
 import XMonad.Layout.MultiToggle as LMT (EOT (..), mkToggle, single, (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers (..))
 import XMonad.Layout.Named (named)
@@ -30,11 +30,12 @@ basicTallLayout = Tall nmaster delta ratio
   where
     nmaster = 1
     delta = 3 / 100
-    ratio = 1 / 2
+    ratio = 3 / 5
 
 tallLayout =
   named "Tall" $
-    LM.magnifierOff $ -- LM.magnifiercz' 1.5
+    -- LM.magnifierczOff' 1.5 $ -- LM.magnifierOff $ -- LM.magnifiercz' 1.5
+    LM.magnify 1.5 (NoMaster 1) False $
       mkToggle (single MIRROR) $
         mkToggle (single REFLECTX) $
           mkToggle (single REFLECTY) $

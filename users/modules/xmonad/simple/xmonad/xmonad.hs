@@ -162,6 +162,7 @@ myStartupHook = do
   spawn "nm-applet"
   spawn "blueman-applet"
   -- spawn "feh --bg-fill ~/.wallpapers/default"
+  spawn "systemctl --user start random-background"
 
 setWallpaper :: X ()
 setWallpaper =
