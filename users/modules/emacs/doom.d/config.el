@@ -81,7 +81,7 @@
 ;; they are implemented.
 
 (after! lsp-haskell
-  (setq lsp-haskell-server-path "haskell-language-server"
+  (setq ;;lsp-haskell-server-path "haskell-language-server"
         lsp-haskell-plugin-retire-global-on nil
         lsp-haskell-plugin-tactics-global-on nil))
 
@@ -96,7 +96,7 @@
         lsp-enable-text-document-color t
         lsp-headerline-breadcrumb-enable t
         lsp-signature-auto-activate t
-        lsp-signature-doc-lines 5
+        lsp-signature-doc-lines 8
         lsp-signature-render-documentation t
 
         lsp-ui-sideline-enable t
@@ -116,7 +116,13 @@
         lsp-ui-doc-include-signature t
         lsp-ui-doc-show-with-cursor t
         lsp-ui-doc-show-with-mouse t
-        lsp-ui-doc-delay 3))
+        lsp-ui-doc-delay 1))
+
+(map! :after lsp-mode
+      :map lsp-mode-map
+      "M-/" #'lsp-ui-doc-show
+      "M-." #'lsp-ui-peek-find-implementation
+      )
 
 ;; TREEMACS
 (setq winum-scope 'visible)
