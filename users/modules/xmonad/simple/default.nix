@@ -67,7 +67,7 @@ in
           dunst
           font-awesome
           selected-nerdfonts
-          gnome3.gnome-terminal
+          gnome.gnome-terminal
           shellScripts
           trayer
           statusbar

@@ -42,10 +42,10 @@ in
         dconf
         glib.bin
         goldendict
-        gnome3.gnome-tweaks
-        gnome3.nautilus
-        gnome3.evince
-        gnome3.gnome-terminal
+        gnome.gnome-tweaks
+        gnome.nautilus
+        gnome.evince
+        gnome.gnome-terminal
         pavucontrol
       ];
 
@@ -75,7 +75,7 @@ in
         xsettings = {
           Unit.Description = "xsettings daemon";
           Service = {
-            ExecStart = "${pkgs.gnome3.gnome-settings-daemon}/libexec/gsd-xsettings";
+            ExecStart = "${pkgs.gnome.gnome-settings-daemon}/libexec/gsd-xsettings";
             Restart = "on-failure";
             RestartSec = 3;
           };

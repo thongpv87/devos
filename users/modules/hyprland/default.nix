@@ -39,10 +39,10 @@ in
         dconf
         glib.bin
         goldendict
-        gnome3.gnome-tweaks
-        gnome3.nautilus
-        gnome3.evince
-        gnome3.gnome-terminal
+        gnome.gnome-tweaks
+        gnome.nautilus
+        gnome.evince
+        gnome.gnome-terminal
         pavucontrol
         wofi
         seatd

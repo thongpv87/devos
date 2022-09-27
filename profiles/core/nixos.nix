@@ -13,7 +13,7 @@
       gptfdisk
       iputils
       usbutils
-      utillinux
+      util-linux
     ];
 
     shellAliases =

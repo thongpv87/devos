@@ -72,9 +72,9 @@ with lib;
     (mkIf cfg.undervolt {
       services.undervolt = {
         enable = true;
-        coreOffset = -130;
-        gpuOffset = -120;
-        uncoreOffset = -120;
+        coreOffset = -120;
+        gpuOffset = -90;
+        uncoreOffset = -70;
       };
     })
 

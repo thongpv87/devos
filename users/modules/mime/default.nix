@@ -27,8 +27,8 @@ in
         shotwell
         rhythmbox
         vlc
-        gnome3.nautilus
-        gnome3.evince #libreoffice
+        gnome.nautilus
+        gnome.evince #libreoffice
       ];
 
       xdg = {
