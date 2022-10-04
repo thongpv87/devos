@@ -44,6 +44,10 @@ with lib;
       };
       services.xserver = {
         videoDrivers = [ "nvidia" ];
+        deviceSection = ''
+          Option "DRI" "3"
+          Option "TearFree" "true"
+        '';
         enable = true;
         displayManager.gdm.enable = true;
         #desktopManager.kde.enable = true;

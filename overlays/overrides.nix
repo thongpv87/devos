@@ -17,7 +17,8 @@ channels: final: prev: {
     zoom-us
     ;
 
-  selected-nerdfonts = prev.nerdfonts.override {
+  selected-nerdfonts = prev.nerdfonts.overrideAttrs (o: {
+    version = "2.1.0";
     fonts = [
       "FiraCode"
       "FiraMono"
@@ -30,14 +31,14 @@ channels: final: prev: {
       "Terminus"
     ];
     enableWindowsFonts = false;
-  };
+  });
 
-  ibus-engines.bamboo = prev.ibus-engines.bamboo.overrideAttrs (oldAttrs: {
-    version = "v0.8.0";
+  ibus-engines.my-bamboo = prev.ibus-engines.bamboo.overrideAttrs (oldAttrs: {
+    version = "v0.8.1";
     src = final.fetchFromGitHub {
       owner = "BambooEngine";
       repo = "ibus-bamboo";
-      rev = "f6406437969b8e40c5e529cad0055d894fad2c7a";
+      rev = "c0001c571d861298beb99463ef63816b17203791";
       sha256 = "0bpnflz0ydifzlh9lg2hv96rg2dxag7cw0la2yh42c36mpahiby3";
     };
     buildInputs = oldAttrs.buildInputs ++ [ final.glib final.gtk3 ];

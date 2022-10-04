@@ -4,7 +4,8 @@ with lib;
 let
   cfg = config.module.xmonad.simple;
 
-  selected-nerdfonts = pkgs.nerdfonts.override {
+  selected-nerdfonts = pkgs.nerdfonts.overrideAttrs (o: {
+    version = "2.1.0";
     fonts = [
       "FiraCode"
       "FiraMono"
@@ -17,7 +18,7 @@ let
       "Terminus"
     ];
     enableWindowsFonts = false;
-  };
+  });
 
   shellScripts = pkgs.stdenv.mkDerivation {
     name = "myShellScripts";

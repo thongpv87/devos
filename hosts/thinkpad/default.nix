@@ -1,4 +1,17 @@
 { suites, lib, config, pkgs, ... }:
+let
+  my-bamboo = pkgs.ibus-engines.bamboo.overrideAttrs (oldAttrs: {
+    version = "v0.8.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "BambooEngine";
+      repo = "ibus-bamboo";
+      rev = "c0001c571d861298beb99463ef63816b17203791";
+      sha256 = "sha256-7qU3ieoRPfv50qM703hEw+LTSrhrzwyzCvP9TOLTiDs=";
+    };
+    buildInputs = oldAttrs.buildInputs ++ [ pkgs.glib pkgs.gtk3 ];
+  });
+  hybridVaApiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+in
 {
   system.stateVersion = "22.05";
   ### root password is empty by default ###
@@ -49,7 +62,7 @@
   time.timeZone = "Asia/Ho_Chi_Minh";
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ bamboo ];
+    ibus.engines = with pkgs.ibus-engines; [ my-bamboo ];
   };
 
   networking.networkmanager.enable = true;
@@ -60,7 +73,7 @@
       enable = true;
       driSupport32Bit = true;
       extraPackages = with pkgs; [
-        vaapiIntel
+        hybridVaApiIntel
         vaapiVdpau
         libvdpau-va-gl
         intel-media-driver
