@@ -157,6 +157,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --width 8 --transparent true --alpha 0 --tint 0x22242b --height 24 --padding 5 --iconspacing 3"
   spawnOnce "systemctl --user start emacs"
+  spawn "xrandr --setprovideroutputsource modesetting NVIDIA-0 && autorandr --change"
   spawn "ibus-daemon"
   spawn "xsetroot -cursor_name left_ptr"
   spawn "nm-applet"

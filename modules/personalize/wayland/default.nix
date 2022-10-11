@@ -19,7 +19,7 @@ with lib;
       vulkan-tools
       nvidia-offload
       wlr-randr
-      #wl-clipboard
+      wl-clipboard
       pipewire
       wireplumber
       slurp

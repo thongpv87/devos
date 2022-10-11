@@ -14,7 +14,7 @@ import XMonad.Layout.Named (named)
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.PerScreen (ifWider)
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Reflect (REFLECTX (..), REFLECTY (..), reflectVert)
+import XMonad.Layout.Reflect (REFLECTX (..), REFLECTY (..), reflectVert, reflectHoriz)
 import XMonad.Layout.SimplestFloat (simplestFloat)
 import XMonad.Layout.Spacing (Border (..), spacingRaw)
 import XMonad.Layout.ThreeColumns (ThreeCol (..))
@@ -39,7 +39,8 @@ tallLayout =
       mkToggle (single MIRROR) $
         mkToggle (single REFLECTX) $
           mkToggle (single REFLECTY) $
-            limitWindows 4 basicTallLayout
+            limitWindows 4 $
+             reflectHoriz $ basicTallLayout
 
 verticalLayout =
   named "Vert" $

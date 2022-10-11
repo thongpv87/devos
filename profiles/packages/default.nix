@@ -9,6 +9,7 @@
 
   services = {
     teamviewer.enable = false;
+    usbmuxd.enable = true;
   };
 
   environment = {
@@ -66,6 +67,10 @@
       nix-zsh-completions
 
       config.boot.kernelPackages.bcc
+
+      # iOS mounting
+      libimobiledevice
+      ifuse
     ];
     pathsToLink = [ "/share/zsh" ];
   };

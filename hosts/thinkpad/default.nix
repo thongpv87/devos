@@ -26,7 +26,7 @@ in
     displayServer = {
       xorg = {
         enable = true;
-        gpuMode = "hybrid";
+        gpuMode = "NVIDIA";
       };
       wayland = {
         enable = false;

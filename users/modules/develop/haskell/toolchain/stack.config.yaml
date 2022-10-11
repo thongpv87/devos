@@ -35,6 +35,6 @@ nix:
   packages: [ zlib.dev
             , zlib.out
             , postgresql
-            , pkgconfig
+            , pkg-config
             , protobuf
             ]

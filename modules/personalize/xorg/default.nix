@@ -64,6 +64,7 @@ with lib;
     (mkIf (cfg.gpuMode == "NVIDIA") {
       hardware = {
         nvidia = {
+          modesetting.enable = true;
           prime = {
             sync.enable = true;
             intelBusId = "PCI:0:2:0";
@@ -79,6 +80,12 @@ with lib;
         windowManager.xmonad.enable = true;
         layout = "us";
         libinput.enable = true;
+
+        screenSection = ''
+          Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+          Option         "AllowIndirectGLXProtocol" "off"
+          Option         "TripleBuffer" "on"
+        '';
       };
     })
   ]);
