@@ -96,7 +96,7 @@ statusbarPP =
     def
       { ppSep = blue " | ",
         ppTitleSanitize = xmobarStrip,
-        ppCurrent = yellow . xmobarBorder "Top" "#8be9fd" 2,
+        ppCurrent = yellow . xmobarBorder "Top" "#8be9fd" 2 . wsSpacing,
         ppVisible = yellow . wsSpacing,
         ppHidden = white . wsSpacing,
         ppHiddenNoWindows = gray . wsSpacing,
@@ -121,7 +121,7 @@ statusbarPP =
     red = xmobarColor "#ff5555" ""
     gray = xmobarColor "#666666" ""
     lowWhite = xmobarColor "#bbbbbb" ""
-    wsSpacing = wrap "" " "
+    wsSpacing = wrap " " " "
 
 myManageHook :: ManageHook
 myManageHook =
