@@ -44,7 +44,8 @@ darkOnOrange =
       pLow = "#0BDA51",
       pHigh = "#ff0000",
       -- pFont = "xft:LiterationSans Nerd Font Mono:style=Book",
-      pFont = "xft:LiterationSans Nerd Font:style=Bold",
+      -- pFont = "xft:LiterationSans Nerd Font:style=Book",
+      pFont = "xft:NotoSansMono Nerd Font",
       pDim = "#7f7f7f",
       pBorder = "#000000", -- zenburnBackLight
       pForeground = zenburnFg,

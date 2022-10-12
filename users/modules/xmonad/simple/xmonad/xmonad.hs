@@ -121,7 +121,7 @@ statusbarPP =
     red = xmobarColor "#ff5555" ""
     gray = xmobarColor "#666666" ""
     lowWhite = xmobarColor "#bbbbbb" ""
-    wsSpacing = wrap " " " "
+    wsSpacing = wrap "" " "
 
 myManageHook :: ManageHook
 myManageHook =
