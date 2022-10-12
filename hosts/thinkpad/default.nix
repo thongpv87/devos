@@ -82,6 +82,7 @@ in
     };
   };
 
+
   services = {
     fstrim.enable = true;
     logind = {
@@ -94,10 +95,18 @@ in
       lidSwitch = "suspend";
     };
 
+    xserver = {
+      layout = "us";
+      libinput.enable = true;
+      xkbModel = "thinkpad";
+      xkbOptions = "caps:escape,altwin:prtsc_rwin";
+    };
+
     fwupd.enable = true;
     udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
   };
 
+  console.useXkbConfig = true;
 
   environment.variables = {
     VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");

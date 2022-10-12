@@ -125,7 +125,7 @@
       )
 
 ;; TREEMACS
-(setq winum-scope 'visible)
+(setq winum-scope 'frame-local)
 (map! "M-0" #'treemacs-select-window
       "M-1" #'winum-select-window-1
       "M-2" #'winum-select-window-2

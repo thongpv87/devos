@@ -43,7 +43,8 @@ darkOnOrange =
     { pNormal = zenburnFg,
       pLow = "#0BDA51",
       pHigh = "#ff0000",
-      pFont = "xft:SauceCodePro Nerd Font:style=Regular",
+      -- pFont = "xft:LiterationSans Nerd Font Mono:style=Book",
+      pFont = "xft:LiterationSans Nerd Font:style=Bold",
       pDim = "#7f7f7f",
       pBorder = "#000000", -- zenburnBackLight
       pForeground = zenburnFg,

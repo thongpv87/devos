@@ -67,7 +67,7 @@ tallOrFull =
     $ layouts
   where
     layouts =
-      ifWider 1920 (ifWider 3800 (toggleGapsLayout tallLayout) verticalLayout) (toggleGapsLayout tallLayout)
+      ifWider 1920 (ifWider 3800 (toggleGapsLayout tallLayout) verticalLayout) tallLayout
 
 centerFloatMedium = customFloating $ RationalRect (1 / 4) (1 / 4) (2 / 4) (2 / 4)
 

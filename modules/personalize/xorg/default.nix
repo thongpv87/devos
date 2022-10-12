@@ -22,7 +22,15 @@ with lib;
   };
 
   config = mkIf (cfg.enable) (mkMerge [
-    { nixpkgs.config.allowUnfree = true; }
+    { 
+      nixpkgs.config.allowUnfree = true; 
+      services.xserver = {
+        layout = "us";
+        libinput.enable = true;
+        xkbModel = "thinkpad";
+        xkbOptions = "caps:escape,altwin:prtsc_rwin";
+      };
+    }
 
     (mkIf (cfg.gpuMode == "hybrid") {
       environment.systemPackages = [ nvidia-offload ];
@@ -56,8 +64,6 @@ with lib;
         #displayManager.sddm.enable = true;
         displayManager.startx.enable = false;
         windowManager.xmonad.enable = true;
-        layout = "us";
-        libinput.enable = true;
       };
     })
 
@@ -78,8 +84,6 @@ with lib;
         enable = true;
         displayManager.gdm.enable = true;
         windowManager.xmonad.enable = true;
-        layout = "us";
-        libinput.enable = true;
 
         screenSection = ''
           Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"

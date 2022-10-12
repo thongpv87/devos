@@ -97,9 +97,9 @@ statusbarPP =
       { ppSep = blue " | ",
         ppTitleSanitize = xmobarStrip,
         ppCurrent = yellow . xmobarBorder "Top" "#8be9fd" 2,
-        ppVisible = yellow,
-        ppHidden = white . wrap "" "",
-        ppHiddenNoWindows = gray . wrap "" "",
+        ppVisible = yellow . wsSpacing,
+        ppHidden = white . wsSpacing,
+        ppHiddenNoWindows = gray . wsSpacing,
         ppUrgent = red . wrap (yellow "!") (yellow "!"),
         ppOrder = \[ws, l, _, wins] -> [ws, l],
         ppExtras = [logTitles formatFocused formatUnfocused]
@@ -121,10 +121,12 @@ statusbarPP =
     red = xmobarColor "#ff5555" ""
     gray = xmobarColor "#666666" ""
     lowWhite = xmobarColor "#bbbbbb" ""
+    wsSpacing = wrap "" " "
 
 myManageHook :: ManageHook
 myManageHook =
-  fullscreenManageHook <+> manageDocks
+  fullscreenManageHook
+    <+> manageDocks
     <+> composeAll
       [ className =? "confirm" --> doFloat,
         className =? "file_progress" --> doFloat,
