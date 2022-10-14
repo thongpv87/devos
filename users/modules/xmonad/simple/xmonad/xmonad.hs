@@ -1,8 +1,5 @@
 {-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE TupleSections #-}
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 
-{-# HLINT ignore "Use tuple-section" #-}
 module Main where
 
 import Common (MyWorkspace (..), myWorkspaceNames, wsName)
