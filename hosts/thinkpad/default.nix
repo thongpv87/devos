@@ -111,6 +111,8 @@ in
 
   environment.variables = {
     VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
+    LIBVA_DRIVER_NAME = "nvidia";
+    MOZ_DISABLE_RDD_SANDBOX = 1;
   };
 
   # systemd.services.thinkfan.preStart = "
