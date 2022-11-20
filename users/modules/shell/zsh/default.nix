@@ -5,9 +5,7 @@ let
   aliases = {
     ssh = "TERM=xterm-256color ssh";
     irssi = "TERM=xterm-256color irssi";
-    nano = "emacsclient -t";
     em = "emacsclient -t";
-    real-nano = "${pkgs.nano}/out/bin/nano";
   };
 in
 {
@@ -24,58 +22,55 @@ in
     };
   };
 
-  config = mkIf cfg.enable
-    {
-      home.packages = with pkgs; [ any-nix-shell nix-zsh-completions ];
-      programs.zsh = {
-        enable = true;
-        enableCompletion = true;
-        enableAutosuggestions = true;
-        autocd = true;
-        defaultKeymap = "emacs";
-        dotDir = ".config/zsh";
+  config = mkIf cfg.enable {
+    home.packages = with pkgs; [ any-nix-shell nix-zsh-completions ];
+    programs.zsh = {
+      enable = true;
+      enableCompletion = true;
+      enableAutosuggestions = true;
+      autocd = true;
+      defaultKeymap = "emacs";
+      dotDir = ".config/zsh";
 
-        history = {
-          extended = true;
-          share = true;
-          size = 10000;
-        };
-
-        localVariables = {
-          ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=3,bold";
-        };
-
-        shellAliases = aliases;
-
-        initExtra = ''
-          if command -v theme.sh > /dev/null; then
-            [ -e ~/.theme_history ] && theme.sh "$(theme.sh -l|tail -n1)"
-          fi
-          any-nix-shell zsh --info-right | source /dev/stdin
-          export DIRENV_LOG_FORMAT=
-          eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
-          source ~/.config/zsh/zshrc_extra
-          #(cat ~/.cache/wal/sequences &)
-          eval "$(${pkgs.starship}/bin/starship init zsh)"
-        '';
-
-        "oh-my-zsh" = {
-          enable = true;
-          plugins = [
-            "git"
-            "sudo"
-            "gitignore"
-            "cp"
-            "docker"
-            "safe-paste"
-            "colored-man-pages"
-          ];
-        };
+      history = {
+        extended = true;
+        share = true;
+        size = 10000;
       };
 
-      xdg = {
+      localVariables = { ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=3,bold"; };
+
+      shellAliases = aliases;
+
+      initExtra = ''
+        if command -v theme.sh > /dev/null; then
+          [ -e ~/.theme_history ] && theme.sh "$(theme.sh -l|tail -n1)"
+        fi
+        any-nix-shell zsh --info-right | source /dev/stdin
+        export DIRENV_LOG_FORMAT=
+        eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
+        source ~/.config/zsh/zshrc_extra
+        #(cat ~/.cache/wal/sequences &)
+        eval "$(${pkgs.starship}/bin/starship init zsh)"
+      '';
+
+      "oh-my-zsh" = {
         enable = true;
-        configFile."zsh/zshrc_extra".source = ./zshrc_extra;
+        plugins = [
+          "git"
+          "sudo"
+          "gitignore"
+          "cp"
+          "docker"
+          "safe-paste"
+          "colored-man-pages"
+        ];
       };
     };
+
+    xdg = {
+      enable = true;
+      configFile."zsh/zshrc_extra".source = ./zshrc_extra;
+    };
+  };
 }

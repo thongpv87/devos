@@ -1,6 +1,7 @@
-{
+{ pkgs, ... }: {
   manual.manpages.enable = true;
 
+  home.packages = [ pkgs.neovim ];
   programs = {
     git = {
       userName = "Thong Pham";
@@ -39,6 +40,6 @@
     # Note, these variables may be set in any order
     # so no session variable may have a runtime dependency
     # on another session variable
-    sessionVariables = { };
+    sessionVariables = { EDITOR = "nvim"; };
   };
 }

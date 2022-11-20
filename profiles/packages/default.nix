@@ -39,6 +39,7 @@
       emacs
       nano
       vim
+      neovim
       wget
       ascii
       file

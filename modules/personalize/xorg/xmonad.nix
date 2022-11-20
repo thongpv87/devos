@@ -50,8 +50,8 @@ in
   ];
 
   services.xserver = {
-    displayManager.gdm.enable = true;
-    desktopManager.xfce.enable = true;
+    displayManager.gdm.enable = false;
+    desktopManager.xfce = { enable = true; };
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;

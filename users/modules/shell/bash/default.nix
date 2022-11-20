@@ -5,9 +5,7 @@ let
   aliases = {
     ssh = "TERM=xterm-256color ssh";
     irssi = "TERM=xterm-256color irssi";
-    nano = "emacsclient -t";
     em = "emacsclient -t";
-    real-nano = "${pkgs.nano}/out/bin/nano";
   };
 in
 {
@@ -24,17 +22,16 @@ in
     };
   };
 
-  config = mkIf cfg.enable
-    {
-      home.packages = with pkgs; [ bash-completion ];
+  config = mkIf cfg.enable {
+    home.packages = with pkgs; [ bash-completion ];
 
-      programs.bash = {
-        enable = true;
-        historyControl = [ "ignoredups" ];
-        shellAliases = aliases;
-        initExtra = ''
-          eval "$(starship init bash)"
-        '';
-      };
+    programs.bash = {
+      enable = true;
+      historyControl = [ "ignoredups" ];
+      shellAliases = aliases;
+      initExtra = ''
+        eval "$(starship init bash)"
+      '';
     };
+  };
 }
