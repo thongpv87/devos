@@ -44,7 +44,9 @@ in
     xorg.xbacklight
     xorg.setxkbmap
     imagemagick
-
+    papirus-icon-theme
+    papirus-folders
+    xfce.xfce4-sensors-plugin
     # feh
     # xdotool
   ];

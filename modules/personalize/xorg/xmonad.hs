@@ -76,6 +76,7 @@ import XMonad.Layout.ToggleLayouts (toggleLayouts)
 import XMonad.Layout.ToggleLayouts as LTL
   ( ToggleLayout (..),
   )
+import XMonad.Layout.ShowWName
 import XMonad.ManageHook
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
@@ -113,7 +114,7 @@ myWorkspaces :: [MyWorkspace]
 myWorkspaces = [minBound :: MyWorkspace .. maxBound]
 
 myWorkspaceNames :: [String]
-myWorkspaceNames = wsName <$> myWorkspaces
+myWorkspaceNames = show <$> myWorkspaces
 
 ------------------- CONFIG --------------------------
 data DisplayConfig = DisplayConfig
@@ -283,10 +284,18 @@ mkXConfig XMonadConfig {..} =
       mouseBindings = myMouseBindings,
       workspaces = myWorkspaceNames,
       manageHook = myManageHook,
-      layoutHook = tallOrFull,
+      layoutHook = showWName' myShowWNameTheme tallOrFull,
       startupHook = myStartupHook,
       logHook = refocusLastLogHook >> nsHideOnFocusLoss namedScratchpads
     }
+
+myShowWNameTheme :: SWNConfig
+myShowWNameTheme = def
+  { swn_font              = "xft:FiraCode Nerd Font:style=regular:size=60"
+  , swn_fade              = 1.0
+  , swn_bgcolor           = "#1c1f24"
+  , swn_color             = "#ffffff"
+  }
 
 statusbarPP :: PP
 statusbarPP =
