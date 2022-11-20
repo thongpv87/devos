@@ -132,7 +132,7 @@
             };
 
             suites = with profiles; rec {
-              base = [ core.nixos users.thongpv87 users.root laptop packages virt ];
+              base = [ core.nixos users.thongpv87 users.root laptop packages virt misc ];
               wayland = base ++ [ profiles.wayland ];
               xorg = base ++ [ profiles.xorg ];
             };

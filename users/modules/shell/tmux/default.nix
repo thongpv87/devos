@@ -48,7 +48,7 @@ in
           baseIndex = 1;
           shortcut = "o";
           customPaneNavigationAndResize = true;
-          keyMode = "emacs";
+          keyMode = "vi";
           newSession = true;
           secureSocket = false;
           terminal = "xterm-256color";
@@ -58,7 +58,7 @@ in
             set -s copy-command 'xsel -ib'
             ${readFile ./bindings.conf}
             ${readFile ./tmux.conf}
-            ${readFile ./gruvbox.conf}
+            ${readFile ./gruvbox-dark.conf}
           '';
         };
       }

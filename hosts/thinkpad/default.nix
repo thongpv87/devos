@@ -61,8 +61,11 @@ in
 
   time.timeZone = "Asia/Ho_Chi_Minh";
   i18n.inputMethod = {
-    enabled = "ibus";
+    # enabled = "ibus";
     ibus.engines = with pkgs.ibus-engines; [ my-bamboo ];
+    enabled = "fcitx";
+    fcitx.engines = [ pkgs.fcitx-engines.unikey ];
+    fcitx5.addons = [ pkgs.fcitx5-unikey ];
   };
 
   networking.networkmanager.enable = true;
@@ -112,7 +115,13 @@ in
   environment.variables = {
     VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
     LIBVA_DRIVER_NAME = "nvidia";
-    MOZ_DISABLE_RDD_SANDBOX = 1;
+    MOZ_DISABLE_RDD_SANDBOX = "1";
+    # GTK_IM_MODULE="ibus";
+    # QT_IM_MODULE="ibus";
+    # XMODIFIERS="@im=ibus";
+    # QT4_IM_MODULE="ibus";
+    # CLUTTER_IM_MODULE="ibus";
+    # GLFW_IM_MODULE="ibus";
   };
 
   # systemd.services.thinkfan.preStart = "

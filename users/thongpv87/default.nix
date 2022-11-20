@@ -13,4 +13,9 @@
     extraGroups = [ "audio" "wheel" "networkmanager" "docker" ];
   };
 
+
+  fileSystems."/home/thongpv87/Dropbox/Documents" = {
+    device = "/home/thongpv87/Documents";
+    options = [ "bind" ];
+  };
 }
