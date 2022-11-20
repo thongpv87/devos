@@ -28,6 +28,7 @@ import XMonad
     (<+>),
     (=?),
   )
+import XMonad.Config.Gnome (gnomeConfig)
 import XMonad.Hooks.DynamicLog
   ( PP (..),
     filterOutWsPP,
@@ -70,7 +71,7 @@ instance Show Terminal where
 
 -- mkXConfig :: XMonadConfig -> XConfig l
 mkXConfig XMonadConfig {..} =
-  def
+  gnomeConfig
     { terminal = show Alacritty,
       modMask = mod4Mask,
       clickJustFocuses = True,
@@ -154,7 +155,7 @@ myManageHook =
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --width 8 --transparent true --alpha 0 --tint 0x22242b --height 24 --padding 5 --iconspacing 3"
+  -- spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --width 8 --transparent true --alpha 0 --tint 0x22242b --height 24 --padding 5 --iconspacing 3"
   spawnOnce "systemctl --user start emacs"
   spawn "xrandr --setprovideroutputsource modesetting NVIDIA-0 && autorandr --change"
   spawn "ibus-daemon"
@@ -177,5 +178,5 @@ main = do
   myConfig <- mkDefaultXMonadConfig
   xmonad
     . ewmh
-    . withSB (statusBarProp "statusbar" (pure statusbarPP))
+    -- . withSB (statusBarProp "statusbar" (pure statusbarPP))
     $ mkXConfig myConfig

@@ -11,7 +11,8 @@
   module = {
     hyprland.enable = false;
     xmonad = {
-      enable = true;
+      enable = false;
+      rofi.enable = true;
       theme = "simple";
     };
 
@@ -32,9 +33,7 @@
       options = [ "caps:escape" "altwin:prtsc_rwin" ];
     };
 
-    language = {
-      base = "en_US.UTF8";
-    };
+    language = { base = "en_US.UTF8"; };
 
     #enableNixpkgsReleaseCheck = true;
     # Note, these variables may be set in any order

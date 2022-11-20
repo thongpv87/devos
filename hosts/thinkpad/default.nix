@@ -28,9 +28,7 @@ in
         enable = true;
         gpuMode = "NVIDIA";
       };
-      wayland = {
-        enable = false;
-      };
+      wayland = { enable = false; };
     };
   };
 
@@ -43,13 +41,11 @@ in
       efi.canTouchEfiVariables = true;
     };
 
-    kernel.sysctl = {
-      "vm.swappiness" = 1;
-    };
-
+    kernel.sysctl = { "vm.swappiness" = 1; };
 
     kernelPackages = pkgs.linuxPackages_latest;
-    initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "battery" "thinkpad_acpi" ];
+    initrd.availableKernelModules =
+      [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "battery" "thinkpad_acpi" ];
     initrd.kernelModules = [ "i915" ];
     kernelModules = [ "kvm-intel" "acpi_call" "coretemp" ];
     blacklistedKernelModules = [ ];
@@ -57,7 +53,6 @@ in
 
     extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
   };
-
 
   time.timeZone = "Asia/Ho_Chi_Minh";
   i18n.inputMethod = {
@@ -86,7 +81,6 @@ in
     };
   };
 
-
   services = {
     fstrim.enable = true;
     logind = {
@@ -113,9 +107,11 @@ in
   console.useXkbConfig = true;
 
   environment.variables = {
-    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
+    VDPAU_DRIVER =
+      lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
     LIBVA_DRIVER_NAME = "nvidia";
     MOZ_DISABLE_RDD_SANDBOX = "1";
+    KDEWM = "/run/current-system/sw/bin/xmonad";
     # GTK_IM_MODULE="ibus";
     # QT_IM_MODULE="ibus";
     # XMODIFIERS="@im=ibus";
@@ -128,24 +124,21 @@ in
   #   /run/current-system/sw/bin/modprobe  -r thinkpad_acpi && /run/current-system/sw/bin/modprobe thinkpad_acpi
   # ";
 
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/97C5-700D";
+    fsType = "vfat";
+  };
 
-  fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/97C5-700D";
-      fsType = "vfat";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/e50d10de-636c-4f47-bf0e-66d8a240efe3";
+    fsType = "ext4";
+  };
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/e50d10de-636c-4f47-bf0e-66d8a240efe3";
-      fsType = "ext4";
-    };
-
-  fileSystems."/home" =
-    {
-      device = "/dev/disk/by-uuid/5d53d8b7-a579-474b-bba8-56bce1b599c2";
-      fsType = "ext4";
-    };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/5d53d8b7-a579-474b-bba8-56bce1b599c2";
+    fsType = "ext4";
+  };
 }

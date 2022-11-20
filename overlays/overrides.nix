@@ -3,19 +3,10 @@ channels: final: prev: {
   __dontExport = true; # overrides clutter up actual creations
 
   inherit (channels.latest)
-    cachix
-    dhall
-    discord
-    element-desktop
-    rage
-    nix-index
-    nixpkgs-fmt
-    qutebrowser
-    signal-desktop
-    starship
-    deploy-rs
-    zoom-us
-    ;
+    cachix dhall discord element-desktop rage nix-index nixpkgs-fmt qutebrowser
+    signal-desktop starship deploy-rs zoom-us;
+
+  pkgconfig = final.pkg-config;
 
   selected-nerdfonts = prev.nerdfonts.overrideAttrs (o: {
     version = "2.1.0";
@@ -55,15 +46,14 @@ channels: final: prev: {
     };
   });
 
-  haskellPackages = prev.haskellPackages.override
-    (old: {
-      overrides = prev.lib.composeExtensions (old.overrides or (_: _: { })) (hfinal: hprev:
+  haskellPackages = prev.haskellPackages.override (old: {
+    overrides = prev.lib.composeExtensions (old.overrides or (_: _: { }))
+      (hfinal: hprev:
         let version = prev.lib.replaceChars [ "." ] [ "" ] prev.ghc.version;
-        in
-        {
+        in {
           # same for haskell packages, matching ghc versions
           inherit (channels.latest.haskell.packages."ghc${version}")
             haskell-language-server;
         });
-    });
+  });
 }

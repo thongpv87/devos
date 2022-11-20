@@ -9,8 +9,8 @@ let
     exec -a "$0" "$@"
   '';
 in
-with lib;
-{
+with lib; {
+  imports = [ ./xmonad.nix ];
   options = {
     personalize.displayServer.xorg = {
       enable = mkEnableOption (mdDoc "Enable Xorg display server");
@@ -22,8 +22,8 @@ with lib;
   };
 
   config = mkIf (cfg.enable) (mkMerge [
-    { 
-      nixpkgs.config.allowUnfree = true; 
+    {
+      nixpkgs.config.allowUnfree = true;
       services.xserver = {
         layout = "us";
         libinput.enable = true;
@@ -57,13 +57,6 @@ with lib;
           Option "TearFree" "true"
         '';
         enable = true;
-        displayManager.gdm.enable = true;
-        #desktopManager.kde.enable = true;
-        #desktopManger.gnome.enable = true;
-        #displayManager.lightdm.enable = false;
-        #displayManager.sddm.enable = true;
-        displayManager.startx.enable = false;
-        windowManager.xmonad.enable = true;
       };
     })
 
@@ -82,9 +75,6 @@ with lib;
       services.xserver = {
         videoDrivers = [ "nvidia" ];
         enable = true;
-        displayManager.gdm.enable = true;
-        windowManager.xmonad.enable = true;
-
         screenSection = ''
           Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
           Option         "AllowIndirectGLXProtocol" "off"

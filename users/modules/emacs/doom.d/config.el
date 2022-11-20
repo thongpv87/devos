@@ -80,6 +80,14 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; org-latex configs
+(setq org-latex-pdf-process
+      '("latexmk -pdflatex='%latex -shell-escape -interaction nonstopmode' -pdf -output-directory=%o -f %f"))
+(add-to-list 'org-latex-packages-alist
+             '("AUTO" "babel" t ("pdflatex")))
+(add-to-list 'org-latex-packages-alist
+             '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+
 (after! lsp-haskell
   (setq ;;lsp-haskell-server-path "haskell-language-server"
         lsp-haskell-plugin-retire-global-on nil

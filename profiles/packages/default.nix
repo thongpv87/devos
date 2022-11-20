@@ -64,6 +64,7 @@
       roboto-slab
 
       nix-index
+      nixfmt
       nix-zsh-completions
 
       config.boot.kernelPackages.bcc
