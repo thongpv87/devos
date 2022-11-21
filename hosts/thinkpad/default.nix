@@ -11,8 +11,7 @@ let
     buildInputs = oldAttrs.buildInputs ++ [ pkgs.glib pkgs.gtk3 ];
   });
   hybridVaApiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-in
-{
+in {
   system.stateVersion = "22.05";
   ### root password is empty by default ###
   imports = suites.base;
@@ -26,7 +25,8 @@ in
     displayServer = {
       xorg = {
         enable = true;
-        gpuMode = "NVIDIA";
+        # gpuMode = "NVIDIA";
+        gpuMode = "hybrid";
       };
       wayland = { enable = false; };
     };

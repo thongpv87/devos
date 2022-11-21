@@ -8,14 +8,14 @@ let
 
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive)
-      scheme-full dvisvgm dvipng# for preview and export as html
+      scheme-full dvisvgm dvipng # for preview and export as html
       pygmentex minted hyperref wrapfig amsmath capt-of ulem vntex babel fvextra
       mdframed efbox latex-bin latexmk polyglossia;
     #(setq org-latex-compiler "lualatex")
     #(setq org-preview-latex-default-process 'dvisvgm)
   });
-in
-{
+
+in {
   options = { module.emacs = { enable = mkOption { default = false; }; }; };
 
   config = mkIf cfg.enable {
@@ -35,15 +35,9 @@ in
       emacsPackages.pdf-tools
     ];
 
-    programs.emacs = {
-      enable = true;
-      #package = pkgs.emacsGcc;
-    };
+    programs.emacs = { enable = true; };
 
-    # home.file.".emacs.d/private/themes" = {
-    #   source = ./themes;
-    #   recursive = true;
-    # };
+    #xsession.initExtra = "${fix-emacs-ibus-issue.out}/bin/fix-ibus-for-emacs";
 
     services = {
       emacs = {
@@ -57,5 +51,6 @@ in
         });
       };
     };
+
   };
 }
