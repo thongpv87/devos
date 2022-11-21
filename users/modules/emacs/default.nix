@@ -31,6 +31,7 @@ in
       doom
       tex
 
+      python310Packages.pygments
       emacsPackages.pdf-tools
     ];
 

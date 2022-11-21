@@ -24,7 +24,9 @@
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 
-(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 12 :weight 'semi-bold)
+(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 12 :weight 'regular)
+      doom-themes-enable-bold t
+      doom-themes-enable-italic t
       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 
 
@@ -36,7 +38,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox-light)
+;; (setq doom-theme 'doom-gruvbox-light)
+(setq doom-theme 'doom-one)
 (setq doom-themes-treemacs-theme "doom-colors")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -80,13 +83,43 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; org-latex configs
+;; org mode
+ (setq org-latex-default-packages-alist
+      '(("AUTO" "polyglossia" t ("xelatex" "lualatex"))
+        ("AUTO" "babel" t ("pdflatex"))
+        ("" "graphicx" t)
+        ("" "longtable" nil)
+        ("" "wrapfig" nil)
+        ("" "rotating" nil)
+        ("normalem" "ulem" t)
+        ("" "amsmath" t)
+        ("" "textcomp" t)
+        ("" "amssymb" t)
+        ("" "capt-of" nil)
+        ("" "color" t)
+        ("" "listings" t)
+        ("dvipsnames" "xcolor" nil)
+        ("colorlinks=true, linkcolor=Blue, citecolor=BrickRed, urlcolor=PineGreen" "hyperref" nil)
+	("" "indentfirst" nil)))
+
+;; (use-package! ox-latex
+;;   (setq org-latex-listings 'engraved))
+
+
+
+(setq org-latex-listings 'engraved
+      org-latex-packages-alist '(("" "color")
+                                 ("" "listings")
+                                 ("" "minted"))
+      org-latex-minted-options '(("breaklines" "true")
+                                 ("breakanywhere" "true")
+                                 ("mathescape")
+                                 ("frame" "lines")
+                                 ))
+
 (setq org-latex-pdf-process
       '("latexmk -pdflatex='%latex -shell-escape -interaction nonstopmode' -pdf -output-directory=%o -f %f"))
-(add-to-list 'org-latex-packages-alist
-             '("AUTO" "babel" t ("pdflatex")))
-(add-to-list 'org-latex-packages-alist
-             '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+
 
 (after! lsp-haskell
   (setq ;;lsp-haskell-server-path "haskell-language-server"
@@ -132,6 +165,10 @@
       "M-." #'lsp-ui-peek-find-implementation
       )
 
+;; Prevent open new workspace when start emacsclient
+(after! persp-mode
+  (setq persp-emacsclient-init-frame-behaviour-override "main"))
+
 ;; TREEMACS
 (setq winum-scope 'frame-local)
 (map! "M-0" #'treemacs-select-window
@@ -148,3 +185,4 @@
 ;; OTHERS
 (add-hook! treemacs-mode
            (treemacs-load-theme "all-the-icons"))
+
