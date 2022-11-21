@@ -39,7 +39,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-gruvbox-light)
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-monokai-pro)
 (setq doom-themes-treemacs-theme "doom-colors")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -107,15 +107,8 @@
 
 
 
-(setq org-latex-listings 'engraved
-      org-latex-packages-alist '(("" "color")
-                                 ("" "listings")
-                                 ("" "minted"))
-      org-latex-minted-options '(("breaklines" "true")
-                                 ("breakanywhere" "true")
-                                 ("mathescape")
-                                 ("frame" "lines")
-                                 ))
+(setq org-latex-listings 'engraved)
+(setq org-latex-src-block-backend 'engraved)
 
 (setq org-latex-pdf-process
       '("latexmk -pdflatex='%latex -shell-escape -interaction nonstopmode' -pdf -output-directory=%o -f %f"))
@@ -185,4 +178,3 @@
 ;; OTHERS
 (add-hook! treemacs-mode
            (treemacs-load-theme "all-the-icons"))
-
