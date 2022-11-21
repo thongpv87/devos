@@ -6,6 +6,7 @@
     git = {
       userName = "Thong Pham";
       userEmail = "thongpv87@gmail.com";
+      signing.key = "087E304C48EC0C8D";
     };
   };
 
@@ -40,6 +41,10 @@
     # Note, these variables may be set in any order
     # so no session variable may have a runtime dependency
     # on another session variable
-    sessionVariables = { EDITOR = "nvim"; };
+    sessionVariables = {
+      EDITOR = "nvim";
+      SSH_AUTH_SOCK =
+        "$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)";
+    };
   };
 }
