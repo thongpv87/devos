@@ -41,10 +41,6 @@
     # Note, these variables may be set in any order
     # so no session variable may have a runtime dependency
     # on another session variable
-    sessionVariables = {
-      EDITOR = "nvim";
-      SSH_AUTH_SOCK =
-        "$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)";
-    };
+    sessionVariables = { EDITOR = "nvim"; };
   };
 }
