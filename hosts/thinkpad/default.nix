@@ -64,7 +64,16 @@ in {
     fcitx5.addons = [ pkgs.fcitx5-unikey ];
   };
 
-  networking.networkmanager.enable = true;
+  networking = {
+    wireless.iwd.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi = {
+        powersave = true;
+        backend = "iwd";
+      };
+    };
+  };
 
   hardware = {
     trackpoint.device = "TPPS/2 Elan TrackPoint";
