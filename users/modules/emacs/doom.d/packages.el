@@ -51,3 +51,4 @@
 
 
 (package! engrave-faces)
+(package! keychain-environment)
