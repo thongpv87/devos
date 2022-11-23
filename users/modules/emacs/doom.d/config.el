@@ -92,6 +92,7 @@
 
 (when noninteractive
   (add-to-list 'doom-env-whitelist "^SSH_"))
+
 (setenv "SSH_AUTH_SOCK" "/run/user/1000/gnupg/S.gpg-agent.ssh")
 
 

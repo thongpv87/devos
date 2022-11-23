@@ -26,7 +26,8 @@ in {
       xorg = {
         enable = true;
         # gpuMode = "NVIDIA";
-        gpuMode = "hybrid";
+        # gpuMode = "hybrid";
+        gpuMode = "integrated";
       };
       wayland = { enable = false; };
     };
@@ -101,13 +102,6 @@ in {
         IdleActionSec=300
       '';
       lidSwitch = "suspend";
-    };
-
-    xserver = {
-      layout = "us";
-      libinput.enable = true;
-      xkbModel = "thinkpad";
-      xkbOptions = "caps:escape,altwin:prtsc_rwin";
     };
 
     fwupd.enable = true;

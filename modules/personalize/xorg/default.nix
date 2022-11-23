@@ -8,8 +8,7 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec -a "$0" "$@"
   '';
-in
-with lib; {
+in with lib; {
   imports = [ ./xmonad.nix ];
   options = {
     personalize.displayServer.xorg = {
@@ -24,6 +23,7 @@ with lib; {
   config = mkIf (cfg.enable) (mkMerge [
     {
       nixpkgs.config.allowUnfree = true;
+
       services.xserver = {
         layout = "us";
         libinput.enable = true;
@@ -31,6 +31,17 @@ with lib; {
         xkbOptions = "caps:escape,altwin:prtsc_rwin";
       };
     }
+
+    (mkIf (cfg.gpuMode == "integrated") {
+      services.xserver = {
+        videoDrivers = [ "intel" ];
+        deviceSection = ''
+          Option "DRI" "3"
+          Option "TearFree" "true"
+        '';
+        enable = true;
+      };
+    })
 
     (mkIf (cfg.gpuMode == "hybrid") {
       environment.systemPackages = [ nvidia-offload ];
