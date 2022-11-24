@@ -95,6 +95,64 @@
 
 (setenv "SSH_AUTH_SOCK" "/run/user/1000/gnupg/S.gpg-agent.ssh")
 
+;; email
+(setq +mu4e-backend 'offlineimap
+      mu4e-index-cleanup nil
+      ;; because gmail uses labels as folders we can use lazy check since
+      ;; messages don't really "move"
+      mu4e-index-lazy-check t
+      mu4e-drafts-folder "/[Gmail].Drafts"
+      mu4e-sent-folder   "/[Gmail].Sent Mail"
+      mu4e-trash-folder  "/[Gmail].Trash"
+      )
+(setq mu4e-maildir-shortcuts
+    '( (:maildir "/INBOX"              :key ?i)
+       (:maildir "/[Gmail].Sent Mail"  :key ?s)
+       (:maildir "/[Gmail].Trash"      :key ?t)
+       (:maildir "/[Gmail].All Mail"   :key ?a)))
+
+(setq +mu4e-gmail-accounts '(("thongpv87@gmail.com" . "/thongpv87"))
+      user-mail-address "thongpv87@gmail.com"
+      user-full-name "Thong Pham"
+      )
+
+(use-package! smtpmail
+  :config
+  (setq send-mail-function    'smtpmail-send-it
+        message-send-mail-function 'message-smtpmail-send-it
+        smtpmail-smtp-server  "smtp.gmail.com"
+        smtpmail-stream-type  'ssl
+        smtpmail-smtp-service 465))
+
+;; Configure desktop notifs for incoming emails:
+(use-package! mu4e-alert
+  :ensure t
+  :init
+  (defun perso--mu4e-notif ()
+    "Display both mode line and desktop alerts for incoming new emails."
+    (interactive)
+    (mu4e-update-mail-and-index 1)        ; getting new emails is ran in the background
+    (mu4e-alert-enable-mode-line-display) ; display new emails in mode-line
+    (mu4e-alert-enable-notifications))    ; enable desktop notifications for new emails
+  (defun perso--mu4e-refresh ()
+    "Refresh emails every 300 seconds and display desktop alerts."
+    (interactive)
+    (mu4e t)                            ; start silently mu4e (mandatory for mu>=1.3.8)
+    (run-with-timer 0 300 'perso--mu4e-notif))
+  :after mu4e
+  :bind ("<f2>" . perso--mu4e-refresh)  ; F2 turns Emacs into a mail client
+  :config
+  ;; Mode line alerts:
+  (add-hook 'after-init-hook #'mu4e-alert-enable-mode-line-display)
+  ;; Desktop alerts:
+  (mu4e-alert-set-default-style 'libnotify)
+  (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
+  ;; Only notify for "interesting" (non-trashed) new emails:
+  (setq mu4e-alert-interesting-mail-query
+        (concat
+         "flag:unread maildir:/INBOX"
+         " AND NOT flag:trashed")))
+
 
 
 ;; org mode

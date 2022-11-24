@@ -26,8 +26,8 @@ in {
       xorg = {
         enable = true;
         # gpuMode = "NVIDIA";
-        # gpuMode = "hybrid";
-        gpuMode = "integrated";
+        gpuMode = "hybrid";
+        # gpuMode = "integrated";
       };
       wayland = { enable = false; };
     };

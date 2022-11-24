@@ -52,3 +52,5 @@
 
 (package! engrave-faces)
 (package! keychain-environment)
+(package! smtpmail)
+(package! mu4e-alert)
