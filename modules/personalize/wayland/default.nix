@@ -8,10 +8,10 @@ let
     exec -a "$0" "$@"
   '';
 in
-with lib;
-{
+with lib; {
   options = {
-    personalize.displayServer.wayland.enable = mkEnableOption (mdDoc "Enable Wayland display server");
+    personalize.displayServer.wayland.enable =
+      mkEnableOption (mdDoc "Enable Wayland display server");
   };
 
   config = mkIf (cfg.enable) {
@@ -26,9 +26,8 @@ with lib;
     ];
 
     programs.xwayland.enable = true;
+    programs.hyprland.enable = true;
 
-    hardware = {
-      nvidiaOptimus.disable = true;
-    };
+    hardware = { nvidiaOptimus.disable = true; };
   };
 }

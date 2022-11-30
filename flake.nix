@@ -48,7 +48,8 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
 
     hyprland = {
-      url = "github:thongpv87/Hyprland";
+      url = "github:hyprwm/Hyprland";
+      #url = "github:thongpv87/Hyprland";
       # build with your own instance of nixpkgs
       inputs.nixpkgs.follows = "latest";
     };
@@ -111,6 +112,7 @@
             digga.nixosModules.nixConfig
             home.nixosModules.home-manager
             agenix.nixosModules.age
+            hyprland.nixosModules.default
           ];
         };
 
