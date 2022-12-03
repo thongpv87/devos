@@ -11,7 +11,8 @@ let
     buildInputs = oldAttrs.buildInputs ++ [ pkgs.glib pkgs.gtk3 ];
   });
   hybridVaApiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-in {
+in
+{
   system.stateVersion = "22.05";
   ### root password is empty by default ###
   imports = suites.base;
@@ -34,6 +35,7 @@ in {
   };
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [ "qtwebkit-5.212.0-alpha4" ];
 
   boot = {
     loader = {
