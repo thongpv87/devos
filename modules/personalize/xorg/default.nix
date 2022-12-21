@@ -63,12 +63,15 @@ with lib; {
         };
       };
       services.xserver = {
+        enable = true;
         videoDrivers = [ "nvidia" ];
         deviceSection = ''
           Option "DRI" "3"
           Option "TearFree" "true"
         '';
-        enable = true;
+        displayManager.sessionCommands = ''
+          xrandr --setprovideroutputsource NVIDIA-G0 modesetting
+        '';
       };
     })
 

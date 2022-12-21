@@ -19,6 +19,7 @@
       git
       lm_sensors
       pciutils
+      hexchat
       upower
       unzip
       alacritty

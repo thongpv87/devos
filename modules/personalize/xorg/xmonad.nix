@@ -26,7 +26,8 @@ let
     '';
   };
 
-in {
+in
+{
   environment.systemPackages = with pkgs; [
     rofi
     alacritty
@@ -51,7 +52,7 @@ in {
   ];
 
   services.xserver = {
-    displayManager.gdm.enable = false;
+    displayManager.gdm.enable = true;
     desktopManager.xfce = { enable = true; };
     windowManager.xmonad = {
       enable = true;

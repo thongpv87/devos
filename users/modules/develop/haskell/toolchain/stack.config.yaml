@@ -27,7 +27,7 @@ nix:
   enable: true
   # This creates a `nix-gc-symlinks` directory in the project `.stack-work`.
   # To revert that, just delete this `nix-gc-symlinks` directory.
-  add-gc-roots: true
+  # add-gc-roots: true
   # Make file is passing environment variables into the stack command
   # We need to preserve these in runtime of binaries called by stack
   # thus we don't want to run stack in pure environment.

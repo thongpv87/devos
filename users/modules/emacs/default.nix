@@ -39,7 +39,10 @@ in
       emacsPackages.pdf-tools
     ];
 
-    programs.emacs = { enable = true; };
+    programs = {
+      emacs = { enable = true; };
+      offlineimap = { enable = true; };
+    };
 
     services = {
       emacs = {
@@ -53,11 +56,6 @@ in
         });
       };
 
-      # offlineimap = {
-      #   enable = true;
-      #   onCalendar = "*:0/10";
-      # };
     };
-
   };
 }

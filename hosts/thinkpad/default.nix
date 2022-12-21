@@ -13,7 +13,7 @@ let
   hybridVaApiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
 in
 {
-  system.stateVersion = "22.05";
+  system.stateVersion = "22.11";
   ### root password is empty by default ###
   imports = suites.base;
   personalize = {
@@ -45,8 +45,16 @@ in
     };
 
     kernel.sysctl = { "vm.swappiness" = 1; };
+    kernelPackages = pkgs.linuxPackages_testing;
+    kernelPatches = [{
+      name = "MGLRU";
+      patch = null;
+      extraConfig = ''
+        LRU_GEN y
+        LRU_GEN_ENABLED y
+      '';
+    }];
 
-    kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules =
       [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "battery" "thinkpad_acpi" ];
     initrd.kernelModules = [ "i915" ];

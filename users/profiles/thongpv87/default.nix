@@ -2,6 +2,7 @@
   manual.manpages.enable = true;
 
   home.packages = [ pkgs.neovim ];
+  home.stateVersion = "22.11";
   programs = {
     git = {
       userName = "Thong Pham";

@@ -166,8 +166,6 @@ in
           "70:name       *?= 'GLavaRadial'"
         ];
 
-        blur = false;
-        blurExclude = [ "class_g = 'slop'" ];
         extraOptions = ''
           corner-radius = 12;
           xinerama-shadow-crop = true;
