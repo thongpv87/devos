@@ -62,6 +62,7 @@
       fira-code-symbols
       inconsolata
       corefonts
+      mononoki
       google-fonts
       roboto-slab
 

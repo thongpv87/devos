@@ -20,6 +20,7 @@
     };
 
     develop.haskell.enable = true;
+    develop.agda.enable = true;
     fonts.enable = true;
     shell.enable = true;
     others.enable = true;

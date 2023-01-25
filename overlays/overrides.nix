@@ -4,7 +4,7 @@ channels: final: prev: {
 
   inherit (channels.latest)
     cachix dhall discord element-desktop rage nix-index nixpkgs-fmt qutebrowser
-    signal-desktop starship deploy-rs zoom-us;
+    signal-desktop starship deploy-rs zoom-us agda;
   ibus-engines.bamboo = channels.latest.ibus-engines.bamboo;
 
   pkgconfig = final.pkg-config;
