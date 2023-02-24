@@ -10,7 +10,7 @@ let
   '';
 in
 with lib; {
-  imports = [ ./xmonad.nix ];
+  imports = [ ./kde.nix ];
   options = {
     personalize.displayServer.xorg = {
       enable = mkEnableOption (mdDoc "Enable Xorg display server");
