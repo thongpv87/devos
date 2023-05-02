@@ -139,6 +139,7 @@
               packages
               virt
               misc
+              # networking
             ];
             wayland = base ++ [ profiles.wayland ];
             xorg = base ++ [ profiles.xorg ];
