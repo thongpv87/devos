@@ -11,8 +11,7 @@ let
     buildInputs = oldAttrs.buildInputs ++ [ pkgs.glib pkgs.gtk3 ];
   });
   hybridVaApiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-in
-{
+in {
   system.stateVersion = "23.05";
   ### root password is empty by default ###
   imports = suites.base;
@@ -46,14 +45,14 @@ in
 
     kernel.sysctl = { "vm.swappiness" = 1; };
     kernelPackages = pkgs.linuxPackages_testing;
-    kernelPatches = [{
-      name = "MGLRU";
-      patch = null;
-      extraConfig = ''
-        LRU_GEN y
-        LRU_GEN_ENABLED y
-      '';
-    }];
+    # kernelPatches = [{
+    #   name = "MGLRU";
+    #   patch = null;
+    #   extraConfig = ''
+    #     LRU_GEN y
+    #     LRU_GEN_ENABLED y
+    #   '';
+    # }];
 
     initrd.availableKernelModules =
       [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "battery" "thinkpad_acpi" ];
@@ -66,14 +65,14 @@ in
   };
 
   time.timeZone = "Asia/Ho_Chi_Minh";
-  # i18n.inputMethod = {
-  #   enabled = "ibus";
-  #   ibus.engines = with pkgs.ibus-engines; [ my-bamboo ];
-  #   #enabled = "fcitx";
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ my-bamboo ];
+    #enabled = "fcitx";
 
-  #   # fcitx.engines = [ pkgs.fcitx-engines.unikey ];
-  #   # fcitx5.addons = [ pkgs.fcitx5-unikey ];
-  # };
+    # fcitx.engines = [ pkgs.fcitx-engines.unikey ];
+    # fcitx5.addons = [ pkgs.fcitx5-unikey ];
+  };
 
   networking = {
     wireless.iwd.enable = true;

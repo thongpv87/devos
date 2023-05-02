@@ -1,13 +1,22 @@
 {
   description = "A highly structured configuration database.";
 
-  nixConfig.extra-experimental-features = "nix-command flakes";
-  nixConfig.extra-substituters =
-    "https://nrdxp.cachix.org https://nix-community.cachix.org";
-  nixConfig.extra-trusted-public-keys =
-    "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+  nixConfig = {
+    extra-experimental-features = "nix-command flakes";
+    extra-substituters =
+      [ "https://nrdxp.cachix.org" "https://nix-community.cachix.org" ];
+    extra-trusted-public-keys = [
+      "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
 
   inputs = {
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+
     # Track channels with commits tested and built by hydra
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -17,58 +26,41 @@
     # But, perhaps even more usefully, it provides a place for adding
     # darwin-specific overlays and packages which could otherwise cause build
     # failures on Linux systems.
-    nixpkgs-darwin-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.05-darwin";
+    # nixpkgs-darwin-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
 
     digga.url = "github:divnix/digga";
-    digga.inputs.nixpkgs.follows = "latest";
-    digga.inputs.nixlib.follows = "latest";
+    digga.inputs.nixpkgs.follows = "nixos";
+    digga.inputs.nixlib.follows = "nixos";
     digga.inputs.home-manager.follows = "home";
     digga.inputs.deploy.follows = "deploy";
 
     home.url = "github:nix-community/home-manager/release-22.11";
-    home.inputs.nixpkgs.follows = "latest";
+    home.inputs.nixpkgs.follows = "nixos";
 
-    darwin.url = "github:LnL7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs-darwin-stable";
+    # darwin.url = "github:LnL7/nix-darwin";
+    # darwin.inputs.nixpkgs.follows = "nixpkgs-darwin-stable";
 
     deploy.url = "github:serokell/deploy-rs";
-    deploy.inputs.nixpkgs.follows = "latest";
+    deploy.inputs.nixpkgs.follows = "nixos";
 
     agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "latest";
+    agenix.inputs.nixpkgs.follows = "nixos";
 
     nvfetcher.url = "github:berberman/nvfetcher";
-    nvfetcher.inputs.nixpkgs.follows = "latest";
-
-    naersk.url = "github:nmattia/naersk";
-    naersk.inputs.nixpkgs.follows = "latest";
+    nvfetcher.inputs.nixpkgs.follows = "nixos";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
-
-    nixos-generators.url = "github:nix-community/nixos-generators";
-
     hyprland = {
       url = "github:hyprwm/Hyprland";
       #url = "github:thongpv87/Hyprland";
       # build with your own instance of nixpkgs
       inputs.nixpkgs.follows = "latest";
     };
+
   };
 
-  outputs =
-    { self
-    , digga
-    , nixos
-    , home
-    , nixos-hardware
-    , nur
-    , agenix
-    , nvfetcher
-    , deploy
-    , nixpkgs
-    , hyprland
-    , ...
-    }@inputs:
+  outputs = { self, digga, nixos, home, nixos-hardware, nur, agenix, nvfetcher
+    , hyprland, deploy, nixpkgs, ... }@inputs:
     digga.lib.mkFlake {
       inherit self inputs;
 
@@ -76,10 +68,6 @@
 
       channels = {
         nixos = {
-          imports = [ (digga.lib.importOverlays ./overlays) ];
-          overlays = [ ];
-        };
-        nixpkgs-darwin-stable = {
           imports = [ (digga.lib.importOverlays ./overlays) ];
           overlays = [ ];
         };
@@ -119,16 +107,12 @@
         imports = [ (digga.lib.importHosts ./hosts) ];
         hosts = {
           # set host-specific properties here
-          #NixOS = { };
-
           thinkpad = { };
         };
-
         importables = rec {
           profiles = digga.lib.rakeLeaves ./profiles // {
             users = digga.lib.rakeLeaves ./users;
           };
-
           suites = with profiles; rec {
             base = [
               core.nixos
@@ -144,32 +128,6 @@
             wayland = base ++ [ profiles.wayland ];
             xorg = base ++ [ profiles.xorg ];
           };
-        };
-      };
-
-      darwin = {
-        hostDefaults = {
-          system = "x86_64-darwin";
-          channelName = "nixpkgs-darwin-stable";
-          imports = [ (digga.lib.importExportableModules ./modules) ];
-          modules = [
-            { lib.our = self.lib; }
-            digga.darwinModules.nixConfig
-            home.darwinModules.home-manager
-            agenix.nixosModules.age
-          ];
-        };
-
-        imports = [ (digga.lib.importHosts ./hosts/darwin) ];
-        hosts = {
-          # set host-specific properties here
-          Mac = { };
-        };
-        importables = rec {
-          profiles = digga.lib.rakeLeaves ./profiles // {
-            users = digga.lib.rakeLeaves ./users;
-          };
-          suites = with profiles; rec { base = [ core.darwin users.darwin ]; };
         };
       };
 
@@ -199,10 +157,10 @@
           # it could just be left to the developer to determine what's
           # appropriate. after all, configuring these hm users is one of the
           # first steps in customizing the template.
-          #nixos = { suites, ... }: { imports = suites.base; };
-          darwin = { suites, ... }: { imports = suites.base; };
           thongpv87 = { suites, ... }: {
             imports = suites.base ++ suites.hmConfig;
+
+            home.stateVersion = "22.11";
           };
         }; # digga.lib.importers.rakeLeaves ./users/hm;
       };
@@ -212,10 +170,8 @@
       # TODO: similar to the above note: does it make sense to make all of
       # these users available on all systems?
       homeConfigurations = digga.lib.mergeAny
-        (digga.lib.mkHomeConfigurations self.darwinConfigurations)
         (digga.lib.mkHomeConfigurations self.nixosConfigurations);
 
       deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
-
     };
 }

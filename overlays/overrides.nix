@@ -25,6 +25,8 @@ channels: final: prev: {
     enableWindowsFonts = false;
   });
 
+  fcitx-engines = prev.fcitx5;
+
   ibus-engines.my-bamboo = prev.ibus-engines.bamboo.overrideAttrs (oldAttrs: {
     version = "v0.8.1";
     src = final.fetchFromGitHub {
