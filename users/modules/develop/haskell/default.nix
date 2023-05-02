@@ -14,7 +14,6 @@ in {
       stack
       ghc
       haskellPackages.haskell-language-server
-      haskellPackages.prune-juice
     ];
   };
 }

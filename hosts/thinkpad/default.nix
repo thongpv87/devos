@@ -13,7 +13,7 @@ let
   hybridVaApiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
 in
 {
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
   ### root password is empty by default ###
   imports = suites.base;
   personalize = {
@@ -66,14 +66,14 @@ in
   };
 
   time.timeZone = "Asia/Ho_Chi_Minh";
-  i18n.inputMethod = {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ my-bamboo ];
-    #enabled = "fcitx";
+  # i18n.inputMethod = {
+  #   enabled = "ibus";
+  #   ibus.engines = with pkgs.ibus-engines; [ my-bamboo ];
+  #   #enabled = "fcitx";
 
-    fcitx.engines = [ pkgs.fcitx-engines.unikey ];
-    fcitx5.addons = [ pkgs.fcitx5-unikey ];
-  };
+  #   # fcitx.engines = [ pkgs.fcitx-engines.unikey ];
+  #   # fcitx5.addons = [ pkgs.fcitx5-unikey ];
+  # };
 
   networking = {
     wireless.iwd.enable = true;
