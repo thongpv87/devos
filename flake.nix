@@ -3,10 +3,14 @@
 
   nixConfig = {
     extra-experimental-features = "nix-command flakes";
-    extra-substituters =
-      [ "https://nrdxp.cachix.org" "https://nix-community.cachix.org" ];
+    extra-substituters = [
+      "https://nrdxp.cachix.org"
+      "https://nix-community.cachix.org"
+      "https://cache.iog.io"
+    ];
     extra-trusted-public-keys = [
       "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4="
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };

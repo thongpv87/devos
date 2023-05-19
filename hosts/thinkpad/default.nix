@@ -43,7 +43,11 @@ in {
       efi.canTouchEfiVariables = true;
     };
 
-    kernel.sysctl = { "vm.swappiness" = 1; };
+    kernel.sysctl = {
+      "vm.swappiness" = 1;
+      "net.ipv4.ip_default_ttl" = 65;
+      "net.ipv6.conf.all.hop_limit" = 65;
+    };
     kernelPackages = pkgs.linuxPackages_testing;
     # kernelPatches = [{
     #   name = "MGLRU";

@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.mkShell {
   buildInputs = with pkgs.xorg; with pkgs.haskellPackages;
-    [ libX11 pkgs.xlibsWrapper libXext libXinerama
+    [ libX11 libXext libXinerama
       libXrandr libXrender libXft
       libXScrnSaver pkgs.alsa-lib
       pkgs.pkg-config pkgs.xscreensaver
